@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import loader from "@monaco-editor/loader";
-import Button from '../Button/Button'
-import {default as ExpandArrowIcon} from './icons/expand-arrow.svg'
+import Button from "../Button/Button";
+import ExpandArrowIcon from "./icons/ExpandArrowIcon.jsx";
 import "./code-editor.css";
 import "./variables.css";
 
@@ -19,17 +19,8 @@ function evaluatePixel(sample) {
 }`;
 
 
-const options = { 
-  minimap: {
-    enabled: false
-  }
-}
-
-
 export const CodeEditor = () => {
   const editorRef = useRef();
-  const [isDocked, setIsDocked] = useState(true)
-
 
   useEffect(() => {
     loader.init().then((monaco) => {
@@ -37,29 +28,26 @@ export const CodeEditor = () => {
         value: evalscript,
         language: "javascript",
         theme: "vs-dark",
-        options
+        minimap: {
+          enabled: false,
+        },
       });
     });
   }, []);
 
-
-  if(isDocked) {
+  return (
     <div className="code-editor-window">
       <div className="code-editor-top-panel">
-        <img className="code-editor-icon" src={ExpandArrowIcon} alt=""/>
+        <ExpandArrowIcon />
       </div>
       <div className="code-editor-wrap">
-        <div className="code-editor-left-panel">
-        </div>
+        <div
+          className="code-editor"
+          ref={(el) => (editorRef.current = el)}
+        ></div>
       </div>
       <div className="code-editor-bottom-panel">
-        <Button>Run evalscript</Button>
       </div>
     </div>
-  }
-  
-  
-  return (
-    <div className="code-editor" ref={(el) => (editorRef.current = el)}></div>
   );
 };

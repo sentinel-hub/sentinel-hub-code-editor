@@ -1,16 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .code-editor-window {
 }
 
 .code-editor {
   max-height: 1000px;
   height: 400px;
-  flex-shrink: 0;
   width: 100%;
+  flex-grow: 1;
 }
 
 .code-editor-top-panel {
   height: var(--spacing07);
-  background: red;
   padding: 0 var(--spacing03);
   display: flex;
   justify-content: flex-end;
@@ -18,7 +23,11 @@
 }
 
 .code-editor-bottom-panel {
-  padding: 0 var(--spacing07);
+  height: var(--spacing07);
+  padding: 0 var(--spacing03);
+  display: flex;
+  justify-content: flex-end;
+  background: var(--colorBg500);
 }
 
 .code-editor-wrap {
@@ -30,5 +39,6 @@
 }
 
 .code-editor-icon {
+  color: #e5e5e5;
   width: var(--fontSize02);
 }

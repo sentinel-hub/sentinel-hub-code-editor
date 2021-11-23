@@ -5,7 +5,7 @@
   "main": "index.js",
   "module": "dist/index.es.js",
   "scripts": {
-    "prettier": "prettier --write src/**/*.js src/**/*.css",
+    "prettier": "prettier --write src/**/*.{js,jsx} src/**/*.css",
     "lint": "eslint --max-warnings 0 --ext .jsx src/",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
