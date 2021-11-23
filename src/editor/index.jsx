@@ -1,7 +1,8 @@
-import './style.css';
-import loader from '@monaco-editor/loader';
 import { useEffect, useRef } from 'react';
+import loader from '@monaco-editor/loader';
 
+import './style.css';
+import './variables.css'
 const evalscript = `//VERSION=3
 function setup() {
   return {

@@ -7,3 +7,7 @@
 .code-editor { 
         height: 100%;
 }
+
+.code-editor-top-panel { 
+        height: var(--spacing03)
+}
