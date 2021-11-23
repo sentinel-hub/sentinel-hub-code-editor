@@ -1,0 +1,34 @@
+.code-editor-window {
+}
+
+.code-editor {
+  max-height: 1000px;
+  height: 400px;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.code-editor-top-panel {
+  height: var(--spacing07);
+  background: red;
+  padding: 0 var(--spacing03);
+  display: flex;
+  justify-content: flex-end;
+  background: var(--colorBg500);
+}
+
+.code-editor-bottom-panel {
+  padding: 0 var(--spacing07);
+}
+
+.code-editor-wrap {
+  display: flex;
+}
+
+.code-editor-left-panel {
+  width: var(--spacing03);
+}
+
+.code-editor-icon {
+  width: var(--fontSize02);
+}

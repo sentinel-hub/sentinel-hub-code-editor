@@ -1,1 +1,1 @@
-export * from "./editor/index.jsx";
+export * from "./components/CodeEditor/CodeEditor.jsx";
