@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import loader from "@monaco-editor/loader";
-import Button from "../Button/Button";
-import ExpandArrowIcon from "./icons/ExpandArrowIcon.jsx";
 import "./code-editor.css";
 import "./variables.css";
 
@@ -37,7 +35,6 @@ export const CodeEditor = () => {
   return (
     <div className="code-editor-window">
       <div className="code-editor-top-panel">
-        <ExpandArrowIcon />
       </div>
       <div className="code-editor-wrap">
         <div
