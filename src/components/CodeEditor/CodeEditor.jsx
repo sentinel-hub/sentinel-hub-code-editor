@@ -18,7 +18,6 @@ function evaluatePixel(sample) {
   return [2.5 * sample.B01, 2.5 * sample.B02, 2.5 * sample.B03, sample.dataMask];
 }`;
 
-
 export const CodeEditor = () => {
   const editorRef = useRef();
 
@@ -46,8 +45,7 @@ export const CodeEditor = () => {
           ref={(el) => (editorRef.current = el)}
         ></div>
       </div>
-      <div className="code-editor-bottom-panel">
-      </div>
+      <div className="code-editor-bottom-panel"></div>
     </div>
   );
 };
