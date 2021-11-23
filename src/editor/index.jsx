@@ -37,7 +37,7 @@ export const CodeEditor = () => {
 
   return (
     <div className="code-editor-window">
-      <div className="code-editor-top-panel"></div>
+
       <div className="code-editor" ref={(el) => (editorRef.current = el)}></div>
     </div>
   );
