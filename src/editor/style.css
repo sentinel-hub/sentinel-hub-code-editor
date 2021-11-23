@@ -1,13 +1,11 @@
 .code-editor-window {
-         height: 800px;
-
-
+  height: 800px;
 }
 
-.code-editor { 
-        height: 100%;
+.code-editor {
+  height: 100%;
 }
 
-.code-editor-top-panel { 
-        height: var(--spacing03)
+.code-editor-top-panel {
+  height: var(--spacing03);
 }
