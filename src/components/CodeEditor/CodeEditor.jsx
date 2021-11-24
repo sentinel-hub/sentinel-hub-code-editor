@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import loader from "@monaco-editor/loader";
 import "./code-editor.css";
 import "./variables.css";

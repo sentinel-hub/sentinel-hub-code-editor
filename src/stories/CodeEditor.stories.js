@@ -8,3 +8,4 @@ const stories = storiesOf("Code Editor test", module);
 stories.add("CodeEditor", () => {
   return <CodeEditor />;
 });
+  

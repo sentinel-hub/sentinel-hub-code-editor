@@ -4,7 +4,6 @@ import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import { terser } from "rollup-plugin-terser";
 
-
 const extensions = ['.jsx', '.js']
 
 export default [
