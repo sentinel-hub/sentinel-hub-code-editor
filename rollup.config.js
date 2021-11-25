@@ -1,3 +1,4 @@
+import path from 'path'
 import babel from "rollup-plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-peer-deps-external";
@@ -20,12 +21,12 @@ export default [
       postcss({
         plugins: [],
         minimize: true,
-        modules: true,
-        extract: true,
+        modules: false,
+        extract: path.resolve('dist/code-editor.css'),
       }),
       babel({
         exclude: "node_modules/**",
-        presets: ["@babel/preset-react"],
+        presets: [["@babel/preset-react", {runtime:"automatic"}]],
         extensions,
       }),
       external(),

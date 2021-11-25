@@ -2,6 +2,7 @@
   "name": "test-npm-package2",
   "version": "1.0.0",
   "description": "",
+  "files":["dist/*"],
   "main": "index.js",
   "module": "dist/index.es.js",
   "scripts": {
