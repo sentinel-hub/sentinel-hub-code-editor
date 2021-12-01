@@ -33,8 +33,6 @@ const MONACO_EDITOR_CONFIG = {
   },
 };
 
-
-
 export const CodeEditor = () => {
   const editorDOMRef = useRef();
   const editorRef = useRef();
@@ -45,7 +43,7 @@ export const CodeEditor = () => {
         editorDOMRef.current,
         MONACO_EDITOR_CONFIG
       );
-      
+
       monacoRef.current = monaco;
       editorRef.current = editor;
 
@@ -77,8 +75,7 @@ export const CodeEditor = () => {
     };
   }, []);
 
-  
-  const checkAndApplyErrors = debounce(function () { 
+  const checkAndApplyErrors = debounce(function () {
     const code = editorRef.current.getValue();
     JSHINT(code, JSHINT_CONFIG);
     const errors = JSHINT.errors.map((e) => {
