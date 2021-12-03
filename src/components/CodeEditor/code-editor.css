@@ -39,3 +39,17 @@
   color: #e5e5e5;
   width: var(--fontSize02);
 }
+
+.code-editor-expand-icon {
+  color: #e5e5e5;
+  width: var(--fontSize02);
+  cursor: pointer;
+}
+
+.code-editor-floating {
+  position: absolute;
+}
+
+.code-editor-header-floating {
+  cursor: move;
+}
