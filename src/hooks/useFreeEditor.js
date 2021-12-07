@@ -18,8 +18,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     editorOffsetRef.current = {
       y: event.clientY - editorPosition.y,
       x: event.clientX - editorPosition.x,
-    }
-
+    };
 
     window.addEventListener("mousemove", mouseMoveHandler);
     window.addEventListener("mouseup", () => {
@@ -30,40 +29,51 @@ const useFreeEditor = (boxRef, headerRef) => {
   const mouseMoveHandler = useCallback((e) => {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
-    const boxRect = boxRef.current.getBoundingClientRect();
+    const editorDimensions = boxRef.current.getBoundingClientRect();
+    
     const x = e.clientX - editorOffsetRef.current.x;
     const y = e.clientY - editorOffsetRef.current.y;
-    const maxX = maxWidth - boxRect.width;
-    const maxY = maxHeight - boxRect.height;
+    const maxX = maxWidth - editorDimensions.width;
+    const maxY = maxHeight - editorDimensions.height;
 
-    const isOutsideX = x < 0 || x > maxX;
-    const isInsideX = x > 0 && x < maxX;
 
-    const isInsideY = y > 0 && y < maxY;
-    const isOutsideY = y < 0 || y > maxY;
-    const newY = tryOutsideY(y, boxRect);
-    const newX = tryOutsideX(x, boxRect);
+    const newY = getPositionY(y, editorDimensions);
+    const newX = getPositionX(x, editorDimensions);
     setEditorPosition({ x: newX, y: newY });
   }, []);
-  function tryOutsideY(y, boxRect) {
-    if (y + boxRect.height > window.innerHeight || y < 0) {
-      if (y < 0) {
-        return 0;
-      }
-      return window.innerHeight - boxRect.height;
-    } else {
-      return y;
+
+
+  function getPositionY(y, editorDimensions) {
+    const isInsideY = y > 0 && y + editorDimensions.height < window.innerHeight;
+    const isOutsideTop = y < 0;
+    if(isInsideY) { 
+        return y
     }
+    if(isOutsideTop) { 
+      return 0
+    }
+    return window.innerHeight - editorDimensions.height;
   }
-  function tryOutsideX(x, boxRect) {
-    if (x + boxRect.width > window.innerWidth || x < 0) {
+  function getPositionX(x, editorDimensions) {
+    console.log(x)
+    const isInsideX = (x + editorDimensions.width < window.innerWidth) || x > 0
+    const isOutsideLeft = x < 0
+
+    if(isInsideX) { 
+      return x
+    } 
+    if(isOutsideLeft) { 
+      return 0
+    }
+    return window.innerWidth - editorDimensions.width;
+    /* if (x + editorDimensions.width > window.innerWidth || x < 0) {
       if (x < 0) {
         return 0;
       }
-      return window.innerWidth - boxRect.width;
+      return window.innerWidth - editorDimensions.width;
     } else {
       return x;
-    }
+    } */
   }
 
   useEffect(() => {
