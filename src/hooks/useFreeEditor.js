@@ -25,6 +25,7 @@ const useFreeEditor = (boxRef, headerRef) => {
       window.removeEventListener("mousemove", mouseMoveHandler);
     });
   }
+  //#endregion
 
   const mouseMoveHandler = useCallback((e) => {
     const maxWidth = window.innerWidth;
@@ -40,8 +41,37 @@ const useFreeEditor = (boxRef, headerRef) => {
 
     const isInsideY = y > 0 && y < maxY;
     const isOutsideY = y < 0 || y > maxY;
-      setTransform([y, x]);
+    const newY = tryOutsideY(y, boxRect)
+    const newX = tryOutsideX(x, boxRect)
+    setTransform([newY, newX]);
+
+
   }, []);
+  function tryOutsideY(y, boxRect) {
+
+    if (y + boxRect.height > window.innerHeight || y < 0) {
+      if (y < 0) {
+        return 0;
+      }
+      return window.innerHeight - boxRect.height;
+    } else {
+      return y;
+    }
+  }
+  function tryOutsideX(x, boxRect) {
+
+    if (x + boxRect.width > window.innerWidth || x < 0) {
+      if (x < 0) {
+        return 0;
+      }
+      return window.innerWidth - boxRect.width;
+    } else {
+      return x;
+    }
+  }
+
+
+
 
   useEffect(() => {
     if (isDocked) {
