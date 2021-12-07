@@ -41,7 +41,7 @@ export const CodeEditor = () => {
   const monacoRef = useRef();
   const headerEditorRef = useRef();
   const boxRef = useRef();
-  const { transform, isDocked, handleDockedClick, handleMouseDown } =
+  const { editorPosition, isDocked, handleDockedClick, handleMouseDown } =
     useFreeEditor(boxRef, headerEditorRef);
 
   useEffect(() => {
@@ -104,13 +104,10 @@ export const CodeEditor = () => {
     );
   }, 500);
 
-
   return (
     <div
       style={{
-        transform: `translate(${transform[1]}px, ${
-          transform[0]
-        }px)`,
+        transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
         maxWidth: 400,
       }}
       ref={boxRef}

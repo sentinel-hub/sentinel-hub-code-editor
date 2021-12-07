@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState, useRef } from "react";
 const HEADER_FLOATED_CLASSNAME = "code-editor-header-floating";
 
 const useFreeEditor = (boxRef, headerRef) => {
-  const offsetRef = useRef();
-  const [transform, setTransform] = useState([0, 0]);
+  const editorOffsetRef = useRef();
+  const [editorPosition, setEditorPosition] = useState({x: 0, y: 0});
   const [isDocked, setIsDocked] = useState(true);
 
   const handleDockedClick = useCallback(() => {
@@ -15,9 +15,9 @@ const useFreeEditor = (boxRef, headerRef) => {
     if (isDocked) {
       return;
     }
-    offsetRef.current = [
-      event.clientY - transform[0],
-      event.clientX - transform[1],
+    editorOffsetRef.current = [
+      event.clientY - editorPosition.y,
+      event.clientX - editorPosition.x,
     ];
 
     window.addEventListener("mousemove", mouseMoveHandler);
@@ -25,14 +25,13 @@ const useFreeEditor = (boxRef, headerRef) => {
       window.removeEventListener("mousemove", mouseMoveHandler);
     });
   }
-  //#endregion
 
   const mouseMoveHandler = useCallback((e) => {
     const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight;
     const boxRect = boxRef.current.getBoundingClientRect();
-    const x = e.clientX - offsetRef.current[1];
-    const y = e.clientY - offsetRef.current[0];
+    const x = e.clientX - editorOffsetRef.current[1];
+    const y = e.clientY - editorOffsetRef.current[0];
     const maxX = maxWidth - boxRect.width;
     const maxY = maxHeight - boxRect.height;
 
@@ -41,14 +40,11 @@ const useFreeEditor = (boxRef, headerRef) => {
 
     const isInsideY = y > 0 && y < maxY;
     const isOutsideY = y < 0 || y > maxY;
-    const newY = tryOutsideY(y, boxRect)
-    const newX = tryOutsideX(x, boxRect)
-    setTransform([newY, newX]);
-
-
+    const newY = tryOutsideY(y, boxRect);
+    const newX = tryOutsideX(x, boxRect);
+    setEditorPosition({x: newX, y: newY});
   }, []);
   function tryOutsideY(y, boxRect) {
-
     if (y + boxRect.height > window.innerHeight || y < 0) {
       if (y < 0) {
         return 0;
@@ -59,7 +55,6 @@ const useFreeEditor = (boxRef, headerRef) => {
     }
   }
   function tryOutsideX(x, boxRect) {
-
     if (x + boxRect.width > window.innerWidth || x < 0) {
       if (x < 0) {
         return 0;
@@ -70,9 +65,6 @@ const useFreeEditor = (boxRef, headerRef) => {
     }
   }
 
-
-
-
   useEffect(() => {
     if (isDocked) {
       headerRef.current.classList.remove(HEADER_FLOATED_CLASSNAME);
@@ -81,6 +73,6 @@ const useFreeEditor = (boxRef, headerRef) => {
     }
   }, [isDocked]);
 
-  return { transform, isDocked, handleDockedClick, handleMouseDown };
+  return { editorPosition, isDocked, handleDockedClick, handleMouseDown };
 };
 export default useFreeEditor;
