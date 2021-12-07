@@ -35,7 +35,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     const newEditorY = getEditorPositionY(editorPositionY, editorDimensions);
     const newEditorX = getEditorPositionX(editorPositionX, editorDimensions);
 
-    setEditorPosition({ x: newEditorY, y: newEditorY });
+    setEditorPosition({ x: newEditorX, y: newEditorY });
   }, []);
 
   function getEditorPositionY(y, editorDimensions) {
