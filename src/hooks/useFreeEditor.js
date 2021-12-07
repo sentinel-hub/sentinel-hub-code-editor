@@ -9,9 +9,9 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   const handleDockedClick = useCallback(() => {
     setIsDocked((prev) => !prev);
-    if(isDocked) { 
-      setEditorPosition({x: 0, y: 0})
-      editorOffsetRef.current = {x: 0, y: 0}
+    if (isDocked) {
+      setEditorPosition({ x: 0, y: 0 });
+      editorOffsetRef.current = { x: 0, y: 0 };
     }
   }, []);
 
@@ -28,9 +28,9 @@ const useFreeEditor = (boxRef, headerRef) => {
     window.addEventListener("mouseup", mouseUpHandler);
   }
 
-  function mouseUpHandler() { 
+  function mouseUpHandler() {
     window.removeEventListener("mousemove", mouseMoveHandler);
-    window.removeEventListener('mouseup', mouseUpHandler)
+    window.removeEventListener("mouseup", mouseUpHandler);
   }
 
   const mouseMoveHandler = useCallback((e) => {
@@ -46,7 +46,8 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, []);
 
   function getEditorPositionY(y, editorDimensions) {
-    const isInsideY = y >= 0 && y + editorDimensions.height <= window.innerHeight;
+    const isInsideY =
+      y >= 0 && y + editorDimensions.height <= window.innerHeight;
     const isOutsideTop = y < 0;
     if (isInsideY) {
       return y;
@@ -59,7 +60,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   function getEditorPositionX(x, editorDimensions) {
     const isInsideX = x + editorDimensions.width <= window.innerWidth && x >= 0;
     const isOutsideLeft = x < 0;
-    console.log(isInsideX)
+    console.log(isInsideX);
     if (isInsideX) {
       return x;
     }
