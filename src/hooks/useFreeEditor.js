@@ -40,19 +40,7 @@ const useFreeEditor = (boxRef, headerRef) => {
 
     const isInsideY = y > 0 && y < maxY;
     const isOutsideY = y < 0 || y > maxY;
-
-    if (isInsideX && isInsideY) {
       setTransform([y, x]);
-      return;
-    }
-    if (isInsideX && isOutsideY) {
-      setTransform((prev) => [prev[0], x]);
-      return;
-    }
-    if (isInsideY && isOutsideX) {
-      setTransform((prev) => [y, prev[1]]);
-      return;
-    }
   }, []);
 
   useEffect(() => {

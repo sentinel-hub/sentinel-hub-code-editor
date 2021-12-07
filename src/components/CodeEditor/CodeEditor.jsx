@@ -104,10 +104,37 @@ export const CodeEditor = () => {
     );
   }, 500);
 
+  function isOutsideX(x) {
+    if(!boxRef.current) { 
+      return 0
+    }
+    if (x + boxRef.current.clientWidth > window.innerWidth || x < 0) {
+      if (x < 0) {
+        return 0
+      }
+      return window.innerWidth - boxRef.current.clientWidth
+    } else {
+      return x
+    }
+  }
+
+  function isOutsideY(y) { 
+    if(!boxRef.current) { 
+      return 0
+    }
+    if (y + boxRef.current.clientHeight > window.innerHeight || y < 0) {
+      if (y < 0) {
+        return 0
+      }
+      return window.innerHeight - boxRef.current.clientHeight
+    } else {
+      return y
+    }
+  }
   return (
     <div
       style={{
-        transform: `translate(${transform[1]}px, ${transform[0]}px)`,
+        transform: `translate(${isOutsideX(transform[1])}px, ${isOutsideY(transform[0])}px)`,
         maxWidth: 400,
       }}
       ref={boxRef}
