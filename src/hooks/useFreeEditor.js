@@ -9,6 +9,10 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   const handleDockedClick = useCallback(() => {
     setIsDocked((prev) => !prev);
+    if(isDocked) { 
+      setEditorPosition({x: 0, y: 0})
+      editorOffsetRef.current = {x: 0, y: 0}
+    }
   }, []);
 
   function handleMouseDown(event) {
@@ -21,9 +25,12 @@ const useFreeEditor = (boxRef, headerRef) => {
     };
 
     window.addEventListener("mousemove", mouseMoveHandler);
-    window.addEventListener("mouseup", () => {
-      window.removeEventListener("mousemove", mouseMoveHandler);
-    });
+    window.addEventListener("mouseup", mouseUpHandler);
+  }
+
+  function mouseUpHandler() { 
+    window.removeEventListener("mousemove", mouseMoveHandler);
+    window.removeEventListener('mouseup', mouseUpHandler)
   }
 
   const mouseMoveHandler = useCallback((e) => {
@@ -39,7 +46,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, []);
 
   function getEditorPositionY(y, editorDimensions) {
-    const isInsideY = y > 0 && y + editorDimensions.height < window.innerHeight;
+    const isInsideY = y >= 0 && y + editorDimensions.height <= window.innerHeight;
     const isOutsideTop = y < 0;
     if (isInsideY) {
       return y;
@@ -50,9 +57,9 @@ const useFreeEditor = (boxRef, headerRef) => {
     return window.innerHeight - editorDimensions.height;
   }
   function getEditorPositionX(x, editorDimensions) {
-    const isInsideX = x + editorDimensions.width < window.innerWidth && x > 0;
+    const isInsideX = x + editorDimensions.width <= window.innerWidth && x >= 0;
     const isOutsideLeft = x < 0;
-
+    console.log(isInsideX)
     if (isInsideX) {
       return x;
     }
