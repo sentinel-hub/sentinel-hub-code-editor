@@ -27,18 +27,15 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   const mouseMoveHandler = useCallback((e) => {
-    const maxWidth = window.innerWidth;
-    const maxHeight = window.innerHeight;
     const editorDimensions = boxRef.current.getBoundingClientRect();
 
-    const x = e.clientX - editorOffsetRef.current.x;
-    const y = e.clientY - editorOffsetRef.current.y;
-    const maxX = maxWidth - editorDimensions.width;
-    const maxY = maxHeight - editorDimensions.height;
+    const editorPositionX = e.clientX - editorOffsetRef.current.x;
+    const editorPositionY = e.clientY - editorOffsetRef.current.y;
 
-    const newY = getEditorPositionY(y, editorDimensions);
-    const newX = getEditorPositionX(x, editorDimensions);
-    setEditorPosition({ x: newX, y: newY });
+    const newEditorY = getEditorPositionY(editorPositionY, editorDimensions);
+    const newEditorX = getEditorPositionX(editorPositionX, editorDimensions);
+
+    setEditorPosition({ x: newEditorY, y: newEditorY });
   }, []);
 
   function getEditorPositionY(y, editorDimensions) {
