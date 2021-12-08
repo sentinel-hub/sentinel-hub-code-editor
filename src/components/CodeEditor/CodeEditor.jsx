@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
+import { ArrowsExpandIcon, LockClosedIcon } from "@heroicons/react/solid";
 import loader from "@monaco-editor/loader";
 import { JSHINT } from "jshint";
+import useFreeEditor from "../../hooks/useFreeEditor";
 
 import "./code-editor.css";
 import "./variables.css";
@@ -37,6 +39,11 @@ export const CodeEditor = () => {
   const editorDOMRef = useRef();
   const editorRef = useRef();
   const monacoRef = useRef();
+  const headerEditorRef = useRef();
+  const boxRef = useRef();
+  const { editorPosition, isDocked, handleDockedClick, handleMouseDown } =
+    useFreeEditor(boxRef, headerEditorRef);
+
   useEffect(() => {
     loader.init().then((monaco) => {
       const editor = monaco.editor.create(
@@ -98,8 +105,31 @@ export const CodeEditor = () => {
   }, 500);
 
   return (
-    <div className="code-editor-window">
-      <div className="code-editor-top-panel"></div>
+    <div
+      style={{
+        transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
+        maxWidth: 400,
+      }}
+      ref={boxRef}
+      className="code-editor-window"
+    >
+      <div
+        className="code-editor-top-panel"
+        ref={headerEditorRef}
+        onMouseDown={handleMouseDown}
+      >
+        {isDocked ? (
+          <ArrowsExpandIcon
+            className="code-editor-expand-icon"
+            onClick={handleDockedClick}
+          />
+        ) : (
+          <LockClosedIcon
+            className="code-editor-expand-icon"
+            onClick={handleDockedClick}
+          />
+        )}
+      </div>
       <div className="code-editor-wrap">
         <div
           className="code-editor"
