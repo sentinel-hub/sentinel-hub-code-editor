@@ -4,11 +4,22 @@
   box-sizing: border-box;
 }
 
-.code-editor {
-  max-height: 1000px;
-  height: 400px;
+.code-editor-docked {
+  height: auto;
+  overflow-y: auto;
   width: 100%;
-  flex-grow: 1;
+  display: flex;
+}
+.code-editor-window-docked {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.code-editor-window {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .code-editor-top-panel {
@@ -25,6 +36,7 @@
   display: flex;
   justify-content: flex-end;
   background: var(--colorBg500);
+  align-items: center;
 }
 
 .code-editor-wrap {
@@ -52,4 +64,19 @@
 
 .code-editor-header-floating {
   cursor: move;
+}
+
+.code-editor-resize-area {
+  background: red;
+}
+
+.editor-icon {
+  color: #e5e5e5;
+  width: var(--fontSize02);
+  font-size: var(--fontSize02);
+}
+
+.icon-resize {
+  transform: rotate(90deg);
+  cursor: nwse-resize;
 }

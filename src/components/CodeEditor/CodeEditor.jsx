@@ -3,6 +3,7 @@ import { ArrowsExpandIcon, LockClosedIcon } from "@heroicons/react/solid";
 import loader from "@monaco-editor/loader";
 import { JSHINT } from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
+import { IoIosResize } from "react-icons/io";
 
 import "./code-editor.css";
 import "./variables.css";
@@ -30,6 +31,7 @@ const MONACO_EDITOR_CONFIG = {
   language: "javascript",
   theme: "vs-dark",
   wordWrap: true,
+  automaticLayout: true,
   minimap: {
     enabled: false,
   },
@@ -40,9 +42,15 @@ export const CodeEditor = () => {
   const editorRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
-  const boxRef = useRef();
-  const { editorPosition, isDocked, handleDockedClick, handleMouseDown } =
-    useFreeEditor(boxRef, headerEditorRef);
+  const codeEditorRef = useRef();
+  const {
+    editorPosition,
+    editorSize,
+    isDocked,
+    handleDockedClick,
+    handleMouseDown,
+    handleResizeMouseDown,
+  } = useFreeEditor(codeEditorRef, headerEditorRef);
 
   useEffect(() => {
     loader.init().then((monaco) => {
@@ -104,13 +112,30 @@ export const CodeEditor = () => {
     );
   }, 500);
 
+  if (isDocked) {
+    return (
+      <div ref={codeEditorRef} className="code-editor-window-docked">
+        <div className="code-editor-top-panel" ref={headerEditorRef}>
+          <ArrowsExpandIcon
+            className="code-editor-expand-icon"
+            onClick={handleDockedClick}
+          />
+        </div>
+        <div
+          className="code-editor-docked"
+          ref={(el) => (editorDOMRef.current = el)}
+        ></div>
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
         transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
-        maxWidth: 400,
+        ...editorSize,
       }}
-      ref={boxRef}
+      ref={codeEditorRef}
       className="code-editor-window"
     >
       <div
@@ -130,13 +155,17 @@ export const CodeEditor = () => {
           />
         )}
       </div>
-      <div className="code-editor-wrap">
-        <div
-          className="code-editor"
-          ref={(el) => (editorDOMRef.current = el)}
-        ></div>
+      <div
+        style={{ height: editorSize.height - 96 }}
+        className="code-editor"
+        ref={(el) => (editorDOMRef.current = el)}
+      ></div>
+      <div
+        onMouseDown={handleResizeMouseDown}
+        className="code-editor-bottom-panel"
+      >
+        <IoIosResize className="editor-icon icon-resize" />
       </div>
-      <div className="code-editor-bottom-panel"></div>
     </div>
   );
 };
