@@ -38,7 +38,6 @@ const MONACO_EDITOR_CONFIG = {
   },
 };
 
-
 export const EvalscriptEditor = ({ onRunEvalscriptClick }) => {
   const editorDOMRef = useRef();
   const editorRef = useRef();
@@ -155,7 +154,7 @@ export const EvalscriptEditor = ({ onRunEvalscriptClick }) => {
         ) : (
           <>
             {window.innerWidth === editorSize.width &&
-              window.innerHeight === editorSize.height ? (
+            window.innerHeight === editorSize.height ? (
               <button
                 className="editor-button"
                 onClick={handleExitFullscreenClick}
@@ -182,7 +181,10 @@ export const EvalscriptEditor = ({ onRunEvalscriptClick }) => {
         onMouseDown={handleResizeMouseDown}
         className="code-editor-bottom-panel"
       >
-        <button onClick={onRunEvalscriptClick} className="button-primary button-primary-bottom-panel">
+        <button
+          onClick={onRunEvalscriptClick}
+          className="button-primary button-primary-bottom-panel"
+        >
           Run Evalscript
         </button>
         <button className="editor-button">
