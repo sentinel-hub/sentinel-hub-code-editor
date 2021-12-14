@@ -7,7 +7,7 @@ export default function Wrapper() {
       style={{ height: "100vh", width: 400, background: "black" }}
       className="panel"
     >
-      <EvalscriptEditor onRunEvalscriptClick={() => console.log("running")} />
+      <EvalscriptEditor onRunEvalscriptClick={() => console.log("running")}  />
     </div>
   );
 }
