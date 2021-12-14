@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef } from "react";
-import { ArrowsExpandIcon, LockClosedIcon } from "@heroicons/react/solid";
+import {
+  ArrowsExpandIcon,
+  XIcon,
+} from "@heroicons/react/solid";
 import loader from "@monaco-editor/loader";
 import JSHINT from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
 import { IoIosResize } from "react-icons/io";
-
+import { BiFullscreen, BiExitFullscreen, BiExpand } from "react-icons/bi";
 import "./code-editor.css";
 import "./variables.css";
 
@@ -31,6 +34,7 @@ const MONACO_EDITOR_CONFIG = {
   language: "javascript",
   theme: "vs-dark",
   wordWrap: true,
+  fontSize: 12,
   automaticLayout: true,
   minimap: {
     enabled: false,
@@ -50,6 +54,8 @@ export const CodeEditor = () => {
     handleDockedClick,
     handleMouseDown,
     handleResizeMouseDown,
+    handleFullscreenClick,
+    handleExitFullscreenClick,
   } = useFreeEditor(codeEditorRef, headerEditorRef);
 
   useEffect(() => {
@@ -116,12 +122,12 @@ export const CodeEditor = () => {
     return (
       <div ref={codeEditorRef} className="code-editor-window-docked">
         <div className="code-editor-top-panel" ref={headerEditorRef}>
-          <ArrowsExpandIcon
-            className="code-editor-expand-icon"
-            onClick={handleDockedClick}
-          />
+          <button className="editor-button" onClick={handleDockedClick}>
+            <BiExpand className="code-editor-expand-icon" />
+          </button>
         </div>
         <div
+          style={{ height: "100%" }}
           className="code-editor-docked"
           ref={(el) => (editorDOMRef.current = el)}
         ></div>
@@ -149,10 +155,24 @@ export const CodeEditor = () => {
             onClick={handleDockedClick}
           />
         ) : (
-          <LockClosedIcon
-            className="code-editor-expand-icon"
-            onClick={handleDockedClick}
-          />
+          <>
+            {window.innerWidth === editorSize.width &&
+            window.innerHeight === editorSize.height ? (
+              <button
+                className="editor-button"
+                onClick={handleExitFullscreenClick}
+              >
+                <BiExitFullscreen className="editor-icon" />
+              </button>
+            ) : (
+              <button className="editor-button" onClick={handleFullscreenClick}>
+                <BiFullscreen className="editor-icon" />
+              </button>
+            )}
+            <button className="editor-button">
+              <XIcon className="editor-icon" onClick={handleDockedClick} />
+            </button>
+          </>
         )}
       </div>
       <div
@@ -164,7 +184,12 @@ export const CodeEditor = () => {
         onMouseDown={handleResizeMouseDown}
         className="code-editor-bottom-panel"
       >
-        <IoIosResize className="editor-icon icon-resize" />
+        <button className="button-primary button-primary-bottom-panel">
+          Run Evalscript
+        </button>
+        <button className="editor-button">
+          <IoIosResize className="icon-resize editor-icon" />
+        </button>
       </div>
     </div>
   );

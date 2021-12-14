@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+.code-editor-window .editor-button,
+.code-editor-window-docked .editor-button {
+  border: none;
+  background: none;
+}
+
 .code-editor-docked {
   height: auto;
   overflow-y: auto;
@@ -18,40 +24,40 @@
   flex-direction: column;
 }
 
-.code-editor-docked  {
+.code-editor-docked {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.monaco-editor { 
+.monaco-editor {
   height: 200px;
 }
 
 .code-editor-window {
-
+  box-shadow: 0px 0px 55px rgba(0, 0, 0, 0.25);
 }
 
 .code-editor-top-panel {
   height: var(--spacing07);
-  padding: 0 var(--spacing03);
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   background: var(--colorBg500);
 }
 
 .code-editor-bottom-panel {
   height: var(--spacing07);
-  padding: 0 var(--spacing03);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   background: var(--colorBg500);
   align-items: center;
+  padding: 0 0 0 var(--spacing02);
 }
 
 .code-editor-wrap {
-flex-grow: 1;
-flex-shrink: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .code-editor-left-panel {
@@ -78,16 +84,78 @@ flex-shrink: 0;
 }
 
 .code-editor-resize-area {
-  background: red;
 }
 
 .editor-icon {
   color: #e5e5e5;
-  width: var(--fontSize02);
   font-size: var(--fontSize02);
 }
 
 .icon-resize {
   transform: rotate(90deg);
   cursor: nwse-resize;
+}
+
+.editor-button {
+  height: 100%;
+  width: var(--spacing05);
+  padding: 0;
+  margin: 0;
+}
+.editor-button:hover {
+  cursor: pointer;
+}
+
+.editor-button:hover {
+  background: var(--colorBg600);
+}
+
+.editor-button svg {
+  width: 20px;
+  font-size: 20px;
+}
+
+.button-primary {
+  padding: var(--spacing02);
+  background: #06a77d;
+  font-weight: 500;
+  color: white;
+  border: none;
+}
+
+.button-primary:hover {
+  cursor: pointer;
+  background: #12917c;
+}
+
+.button-primary-bottom-panel {
+  margin-right: var(--spacing02);
+}
+
+.button-primary:focus {
+}
+
+.editor-button-resize {
+  height: 100%;
+}
+
+.editor-button-text {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing02);
+  background: none;
+  color: rgb(162, 162, 162);
+  font-weight: 500;
+  border: 1px solid rgb(165, 165, 165);
+  margin-right: var(--spacing02);
+}
+
+.editor-button-text:hover {
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+}
+
+.editor-button-text svg {
+  margin-left: var(--spacing02);
 }

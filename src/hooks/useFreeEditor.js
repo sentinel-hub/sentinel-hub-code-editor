@@ -52,18 +52,30 @@ const useFreeEditor = (boxRef, headerRef) => {
     return width;
   }
 
-  const mousemoveHandle = useCallback((event) => {
-    const newWidth = getValidWidth(
-      editorSize.width + event.clientX - mouseOffsetRef.current.x
-    );
-    const newHeight = getValidHeight(
-      editorSize.height + event.clientY - mouseOffsetRef.current.y
-    );
-    setEditorSize({
-      width: newWidth,
-      height: newHeight,
-    });
-  }, [editorSize]);
+  function handleFullscreenClick() {
+    setEditorPosition({ x: 0, y: 0 });
+    setEditorSize({ height: window.innerHeight, width: window.innerWidth });
+  }
+  function handleExitFullscreenClick() {
+    setEditorPosition({ x: 0, y: 0 });
+    setEditorSize({ height: MIN_HEIGHT, width: MIN_WIDTH });
+  }
+
+  const mousemoveHandle = useCallback(
+    (event) => {
+      const newWidth = getValidWidth(
+        editorSize.width + event.clientX - mouseOffsetRef.current.x
+      );
+      const newHeight = getValidHeight(
+        editorSize.height + event.clientY - mouseOffsetRef.current.y
+      );
+      setEditorSize({
+        width: newWidth,
+        height: newHeight,
+      });
+    },
+    [editorSize]
+  );
 
   function handleMouseDown(event) {
     if (isDocked) {
@@ -131,10 +143,12 @@ const useFreeEditor = (boxRef, headerRef) => {
     editorPosition,
     editorSize,
     isDocked,
+    handleExitFullscreenClick,
     handleDockedClick,
     handleMouseDown,
     setEditorPosition,
     handleResizeMouseDown,
+    handleFullscreenClick,
   };
 };
 export default useFreeEditor;
