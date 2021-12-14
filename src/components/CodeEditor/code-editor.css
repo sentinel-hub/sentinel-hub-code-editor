@@ -14,12 +14,22 @@
   height: 100%;
   width: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.code-editor-window {
+.code-editor-docked  {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.monaco-editor { 
+  height: 200px;
+}
+
+.code-editor-window {
+
 }
 
 .code-editor-top-panel {
@@ -40,7 +50,8 @@
 }
 
 .code-editor-wrap {
-  display: flex;
+flex-grow: 1;
+flex-shrink: 0;
 }
 
 .code-editor-left-panel {

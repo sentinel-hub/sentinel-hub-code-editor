@@ -63,7 +63,7 @@ const useFreeEditor = (boxRef, headerRef) => {
       width: newWidth,
       height: newHeight,
     });
-  }, []);
+  }, [editorSize]);
 
   function handleMouseDown(event) {
     if (isDocked) {

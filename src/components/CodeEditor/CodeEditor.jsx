@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { ArrowsExpandIcon, LockClosedIcon } from "@heroicons/react/solid";
 import loader from "@monaco-editor/loader";
-import { JSHINT } from "jshint";
+import JSHINT from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
 import { IoIosResize } from "react-icons/io";
 
@@ -92,7 +92,7 @@ export const CodeEditor = () => {
 
   const checkAndApplyErrors = debounce(function () {
     const code = editorRef.current.getValue();
-    JSHINT(code, JSHINT_CONFIG);
+    JSHINT.JSHINT(code, JSHINT_CONFIG);
     const errors = JSHINT.errors.map((e) => {
       return {
         startLineNumber: e.line,

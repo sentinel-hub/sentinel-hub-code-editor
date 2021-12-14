@@ -1,6 +1,6 @@
 {
-  "name": "test-npm-package2",
-  "version": "1.0.0",
+  "name": "test-package-2-pb",
+  "version": "1.0.2",
   "description": "",
   "files": [
     "dist/*"
@@ -21,6 +21,7 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
     "@heroicons/react": "^1.0.5",
+    "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
