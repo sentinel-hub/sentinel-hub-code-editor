@@ -38,7 +38,7 @@ const MONACO_EDITOR_CONFIG = {
   },
 };
 
-export const EvalscriptEditor = ({ onRunEvalscriptClick }) => {
+export const CodeEditor = ({ onRunEvalscriptClick }) => {
   const editorDOMRef = useRef();
   const editorRef = useRef();
   const monacoRef = useRef();
