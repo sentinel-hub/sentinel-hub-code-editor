@@ -52,8 +52,8 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
     handleMoveMouseDown,
     handleResizeMouseDown,
     handleFullscreenClick,
-    handleExitFullscreenClick,  
-    handleRunEvalscriptClick
+    handleExitFullscreenClick,
+    handleRunEvalscriptClick,
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
@@ -179,17 +179,20 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
         className="code-editor"
         ref={(el) => (monacoEditorDOMRef.current = el)}
       ></div>
-      <div
-        className="code-editor-bottom-panel"
-      >
+      <div className="code-editor-bottom-panel">
         <button
-          onClick={() => {onRunEvalscriptClick(); handleRunEvalscriptClick()}}
+          onClick={() => {
+            onRunEvalscriptClick();
+            handleRunEvalscriptClick();
+          }}
           className="button-primary button-primary-bottom-panel"
         >
           Run Evalscript
         </button>
-        <button         onMouseDown={handleResizeMouseDown}
- className="editor-button editor-button-resize">
+        <button
+          onMouseDown={handleResizeMouseDown}
+          className="editor-button editor-button-resize"
+        >
           <IoIosResize className="icon-resize editor-icon" />
         </button>
       </div>

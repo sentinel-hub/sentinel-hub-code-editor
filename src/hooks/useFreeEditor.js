@@ -138,8 +138,8 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   function handleRunEvalscriptClick() {
-  setEditorSize({height: MIN_HEIGHT, width: MIN_WIDTH})    
-  setEditorPosition({x: 0, y: 0})
+    setEditorSize({ height: MIN_HEIGHT, width: MIN_WIDTH });
+    setEditorPosition({ x: 0, y: 0 });
   }
   useEffect(() => {
     if (isDocked) {
@@ -159,7 +159,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     handleResizeMouseDown,
     handleFullscreenClick,
     handleExitFullscreenClick,
-    handleRunEvalscriptClick
+    handleRunEvalscriptClick,
   };
 };
 export default useFreeEditor;
