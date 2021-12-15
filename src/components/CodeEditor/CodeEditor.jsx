@@ -49,10 +49,11 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
     editorSize,
     isDocked,
     handleDockedClick,
-    handleMouseDown,
+    handleMoveMouseDown,
     handleResizeMouseDown,
     handleFullscreenClick,
-    handleExitFullscreenClick,
+    handleExitFullscreenClick,  
+    handleRunEvalscriptClick
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
@@ -145,7 +146,7 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
       <div
         className="code-editor-top-panel"
         ref={headerEditorRef}
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleMoveMouseDown}
       >
         {isDocked ? (
           <ArrowsExpandIcon
@@ -179,16 +180,16 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
         ref={(el) => (monacoEditorDOMRef.current = el)}
       ></div>
       <div
-        onMouseDown={handleResizeMouseDown}
         className="code-editor-bottom-panel"
       >
         <button
-          onClick={onRunEvalscriptClick}
+          onClick={() => {onRunEvalscriptClick(); handleRunEvalscriptClick()}}
           className="button-primary button-primary-bottom-panel"
         >
           Run Evalscript
         </button>
-        <button className="editor-button editor-button-resize">
+        <button         onMouseDown={handleResizeMouseDown}
+ className="editor-button editor-button-resize">
           <IoIosResize className="icon-resize editor-icon" />
         </button>
       </div>

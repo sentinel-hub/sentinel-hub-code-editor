@@ -6,14 +6,14 @@ const MIN_WIDTH = 600;
 const MIN_HEIGHT = 400;
 
 const useFreeEditor = (boxRef, headerRef) => {
-  const editorOffsetRef = useRef({ x: 0, y: 0 });
-  const mouseOffsetRef = useRef({ x: 0, y: 0 });
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
+  const [isDocked, setIsDocked] = useState(true);
   const [editorSize, setEditorSize] = useState({
     width: MIN_WIDTH,
     height: MIN_HEIGHT,
   });
-  const [isDocked, setIsDocked] = useState(true);
+  const editorOffsetRef = useRef({ x: 0, y: 0 });
+  const mouseOffsetRef = useRef({ x: 0, y: 0 });
 
   const handleDockedClick = useCallback(() => {
     setIsDocked((prev) => !prev);
@@ -60,6 +60,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     setEditorPosition({ x: 0, y: 0 });
     setEditorSize({ height: window.innerHeight, width: window.innerWidth });
   }
+
   function handleExitFullscreenClick() {
     setEditorPosition({ x: 0, y: 0 });
     setEditorSize({ height: MIN_HEIGHT, width: MIN_WIDTH });
@@ -81,7 +82,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     [editorSize]
   );
 
-  function handleMouseDown(event) {
+  function handleMoveMouseDown(event) {
     if (isDocked) {
       return;
     }
@@ -136,6 +137,10 @@ const useFreeEditor = (boxRef, headerRef) => {
     return window.innerWidth - editorDimensions.width;
   }
 
+  function handleRunEvalscriptClick() {
+  setEditorSize({height: MIN_HEIGHT, width: MIN_WIDTH})    
+  setEditorPosition({x: 0, y: 0})
+  }
   useEffect(() => {
     if (isDocked) {
       headerRef.current.classList.remove(HEADER_FLOATED_CLASSNAME);
@@ -145,15 +150,16 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, [isDocked]);
 
   return {
-    editorPosition,
     editorSize,
-    isDocked,
-    handleExitFullscreenClick,
-    handleDockedClick,
-    handleMouseDown,
+    editorPosition,
     setEditorPosition,
+    isDocked,
+    handleDockedClick,
+    handleMoveMouseDown,
     handleResizeMouseDown,
     handleFullscreenClick,
+    handleExitFullscreenClick,
+    handleRunEvalscriptClick
   };
 };
 export default useFreeEditor;
