@@ -75,10 +75,6 @@
   cursor: pointer;
 }
 
-.code-editor-floating {
-  position: absolute;
-}
-
 .code-editor-header-floating {
   cursor: move;
 }

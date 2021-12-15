@@ -39,11 +39,11 @@ const MONACO_EDITOR_CONFIG = {
 };
 
 export const CodeEditor = ({ onRunEvalscriptClick }) => {
-  const editorDOMRef = useRef();
+  const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
-  const codeEditorRef = useRef();
+  const editorWindowRef = useRef();
   const {
     editorPosition,
     editorSize,
@@ -53,12 +53,12 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
     handleResizeMouseDown,
     handleFullscreenClick,
     handleExitFullscreenClick,
-  } = useFreeEditor(codeEditorRef, headerEditorRef);
+  } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
     loader.init().then((monaco) => {
       const editor = monaco.editor.create(
-        editorDOMRef.current,
+        monacoEditorDOMRef.current,
         MONACO_EDITOR_CONFIG
       );
 
@@ -117,7 +117,7 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
 
   if (isDocked) {
     return (
-      <div ref={codeEditorRef} className="code-editor-window-docked">
+      <div ref={editorWindowRef} className="code-editor-window-docked">
         <div className="code-editor-top-panel" ref={headerEditorRef}>
           <button className="editor-button" onClick={handleDockedClick}>
             <BiExpand className="code-editor-expand-icon" />
@@ -126,7 +126,7 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
         <div
           style={{ height: "100%" }}
           className="code-editor-docked"
-          ref={(el) => (editorDOMRef.current = el)}
+          ref={(el) => (monacoEditorDOMRef.current = el)}
         ></div>
       </div>
     );
@@ -137,8 +137,9 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
       style={{
         transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
         ...editorSize,
+        position: "absolute",
       }}
-      ref={codeEditorRef}
+      ref={editorWindowRef}
       className="code-editor-window"
     >
       <div
@@ -175,7 +176,7 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
       <div
         style={{ height: editorSize.height - 96 }}
         className="code-editor"
-        ref={(el) => (editorDOMRef.current = el)}
+        ref={(el) => (monacoEditorDOMRef.current = el)}
       ></div>
       <div
         onMouseDown={handleResizeMouseDown}
