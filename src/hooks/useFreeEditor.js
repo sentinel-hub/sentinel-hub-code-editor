@@ -26,9 +26,13 @@ const useFreeEditor = (boxRef, headerRef) => {
   function handleResizeMouseDown(event) {
     mouseOffsetRef.current = { x: event.clientX, y: event.clientY };
     window.addEventListener("mousemove", mousemoveHandle);
-    window.addEventListener("mouseup", () => {
-      window.removeEventListener("mousemove", mousemoveHandle);
-    }, {once: true});
+    window.addEventListener(
+      "mouseup",
+      () => {
+        window.removeEventListener("mousemove", mousemoveHandle);
+      },
+      { once: true }
+    );
   }
 
   function getValidHeight(height) {
@@ -87,10 +91,13 @@ const useFreeEditor = (boxRef, headerRef) => {
     };
 
     window.addEventListener("mousemove", mouseMoveHandler);
-    window.addEventListener("mouseup", () => {
-      window.removeEventListener("mousemove", mouseMoveHandler);
-
-    }, {once: true})
+    window.addEventListener(
+      "mouseup",
+      () => {
+        window.removeEventListener("mousemove", mouseMoveHandler);
+      },
+      { once: true }
+    );
   }
 
   const mouseMoveHandler = useCallback((e) => {
@@ -136,7 +143,6 @@ const useFreeEditor = (boxRef, headerRef) => {
       headerRef.current.classList.add(HEADER_FLOATED_CLASSNAME);
     }
   }, [isDocked]);
-
 
   return {
     editorPosition,
