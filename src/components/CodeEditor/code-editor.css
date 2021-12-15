@@ -93,7 +93,6 @@
 
 .icon-resize {
   transform: rotate(90deg);
-  cursor: nwse-resize;
 }
 
 .editor-button {
@@ -117,7 +116,7 @@
 
 .button-primary {
   padding: var(--spacing02);
-  background: #06a77d;
+  background: #007acc;
   font-weight: 500;
   color: white;
   border: none;
@@ -125,7 +124,7 @@
 
 .button-primary:hover {
   cursor: pointer;
-  background: #12917c;
+  background: #006eb8;
 }
 
 .button-primary-bottom-panel {
@@ -158,4 +157,8 @@
 
 .editor-button-text svg {
   margin-left: var(--spacing02);
+}
+
+.editor-button-resize:hover {
+  cursor: nwse-resize;
 }

@@ -8,6 +8,9 @@ export default function Wrapper() {
       className="panel"
     >
       <EvalscriptEditor onRunEvalscriptClick={() => console.log("running")} />
+      <h1 style={{ color: "white" }}>
+        Wrapper to simulate parent div in apps like EOB and RB
+      </h1>
     </div>
   );
 }

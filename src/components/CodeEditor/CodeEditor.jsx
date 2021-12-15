@@ -187,7 +187,7 @@ export const EvalscriptEditor = ({ onRunEvalscriptClick }) => {
         >
           Run Evalscript
         </button>
-        <button className="editor-button">
+        <button className="editor-button editor-button-resize">
           <IoIosResize className="icon-resize editor-icon" />
         </button>
       </div>
