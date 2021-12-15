@@ -28,7 +28,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     window.addEventListener("mousemove", mousemoveHandle);
     window.addEventListener("mouseup", () => {
       window.removeEventListener("mousemove", mousemoveHandle);
-    });
+    }, {once: true});
   }
 
   function getValidHeight(height) {
@@ -87,12 +87,10 @@ const useFreeEditor = (boxRef, headerRef) => {
     };
 
     window.addEventListener("mousemove", mouseMoveHandler);
-    window.addEventListener("mouseup", mouseUpHandler);
-  }
+    window.addEventListener("mouseup", () => {
+      window.removeEventListener("mousemove", mouseMoveHandler);
 
-  function mouseUpHandler() {
-    window.removeEventListener("mousemove", mouseMoveHandler);
-    window.removeEventListener("mouseup", mouseUpHandler);
+    }, {once: true})
   }
 
   const mouseMoveHandler = useCallback((e) => {
@@ -138,6 +136,7 @@ const useFreeEditor = (boxRef, headerRef) => {
       headerRef.current.classList.add(HEADER_FLOATED_CLASSNAME);
     }
   }, [isDocked]);
+
 
   return {
     editorPosition,
