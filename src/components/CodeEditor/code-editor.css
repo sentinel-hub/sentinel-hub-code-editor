@@ -19,19 +19,6 @@
 .code-editor-window-docked {
   height: 100%;
   width: 100%;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.code-editor-docked {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.monaco-editor {
-  height: 200px;
 }
 
 .code-editor-window {
@@ -55,11 +42,6 @@
   padding: 0 0 0 var(--spacing02);
 }
 
-.code-editor-wrap {
-  flex-grow: 1;
-  flex-shrink: 0;
-}
-
 .code-editor-left-panel {
   width: var(--spacing03);
 }
@@ -77,9 +59,6 @@
 
 .code-editor-header-floating {
   cursor: move;
-}
-
-.code-editor-resize-area {
 }
 
 .editor-icon {
@@ -125,9 +104,6 @@
 
 .button-primary-bottom-panel {
   margin-right: var(--spacing02);
-}
-
-.button-primary:focus {
 }
 
 .editor-button-resize {
