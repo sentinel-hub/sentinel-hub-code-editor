@@ -91,7 +91,7 @@
 
 .button-primary {
   padding: var(--spacing02);
-  background: #007acc;
+  background: var(--colorPrimary500);
   font-weight: 500;
   color: white;
   border: none;
@@ -99,7 +99,7 @@
 
 .button-primary:hover {
   cursor: pointer;
-  background: #006eb8;
+  background: var(--colorPrimary600);
 }
 
 .button-primary-bottom-panel {
