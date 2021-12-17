@@ -4,9 +4,10 @@ import loader from "@monaco-editor/loader";
 import { JSHINT } from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
 import { IoIosResize } from "react-icons/io";
-import { BiFullscreen, BiExitFullscreen, BiExpand } from "react-icons/bi";
+import { BiFullscreen, BiExpand } from "react-icons/bi";
 import "./code-editor.css";
 import "./variables.css";
+import ReactDOM from "react-dom";
 
 const evalscript = `//VERSION=3
 function setup() {
@@ -38,7 +39,7 @@ const MONACO_EDITOR_CONFIG = {
   },
 };
 
-export const CodeEditor = ({ onRunEvalscriptClick }) => {
+export const CodeEditor = ({ onRunEvalscriptClick, portalId }) => {
   const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
   const monacoRef = useRef();
@@ -52,8 +53,6 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
     handleMoveMouseDown,
     handleResizeMouseDown,
     handleFullscreenClick,
-    handleExitFullscreenClick,
-    handleRunEvalscriptClick,
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
         checkAndApplyErrors();
       });
     });
-  }, []);
+  }, [isDocked]);
 
   const debounce = useCallback((func, wait, immediate) => {
     var timeout;
@@ -127,18 +126,18 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
         <div
           style={{ height: "100%" }}
           className="code-editor-docked"
-          ref={(el) => (monacoEditorDOMRef.current = el)}
+          ref={monacoEditorDOMRef}
         ></div>
       </div>
     );
   }
 
-  return (
+  return ReactDOM.createPortal(
     <div
       style={{
         transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
         ...editorSize,
-        position: "absolute",
+        position: "fixed",
       }}
       ref={editorWindowRef}
       className="code-editor-window"
@@ -155,19 +154,9 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
           />
         ) : (
           <>
-            {window.innerWidth === editorSize.width &&
-            window.innerHeight === editorSize.height ? (
-              <button
-                className="editor-button"
-                onClick={handleExitFullscreenClick}
-              >
-                <BiExitFullscreen className="editor-icon" />
-              </button>
-            ) : (
-              <button className="editor-button" onClick={handleFullscreenClick}>
-                <BiFullscreen className="editor-icon" />
-              </button>
-            )}
+            <button className="editor-button" onClick={handleFullscreenClick}>
+              <BiFullscreen className="editor-icon" />
+            </button>
             <button onClick={handleDockedClick} className="editor-button">
               <XIcon className="editor-icon" />
             </button>
@@ -177,13 +166,12 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
       <div
         style={{ height: editorSize.height - 96 }}
         className="code-editor"
-        ref={(el) => (monacoEditorDOMRef.current = el)}
+        ref={monacoEditorDOMRef}
       ></div>
       <div className="code-editor-bottom-panel">
         <button
           onClick={() => {
-            onRunEvalscriptClick();
-            handleRunEvalscriptClick();
+            onRunEvalscriptClick(editorRef.current.getValue());
           }}
           className="button-primary button-primary-bottom-panel"
         >
@@ -196,6 +184,7 @@ export const CodeEditor = ({ onRunEvalscriptClick }) => {
           <IoIosResize className="icon-resize editor-icon" />
         </button>
       </div>
-    </div>
+    </div>,
+    document.querySelector(portalId)
   );
 };

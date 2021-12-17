@@ -14,7 +14,6 @@ const useFreeEditor = (boxRef, headerRef) => {
   });
   const editorOffsetRef = useRef({ x: 0, y: 0 });
   const mouseOffsetRef = useRef({ x: 0, y: 0 });
-
   const handleDockedClick = useCallback(() => {
     setIsDocked((prev) => !prev);
     if (isDocked) {
@@ -59,11 +58,6 @@ const useFreeEditor = (boxRef, headerRef) => {
   function handleFullscreenClick() {
     setEditorPosition({ x: 0, y: 0 });
     setEditorSize({ height: window.innerHeight, width: window.innerWidth });
-  }
-
-  function handleExitFullscreenClick() {
-    setEditorPosition({ x: 0, y: 0 });
-    setEditorSize({ height: MIN_HEIGHT, width: MIN_WIDTH });
   }
 
   const mousemoveHandle = useCallback(
@@ -137,10 +131,6 @@ const useFreeEditor = (boxRef, headerRef) => {
     return window.innerWidth - editorDimensions.width;
   }
 
-  function handleRunEvalscriptClick() {
-    setEditorSize({ height: MIN_HEIGHT, width: MIN_WIDTH });
-    setEditorPosition({ x: 0, y: 0 });
-  }
   useEffect(() => {
     if (isDocked) {
       headerRef.current.classList.remove(HEADER_FLOATED_CLASSNAME);
@@ -158,8 +148,6 @@ const useFreeEditor = (boxRef, headerRef) => {
     handleMoveMouseDown,
     handleResizeMouseDown,
     handleFullscreenClick,
-    handleExitFullscreenClick,
-    handleRunEvalscriptClick,
   };
 };
 export default useFreeEditor;

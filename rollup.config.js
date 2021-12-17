@@ -22,8 +22,7 @@ export default [
       postcss({
         plugins: [],
         minimize: true,
-        modules: true,
-        extract: path.resolve('dist/code-editor.css'),
+        extract: false, 
       }),
       babel({
         exclude: "node_modules/**",
