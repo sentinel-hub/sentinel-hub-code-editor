@@ -8,7 +8,7 @@ import { BiFullscreen, BiExpand } from "react-icons/bi";
 import ReactDOM from "react-dom";
 import React from "react";
 import "./code-editor.css";
-import ThemeProvider from './ThemeProvider'
+import ThemeProvider from "./ThemeProvider";
 
 const evalscript = `//VERSION=3
 function setup() {
