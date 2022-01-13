@@ -20,10 +20,7 @@ export default function Wrapper() {
       className="panel"
     >
       <div style={{ height: 400 }}>
-        <CodeEditor
-          portalId={"#select-root"}
-          onRunEvalscriptClick={() => console.log("running")}
-        />
+        <CodeEditor portalId="select-root" />
         <h1 style={{ color: "white" }}>
           Wrapper to simulate parent div in apps like EOB and RB
         </h1>

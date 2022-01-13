@@ -5,9 +5,10 @@ import { JSHINT } from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
 import { IoIosResize } from "react-icons/io";
 import { BiFullscreen, BiExpand } from "react-icons/bi";
-import "./code-editor.css";
-import "./variables.css";
 import ReactDOM from "react-dom";
+import React from "react";
+import "./code-editor.css";
+import ThemeProvider from './ThemeProvider'
 
 const evalscript = `//VERSION=3
 function setup() {
@@ -27,7 +28,7 @@ const JSHINT_CONFIG = {
   esversion: 6,
 };
 
-const MONACO_EDITOR_CONFIG = {
+let MONACO_EDITOR_CONFIG = {
   value: evalscript,
   language: "javascript",
   theme: "vs-dark",
@@ -39,7 +40,11 @@ const MONACO_EDITOR_CONFIG = {
   },
 };
 
-export const CodeEditor = ({ onRunEvalscriptClick, portalId }) => {
+export const CodeEditor = ({
+  onRunEvalscriptClick,
+  portalId,
+  editorTheme = "dark",
+}) => {
   const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
   const monacoRef = useRef();
@@ -56,6 +61,11 @@ export const CodeEditor = ({ onRunEvalscriptClick, portalId }) => {
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
+    console.log("this effect is running");
+    if (editorTheme === "light") {
+      MONACO_EDITOR_CONFIG = { ...MONACO_EDITOR_CONFIG, theme: "vs" };
+    }
+
     loader.init().then((monaco) => {
       const editor = monaco.editor.create(
         monacoEditorDOMRef.current,
@@ -115,76 +125,81 @@ export const CodeEditor = ({ onRunEvalscriptClick, portalId }) => {
     );
   }, 500);
 
+  console.log(portalId, editorTheme);
   if (isDocked) {
     return (
-      <div ref={editorWindowRef} className="code-editor-window-docked">
-        <div className="code-editor-top-panel" ref={headerEditorRef}>
-          <button className="editor-button" onClick={handleDockedClick}>
-            <BiExpand className="code-editor-expand-icon" />
-          </button>
+      <ThemeProvider theme={editorTheme}>
+        <div ref={editorWindowRef} className="code-editor-window-docked">
+          <div className="code-editor-top-panel" ref={headerEditorRef}>
+            <button className="editor-button" onClick={handleDockedClick}>
+              <BiExpand className="code-editor-expand-icon editor-icon" />
+            </button>
+          </div>
+          <div
+            style={{ height: "100%" }}
+            className={`code-editor-docked`}
+            ref={monacoEditorDOMRef}
+          ></div>
         </div>
-        <div
-          style={{ height: "100%" }}
-          className="code-editor-docked"
-          ref={monacoEditorDOMRef}
-        ></div>
-      </div>
+      </ThemeProvider>
     );
   }
 
   return ReactDOM.createPortal(
-    <div
-      style={{
-        transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
-        ...editorSize,
-        position: "fixed",
-      }}
-      ref={editorWindowRef}
-      className="code-editor-window"
-    >
+    <ThemeProvider theme={editorTheme}>
       <div
-        className="code-editor-top-panel"
-        ref={headerEditorRef}
-        onMouseDown={handleMoveMouseDown}
+        style={{
+          transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
+          ...editorSize,
+          position: "fixed",
+        }}
+        ref={editorWindowRef}
+        className="code-editor-window"
       >
-        {isDocked ? (
-          <ArrowsExpandIcon
-            className="code-editor-expand-icon"
-            onClick={handleDockedClick}
-          />
-        ) : (
-          <>
-            <button className="editor-button" onClick={handleFullscreenClick}>
-              <BiFullscreen className="editor-icon" />
-            </button>
-            <button onClick={handleDockedClick} className="editor-button">
-              <XIcon className="editor-icon" />
-            </button>
-          </>
-        )}
-      </div>
-      <div
-        style={{ height: editorSize.height - 96 }}
-        className="code-editor"
-        ref={monacoEditorDOMRef}
-      ></div>
-      <div className="code-editor-bottom-panel">
-        <button
-          onClick={() => {
-            onRunEvalscriptClick(editorRef.current.getValue());
-          }}
-          className="button-primary button-primary-bottom-panel"
+        <div
+          className="code-editor-top-panel"
+          ref={headerEditorRef}
+          onMouseDown={handleMoveMouseDown}
         >
-          Run Evalscript
-        </button>
-        <button
-          onMouseDown={handleResizeMouseDown}
-          className="editor-button editor-button-resize"
-        >
-          <IoIosResize className="icon-resize editor-icon" />
-        </button>
+          {isDocked ? (
+            <ArrowsExpandIcon
+              className="code-editor-expand-icon"
+              onClick={handleDockedClick}
+            />
+          ) : (
+            <>
+              <button className="editor-button" onClick={handleFullscreenClick}>
+                <BiFullscreen className="editor-icon" />
+              </button>
+              <button onClick={handleDockedClick} className="editor-button">
+                <XIcon className="editor-icon" />
+              </button>
+            </>
+          )}
+        </div>
+        <div
+          style={{ height: editorSize.height - 96 }}
+          className="code-editor"
+          ref={monacoEditorDOMRef}
+        ></div>
+        <div className="code-editor-bottom-panel">
+          <button
+            onClick={() => {
+              onRunEvalscriptClick(editorRef.current.getValue());
+            }}
+            className="button-primary button-primary-bottom-panel"
+          >
+            Run Evalscript
+          </button>
+          <button
+            onMouseDown={handleResizeMouseDown}
+            className="editor-button editor-button-resize"
+          >
+            <IoIosResize className="icon-resize editor-icon" />
+          </button>
+        </div>
       </div>
-    </div>,
-    document.querySelector(portalId)
+    </ThemeProvider>,
+    document.getElementById(portalId)
   );
 };
