@@ -11,12 +11,12 @@ const extensions = ['.jsx', '.js']
 export default [
   {
     input: "./src/index.js",
-    inlineDynamicImports: true,
     output: [
       {
         file: "dist/index.es.js",
         format: "es",
         exports: "named",
+
       },
     ],
     plugins: [
@@ -24,6 +24,7 @@ export default [
         plugins: [],
         minimize: true,
         extract: false, 
+        inject: true,
       }),
       babel({
         exclude: "node_modules/**",
