@@ -16,7 +16,7 @@ function setup() {
     input: ["B01","B02","B03", "dataMask"],
     output: { bands: 4 }
   };
-}
+} 
 
 function evaluatePixel(sample) {
   

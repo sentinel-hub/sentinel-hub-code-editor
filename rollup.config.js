@@ -11,6 +11,7 @@ const extensions = ['.jsx', '.js']
 export default [
   {
     input: "./src/index.js",
+    inlineDynamicImports: true,
     output: [
       {
         file: "dist/index.es.js",
