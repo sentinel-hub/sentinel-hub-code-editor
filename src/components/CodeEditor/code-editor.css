@@ -4,40 +4,52 @@
   box-sizing: border-box;
 }
 
-.code-editor {
-  max-height: 1000px;
-  height: 400px;
+.code-editor-window .editor-button,
+.code-editor-window-docked .editor-button {
+  border: none;
+  background: none;
+}
+
+.code-editor-docked {
   width: 100%;
-  flex-grow: 1;
+  height: 100%;
+}
+
+.code-editor-dark {
+  background: var(--colorBg500);
+}
+
+.code-editor-light {
+  background: var(--colorBgLight500);
+}
+
+.code-editor-window-docked {
+  height: 100%;
+  width: 100%;
+  position: static;
+  transform: translate(0px, 0px);
+}
+
+.code-editor-window {
+  box-shadow: 0px 0px 55px rgba(0, 0, 0, 0.25);
+  z-index: 9999999999999999;
 }
 
 .code-editor-top-panel {
   height: var(--spacing07);
-  padding: 0 var(--spacing03);
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   background: var(--colorBg500);
 }
 
 .code-editor-bottom-panel {
   height: var(--spacing07);
-  padding: 0 var(--spacing03);
   display: flex;
-  justify-content: flex-end;
-  background: var(--colorBg500);
-}
-
-.code-editor-wrap {
-  display: flex;
-}
-
-.code-editor-left-panel {
-  width: var(--spacing03);
-}
-
-.code-editor-icon {
-  color: #e5e5e5;
-  width: var(--fontSize02);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 var(--spacing02);
+  background: var(--colorBg600);
 }
 
 .code-editor-expand-icon {
@@ -46,10 +58,76 @@
   cursor: pointer;
 }
 
-.code-editor-floating {
-  position: absolute;
-}
-
 .code-editor-header-floating {
   cursor: move;
+}
+
+.editor-icon {
+  color: var(--colorUI500);
+  font-size: var(--fontSize02);
+}
+
+.icon-resize {
+  transform: rotate(90deg);
+}
+
+.editor-button {
+  height: 100%;
+  width: var(--spacing05);
+  padding: 0;
+  margin: 0;
+}
+.editor-button:hover {
+  background: var(--colorBg600);
+}
+
+.editor-button svg {
+  width: 20px;
+  font-size: 20px;
+}
+
+.button-primary {
+  padding: var(--spacing02);
+  background: var(--colorPrimary500);
+  font-weight: 500;
+  color: white;
+  border: none;
+}
+
+.button-primary:hover {
+  cursor: pointer;
+  background: var(--colorPrimary600);
+}
+
+.button-primary-bottom-panel {
+  margin-right: var(--spacing02);
+}
+
+.editor-button-resize {
+  height: 100%;
+}
+
+.editor-button-text {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing02);
+  background: none;
+  color: rgb(162, 162, 162);
+  font-weight: 500;
+  border: 1px solid rgb(165, 165, 165);
+  margin-right: var(--spacing02);
+}
+
+.editor-button-text:hover {
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+}
+
+.editor-button-text svg {
+  margin-left: var(--spacing02);
+}
+
+.editor-button-resize:hover {
+  cursor: nwse-resize;
 }

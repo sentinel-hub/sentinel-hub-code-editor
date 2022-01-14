@@ -4,12 +4,14 @@ import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import { terser } from "rollup-plugin-terser";
+import commonjs from '@rollup/plugin-commonjs'
 
 const extensions = ['.jsx', '.js']
 
 export default [
   {
     input: "./src/index.js",
+    inlineDynamicImports: true,
     output: [
       {
         file: "dist/index.es.js",
@@ -21,8 +23,7 @@ export default [
       postcss({
         plugins: [],
         minimize: true,
-        modules: false,
-        extract: path.resolve('dist/code-editor.css'),
+        extract: false, 
       }),
       babel({
         exclude: "node_modules/**",
@@ -32,6 +33,7 @@ export default [
       external(),
       resolve({extensions}),
       terser(),
+      commonjs()
     ],
   },
 ];
