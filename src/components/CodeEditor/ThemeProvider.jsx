@@ -1,13 +1,10 @@
 import React from "react";
-import { Suspense } from "react";
-const ThemeLight = React.lazy(() => import("./ThemeLight"));
-const ThemeDark = React.lazy(() => import("./ThemeDark"));
+import "./ThemeDark";
+import "./ThemeLight";
 export default function ThemeProvider({ theme, children }) {
   return (
-    <Suspense fallback={() => null}>
-      {theme === "light" && <ThemeLight />}
-      {theme === "dark" && <ThemeDark />}
+    <div className={theme === "light" ? "theme-light" : "theme-dark"}>
       {children}
-    </Suspense>
+    </div>
   );
 }

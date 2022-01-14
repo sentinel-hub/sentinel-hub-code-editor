@@ -1,4 +1,4 @@
-:root {
+.theme-light {
   --spacing01: 0.25rem;
   --spacing02: 0.5rem;
   --spacing03: 1rem;
@@ -20,4 +20,6 @@
 
   --colorPrimary500: #007acc;
   --colorPrimary600: #006eb8;
+
+  height: 100%;
 }

@@ -43,7 +43,7 @@ let MONACO_EDITOR_CONFIG = {
 export const CodeEditor = ({
   onRunEvalscriptClick,
   portalId,
-  editorTheme = "dark",
+  editorTheme = "light",
 }) => {
   const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
@@ -125,7 +125,6 @@ export const CodeEditor = ({
     );
   }, 500);
 
-  console.log(portalId, editorTheme);
   if (isDocked) {
     return (
       <ThemeProvider theme={editorTheme}>
