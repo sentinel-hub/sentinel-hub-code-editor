@@ -1,13 +1,13 @@
 {
   "name": "test-package-2-pb",
-  "version": "1.0.28" ,
+  "version": "1.0.32",
   "description": "",
   "files": [
     "dist/*"
   ],
   "main": "index.js",
   "module": "dist/index.es.js",
-  "private": false, 
+  "private": false,
   "scripts": {
     "prettier": "prettier --write src/**/*.{js,jsx} src/**/*.css",
     "lint": "eslint --max-warnings 0 --ext .jsx --ext .js 'src/components'",
@@ -41,7 +41,8 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.1",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "styled-components": "^5.3.3"
   },
   "peerDependencies": {
     "react": ">=16.8.3",
