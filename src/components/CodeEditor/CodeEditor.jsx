@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useRef } from "react";
-import { ArrowsExpandIcon, XIcon } from "@heroicons/react/solid";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowsExpandIcon } from "@heroicons/react/solid";
 import loader from "@monaco-editor/loader";
 import { JSHINT } from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
-import { IoIosResize } from "react-icons/io";
 import { BiFullscreen, BiExpand } from "react-icons/bi";
 import ReactDOM from "react-dom";
 import React from "react";
 import "./code-editor.css";
-import ThemeProvider from "./ThemeProvider";
+import styled, { ThemeProvider } from "styled-components";
+import { variables } from "./variables.js";
+import { themeDark } from "./themeDark.js";
+import { themeLight } from "./themeLight";
+import { CgArrowsExpandLeft } from "react-icons/cg";
+import { MdOutlineClose } from "react-icons/md";
+import Switch from "./Switch";
 
 const evalscript = `//VERSION=3
 function setup() {
@@ -31,7 +36,6 @@ const JSHINT_CONFIG = {
 let MONACO_EDITOR_CONFIG = {
   value: evalscript,
   language: "javascript",
-  theme: "vs-dark",
   wordWrap: true,
   fontSize: 12,
   automaticLayout: true,
@@ -39,6 +43,85 @@ let MONACO_EDITOR_CONFIG = {
     enabled: false,
   },
 };
+
+const CodeEditorTopPanel = styled.div`
+  height: ${({ theme }) => theme.spacing07};
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: ${({ theme }) => theme.colorBg500};
+`;
+
+const CodeEditorBottomPanel = styled.div`
+  height: ${({ theme }) => theme.spacing07};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 ${({ theme }) => theme.spacing02};
+  background: ${({ theme }) => theme.colorBg600};
+`;
+
+const ButtonPrimary = styled.button`
+  padding: ${({ theme }) => theme.spacing02};
+  background: ${({ theme }) => theme.colorPrimary500};
+  font-weight: 500;
+  color: white;
+  border: none;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const CodeEditorIcon = styled.button`
+  height: 100%;
+  width: ${({ theme }) => theme.spacing05};
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  font-size: 20px;
+  height: 100%;
+  color: ${({ theme }) => theme.colorUI500};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :hover {
+    background: ${({ theme }) => theme.colorBg600};
+    cursor: pointer;
+  }
+`;
+
+const CodeEditorWindow = styled.div`
+  box-shadow: 0px 0px 55px rgba(0, 0, 0, 0.25);
+  z-index: 9999999999999999;
+  .code-editor-top-panel-drag {
+    :hover {
+      cursor: grab;
+    }
+    :active {
+      cursor: grabbing;
+    }
+  }
+  .editor-button-resize {
+    cursor: nwse-resize;
+    z-index: 0;
+    :hover {
+      background: ${({ theme }) => theme.colorBg600};
+    }
+  }
+`;
+
+const CodeEditorWindowDocked = styled.div`
+  height: 100%;
+  width: 100%;
+  position: static;
+  transform: translate(0px, 0px);
+  .code-editor-docked {
+    height: 100%;
+    width: 100%;
+  }
+`;
 
 export const CodeEditor = ({
   onRunEvalscriptClick,
@@ -50,6 +133,9 @@ export const CodeEditor = ({
   const monacoRef = useRef();
   const headerEditorRef = useRef();
   const editorWindowRef = useRef();
+  const [isDarkTheme, setIsDarkTheme] = useState(
+    editorTheme === "dark" ? true : false
+  );
   const {
     editorPosition,
     editorSize,
@@ -61,16 +147,11 @@ export const CodeEditor = ({
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
-    console.log("this effect is running");
-    if (editorTheme === "light") {
-      MONACO_EDITOR_CONFIG = { ...MONACO_EDITOR_CONFIG, theme: "vs" };
-    }
-
     loader.init().then((monaco) => {
-      const editor = monaco.editor.create(
-        monacoEditorDOMRef.current,
-        MONACO_EDITOR_CONFIG
-      );
+      const editor = monaco.editor.create(monacoEditorDOMRef.current, {
+        ...MONACO_EDITOR_CONFIG,
+        theme: isDarkTheme ? "vs-dark" : "vs",
+      });
 
       monacoRef.current = monaco;
       editorRef.current = editor;
@@ -80,6 +161,17 @@ export const CodeEditor = ({
       });
     });
   }, [isDocked]);
+
+  useEffect(() => {
+    if (monacoRef.current) {
+      if (isDarkTheme) {
+        monacoRef.current.editor.setTheme("vs-dark");
+      } else {
+        monacoRef.current.editor.setTheme("vs");
+        monacoRef.current.editor.setFontSize;
+      }
+    }
+  }, [isDarkTheme]);
 
   const debounce = useCallback((func, wait, immediate) => {
     var timeout;
@@ -125,29 +217,48 @@ export const CodeEditor = ({
     );
   }, 500);
 
-  console.log(portalId, editorTheme);
+  function toggleTheme() {
+    setIsDarkTheme((prev) => !prev);
+  }
+
   if (isDocked) {
     return (
-      <ThemeProvider theme={editorTheme}>
-        <div ref={editorWindowRef} className="code-editor-window-docked">
-          <div className="code-editor-top-panel" ref={headerEditorRef}>
-            <button className="editor-button" onClick={handleDockedClick}>
+      <ThemeProvider
+        theme={
+          isDarkTheme
+            ? { ...variables, ...themeDark }
+            : { ...variables, ...themeLight }
+        }
+      >
+        <CodeEditorWindowDocked
+          ref={editorWindowRef}
+          className="code-editor-window-docked"
+        >
+          <CodeEditorTopPanel ref={headerEditorRef}>
+            <Switch checked={isDarkTheme === true} onChange={toggleTheme} />
+            <CodeEditorIcon onClick={handleDockedClick}>
               <BiExpand className="code-editor-expand-icon editor-icon" />
-            </button>
-          </div>
+            </CodeEditorIcon>
+          </CodeEditorTopPanel>
           <div
             style={{ height: "100%" }}
             className={`code-editor-docked`}
             ref={monacoEditorDOMRef}
           ></div>
-        </div>
+        </CodeEditorWindowDocked>
       </ThemeProvider>
     );
   }
 
   return ReactDOM.createPortal(
-    <ThemeProvider theme={editorTheme}>
-      <div
+    <ThemeProvider
+      theme={
+        isDarkTheme
+          ? { ...variables, ...themeDark }
+          : { ...variables, ...themeLight }
+      }
+    >
+      <CodeEditorWindow
         style={{
           transform: `translate(${editorPosition.x}px, ${editorPosition.y}px)`,
           ...editorSize,
@@ -156,10 +267,10 @@ export const CodeEditor = ({
         ref={editorWindowRef}
         className="code-editor-window"
       >
-        <div
-          className="code-editor-top-panel"
+        <CodeEditorTopPanel
           ref={headerEditorRef}
           onMouseDown={handleMoveMouseDown}
+          className="code-editor-top-panel-drag"
         >
           {isDocked ? (
             <ArrowsExpandIcon
@@ -168,37 +279,38 @@ export const CodeEditor = ({
             />
           ) : (
             <>
-              <button className="editor-button" onClick={handleFullscreenClick}>
-                <BiFullscreen className="editor-icon" />
-              </button>
-              <button onClick={handleDockedClick} className="editor-button">
-                <XIcon className="editor-icon" />
-              </button>
+              <Switch onChange={toggleTheme} checked={isDarkTheme === true} />
+              <CodeEditorIcon onClick={handleFullscreenClick}>
+                <BiFullscreen />
+              </CodeEditorIcon>
+              <CodeEditorIcon onClick={handleDockedClick}>
+                <MdOutlineClose />
+              </CodeEditorIcon>
             </>
           )}
-        </div>
+        </CodeEditorTopPanel>
         <div
           style={{ height: editorSize.height - 96 }}
           className="code-editor"
           ref={monacoEditorDOMRef}
         ></div>
-        <div className="code-editor-bottom-panel">
-          <button
+        <CodeEditorBottomPanel>
+          <ButtonPrimary
             onClick={() => {
               onRunEvalscriptClick(editorRef.current.getValue());
             }}
             className="button-primary button-primary-bottom-panel"
           >
             Run Evalscript
-          </button>
-          <button
+          </ButtonPrimary>
+          <CodeEditorIcon
             onMouseDown={handleResizeMouseDown}
-            className="editor-button editor-button-resize"
+            className="editor-button-resize"
           >
-            <IoIosResize className="icon-resize editor-icon" />
-          </button>
-        </div>
-      </div>
+            <CgArrowsExpandLeft className="icon-resize editor-icon" />
+          </CodeEditorIcon>
+        </CodeEditorBottomPanel>
+      </CodeEditorWindow>
     </ThemeProvider>,
     document.getElementById(portalId)
   );
