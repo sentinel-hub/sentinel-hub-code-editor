@@ -12,9 +12,8 @@ import { variables } from "./variables.js";
 import { themeDark } from "./themeDark.js";
 import { themeLight } from "./themeLight";
 import { CgArrowsExpandLeft } from "react-icons/cg";
-import { MdOutlineClose, MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineClose } from "react-icons/md";
 import Switch from "./Switch";
-import { BsLightningCharge } from "react-icons/bs";
 
 const evalscript = `//VERSION=3
 function setup() {

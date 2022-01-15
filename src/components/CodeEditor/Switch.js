@@ -1,6 +1,5 @@
 import React from 'react';
-import { BsLightningCharge } from 'react-icons/bs';
-import { MdOutlineDarkMode } from 'react-icons/md';
+import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import styled from 'styled-components';
 
 
@@ -77,7 +76,7 @@ export default function Switch({ checked, onChange }) {
           className={`switch-button`}
         ></div>
       </SwitchWrap>
-      <BsLightningCharge className="switch-icon switch-icon-right" />
+      <MdOutlineLightMode className="switch-icon switch-icon-right" />
     </SwitchOuter>
   );
 }
