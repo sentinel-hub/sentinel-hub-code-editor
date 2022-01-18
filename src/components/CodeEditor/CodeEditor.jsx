@@ -6,7 +6,6 @@ import useFreeEditor from "../../hooks/useFreeEditor";
 import { BiFullscreen, BiExpand } from "react-icons/bi";
 import ReactDOM from "react-dom";
 import React from "react";
-import "./code-editor.css";
 import styled, { ThemeProvider } from "styled-components";
 import { variables } from "./variables.js";
 import { themeDark } from "./themeDark.js";
@@ -58,7 +57,7 @@ const CodeEditorBottomPanel = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 0 0 ${({ theme }) => theme.spacing02};
-  background: ${({ theme }) => theme.colorBg600};
+  background: ${({ theme }) => theme.colorBg500};
 `;
 
 const ButtonPrimary = styled.button`
