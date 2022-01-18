@@ -6,7 +6,6 @@ import useFreeEditor from "../../hooks/useFreeEditor";
 import { BiFullscreen, BiExpand } from "react-icons/bi";
 import ReactDOM from "react-dom";
 import React from "react";
-import "./code-editor.css";
 import styled, { ThemeProvider } from "styled-components";
 import { variables } from "./variables.js";
 import { themeDark } from "./themeDark.js";
@@ -39,6 +38,7 @@ let MONACO_EDITOR_CONFIG = {
   wordWrap: true,
   fontSize: 12,
   automaticLayout: true,
+  scrollBeyondLastLine: false,
   minimap: {
     enabled: false,
   },
@@ -58,7 +58,7 @@ const CodeEditorBottomPanel = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 0 0 ${({ theme }) => theme.spacing02};
-  background: ${({ theme }) => theme.colorBg600};
+  background: ${({ theme }) => theme.colorBg500};
 `;
 
 const ButtonPrimary = styled.button`
@@ -95,6 +95,7 @@ const CodeEditorIcon = styled.button`
 const CodeEditorWindow = styled.div`
   box-shadow: 0px 0px 55px rgba(0, 0, 0, 0.25);
   z-index: 9999999999999999;
+
   .code-editor-top-panel-drag {
     :hover {
       cursor: grab;
@@ -117,6 +118,7 @@ const CodeEditorWindowDocked = styled.div`
   width: 100%;
   position: static;
   transform: translate(0px, 0px);
+  overflow-y: hidden;
   .code-editor-docked {
     height: 100%;
     width: 100%;

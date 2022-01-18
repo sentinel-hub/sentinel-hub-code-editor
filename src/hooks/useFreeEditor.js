@@ -8,6 +8,7 @@ const MIN_HEIGHT = 400;
 const useFreeEditor = (boxRef, headerRef) => {
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
   const [isDocked, setIsDocked] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
   const [editorSize, setEditorSize] = useState({
     width: MIN_WIDTH,
     height: MIN_HEIGHT,
@@ -21,6 +22,15 @@ const useFreeEditor = (boxRef, headerRef) => {
       editorOffsetRef.current = { x: 0, y: 0 };
     }
   }, []);
+
+  useEffect(() => {
+    console.log(isDragging);
+    if (isDragging) {
+      document.querySelector("body").style.overflowY = "hidden";
+    } else {
+      document.querySelector("body").style.overflowY = "auto";
+    }
+  }, [isDragging]);
 
   function handleResizeMouseDown(event) {
     mouseOffsetRef.current = { x: event.clientX, y: event.clientY };
@@ -84,11 +94,12 @@ const useFreeEditor = (boxRef, headerRef) => {
       y: event.clientY - editorPosition.y,
       x: event.clientX - editorPosition.x,
     };
-
+    setIsDragging(true);
     window.addEventListener("mousemove", mouseMoveHandler);
     window.addEventListener(
       "mouseup",
       () => {
+        setIsDragging(false);
         window.removeEventListener("mousemove", mouseMoveHandler);
       },
       { once: true }
