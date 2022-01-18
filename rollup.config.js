@@ -34,7 +34,7 @@ export default [
       external(),
       resolve({extensions}),
       terser(),
-      commonjs()
+      commonjs(),
     ],
   },
 ];

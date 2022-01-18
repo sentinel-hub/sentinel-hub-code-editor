@@ -72,6 +72,7 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   const mousemoveHandle = useCallback(
     (event) => {
+
       const newWidth = getValidWidth(
         editorSize.width + event.clientX - mouseOffsetRef.current.x
       );
@@ -107,6 +108,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   const mouseMoveHandler = useCallback((e) => {
+    e.preventDefault()
     const editorDimensions = boxRef.current.getBoundingClientRect();
 
     const editorPositionX = e.clientX - editorOffsetRef.current.x;

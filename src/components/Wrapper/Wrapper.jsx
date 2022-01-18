@@ -19,6 +19,7 @@ export default function Wrapper() {
       }}
       className="panel"
     >
+      <textarea name="" id="" value="HEHEHEHEHE" cols="30" rows="10"></textarea>
       <div style={{ height: 400 }}>
         <CodeEditor portalId="select-root" />
         <h1 style={{ color: "white" }}>
