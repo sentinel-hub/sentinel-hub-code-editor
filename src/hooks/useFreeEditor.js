@@ -107,6 +107,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   const mouseMoveHandler = useCallback((e) => {
+    e.preventDefault();
     const editorDimensions = boxRef.current.getBoundingClientRect();
 
     const editorPositionX = e.clientX - editorOffsetRef.current.x;
