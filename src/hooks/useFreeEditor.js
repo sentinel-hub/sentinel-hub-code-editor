@@ -5,9 +5,7 @@ const HEADER_FLOATED_CLASSNAME = "code-editor-header-floating";
 const MIN_WIDTH = 600;
 const MIN_HEIGHT = 400;
 
-function hello()  { 
-  
-}
+function hello() {}
 
 const useFreeEditor = (boxRef, headerRef) => {
   const [isFullscreen, setIsFullscreen] = useState(false);

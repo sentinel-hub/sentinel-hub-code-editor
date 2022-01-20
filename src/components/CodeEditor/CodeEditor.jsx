@@ -68,7 +68,7 @@ const ButtonPrimary = styled.button`
 
   :hover {
     cursor: pointer;
-    background: ${({theme}) => theme.colorPrimary600};
+    background: ${({ theme }) => theme.colorPrimary600};
   }
 `;
 
@@ -122,7 +122,10 @@ export const CodeEditor = ({
   const monacoRef = useRef();
   const headerEditorRef = useRef();
   const editorWindowRef = useRef();
-  const [shouldTriggerRunEvalscriptAnimation, setShouldTriggerRunEvalscriptAnimation] = useState(false)
+  const [
+    shouldTriggerRunEvalscriptAnimation,
+    setShouldTriggerRunEvalscriptAnimation,
+  ] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(
     editorTheme === "dark" ? true : false
   );
@@ -140,12 +143,12 @@ export const CodeEditor = ({
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
-    if(shouldTriggerRunEvalscriptAnimation) {
+    if (shouldTriggerRunEvalscriptAnimation) {
       setTimeout(() => {
-        setShouldTriggerRunEvalscriptAnimation(false)
+        setShouldTriggerRunEvalscriptAnimation(false);
       }, 2000);
     }
-  }, [shouldTriggerRunEvalscriptAnimation])
+  }, [shouldTriggerRunEvalscriptAnimation]);
 
   useEffect(() => {
     let MONACO_EDITOR_CONFIG = {
@@ -306,18 +309,18 @@ export const CodeEditor = ({
         <CodeEditorBottomPanel>
           <ButtonPrimary
             onClick={() => {
-              setShouldTriggerRunEvalscriptAnimation(true)
+              setShouldTriggerRunEvalscriptAnimation(true);
               onRunEvalscriptClick(editorRef.current.getValue());
             }}
           >
-            {shouldTriggerRunEvalscriptAnimation ? 
-            <>
-            Running Evalscript
-            <SuccessIcon />
-            </>
-            :
-            "Run Evalscript"
-          }
+            {shouldTriggerRunEvalscriptAnimation ? (
+              <>
+                Running Evalscript
+                <SuccessIcon />
+              </>
+            ) : (
+              "Run Evalscript"
+            )}
           </ButtonPrimary>
           <CodeEditorIcon
             onMouseDown={handleResizeMouseDown}
