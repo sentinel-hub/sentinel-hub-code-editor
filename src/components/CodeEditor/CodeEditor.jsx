@@ -137,7 +137,7 @@ export const CodeEditor = ({
     handleResizeMouseDown,
     handleFullscreenClick,
     handleCancelFullscreenClick,
-    isFullscreen
+    isFullscreen,
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
@@ -286,15 +286,15 @@ export const CodeEditor = ({
           ) : (
             <>
               <Switch onChange={toggleTheme} checked={isDarkTheme === true} />
-              {isFullscreen ?
+              {isFullscreen ? (
                 <CodeEditorIcon onClick={handleCancelFullscreenClick}>
                   <BiExitFullscreen />
                 </CodeEditorIcon>
-                :
-                <CodeEditorIcon onClick={handleFullscreenClick} >
+              ) : (
+                <CodeEditorIcon onClick={handleFullscreenClick}>
                   <BiFullscreen />
                 </CodeEditorIcon>
-              }
+              )}
               <CodeEditorIcon onClick={handleDockedClick}>
                 <MdOutlineClose />
               </CodeEditorIcon>

@@ -6,7 +6,7 @@ const MIN_WIDTH = 600;
 const MIN_HEIGHT = 400;
 
 const useFreeEditor = (boxRef, headerRef) => {
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
   const [isDocked, setIsDocked] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
@@ -16,8 +16,8 @@ const useFreeEditor = (boxRef, headerRef) => {
   });
   const editorOffsetRef = useRef({ x: 0, y: 0 });
   const mouseOffsetRef = useRef({ x: 0, y: 0 });
-  const preFullscreenEditorSize = useRef({width: 0, height: 0})
-  const preFullscreenEditorPosition = useRef({x: 0, y: 0})
+  const preFullscreenEditorSize = useRef({ width: 0, height: 0 });
+  const preFullscreenEditorPosition = useRef({ x: 0, y: 0 });
   const handleDockedClick = useCallback(() => {
     setIsDocked((prev) => !prev);
     if (isDocked) {
@@ -69,19 +69,25 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   function handleFullscreenClick() {
-    preFullscreenEditorSize.current = {width: editorSize.width, height: editorSize.height};
-    preFullscreenEditorPosition.current ={x: editorPosition.x, y: editorPosition.y};
-    setIsFullscreen(true)
+    preFullscreenEditorSize.current = {
+      width: editorSize.width,
+      height: editorSize.height,
+    };
+    preFullscreenEditorPosition.current = {
+      x: editorPosition.x,
+      y: editorPosition.y,
+    };
+    setIsFullscreen(true);
     setEditorPosition({ x: 0, y: 0 });
     setEditorSize({ height: window.innerHeight, width: window.innerWidth });
   }
-  
-  function handleCancelFullscreenClick() { 
-    const {x,y} = preFullscreenEditorPosition.current; 
-    const {height, width} = preFullscreenEditorSize.current; 
-    setIsFullscreen(false)
-    setEditorPosition({x,y})
-    setEditorSize({height, width})
+
+  function handleCancelFullscreenClick() {
+    const { x, y } = preFullscreenEditorPosition.current;
+    const { height, width } = preFullscreenEditorSize.current;
+    setIsFullscreen(false);
+    setEditorPosition({ x, y });
+    setEditorSize({ height, width });
   }
 
   const mousemoveHandle = useCallback(
@@ -175,7 +181,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     handleResizeMouseDown,
     handleFullscreenClick,
     handleCancelFullscreenClick,
-    isFullscreen
+    isFullscreen,
   };
 };
 export default useFreeEditor;
