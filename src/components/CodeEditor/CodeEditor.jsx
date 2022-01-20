@@ -81,7 +81,7 @@ const CodeEditorIcon = styled.button`
 
 const CodeEditorWindow = styled.div`
   box-shadow: 0px 0px 55px rgba(0, 0, 0, 0.25);
-  z-index: 9999999999999999;
+  z-index: 10;
   top: 0;
   left: 0;
 `;
