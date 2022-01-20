@@ -38,6 +38,12 @@ const CodeEditorTopPanel = styled.div`
   justify-content: flex-end;
   align-items: center;
   background: ${({ theme }) => theme.colorBg600};
+    :hover {
+      cursor: grab;
+    }
+    :active {
+      cursor: grabbing;
+    }
 `;
 
 const CodeEditorBottomPanel = styled.div`
@@ -85,22 +91,9 @@ const CodeEditorWindow = styled.div`
   z-index: 9999999999999999;
   top: 0;
   left: 0;
-  .code-editor-top-panel-drag {
-    :hover {
-      cursor: grab;
-    }
-    :active {
-      cursor: grabbing;
-    }
-  }
-  .editor-button-resize {
-    cursor: nwse-resize;
-    z-index: 0;
-    :hover {
-      background: ${({ theme }) => theme.colorBg500};
-    }
-  }
 `;
+
+
 
 const CodeEditorWindowDocked = styled.div`
   height: 100%;
@@ -108,11 +101,12 @@ const CodeEditorWindowDocked = styled.div`
   position: static;
   transform: translate(0px, 0px);
   overflow-y: hidden;
-  .code-editor-docked {
+`;
+
+const MonacoEditor = styled.div`
     height: 100%;
     width: 100%;
-  }
-`;
+  `
 
 export const CodeEditor = ({
   onRunEvalscriptClick,
@@ -238,19 +232,17 @@ export const CodeEditor = ({
       >
         <CodeEditorWindowDocked
           ref={editorWindowRef}
-          className="code-editor-window-docked"
         >
           <CodeEditorTopPanel ref={headerEditorRef}>
             <Switch checked={isDarkTheme === true} onChange={toggleTheme} />
             <CodeEditorIcon onClick={handleDockedClick}>
-              <BiExpand className="code-editor-expand-icon editor-icon" />
+              <BiExpand/>
             </CodeEditorIcon>
           </CodeEditorTopPanel>
-          <div
+          <MonacoEditor
             style={{ height: "100%" }}
-            className={`code-editor-docked`}
             ref={monacoEditorDOMRef}
-          ></div>
+          ></MonacoEditor>
         </CodeEditorWindowDocked>
       </ThemeProvider>
     );
@@ -271,16 +263,15 @@ export const CodeEditor = ({
           position: "fixed",
         }}
         ref={editorWindowRef}
-        className="code-editor-window"
+
       >
         <CodeEditorTopPanel
           ref={headerEditorRef}
           onMouseDown={handleMoveMouseDown}
-          className="code-editor-top-panel-drag"
+
         >
           {isDocked ? (
             <ArrowsExpandIcon
-              className="code-editor-expand-icon"
               onClick={handleDockedClick}
             />
           ) : (
@@ -303,7 +294,6 @@ export const CodeEditor = ({
         </CodeEditorTopPanel>
         <div
           style={{ height: editorSize.height - 96 }}
-          className="code-editor"
           ref={monacoEditorDOMRef}
         ></div>
         <CodeEditorBottomPanel>
@@ -311,15 +301,14 @@ export const CodeEditor = ({
             onClick={() => {
               onRunEvalscriptClick(editorRef.current.getValue());
             }}
-            className="button-primary button-primary-bottom-panel"
           >
             Run Evalscript
           </ButtonPrimary>
           <CodeEditorIcon
             onMouseDown={handleResizeMouseDown}
-            className="editor-button-resize"
+            style={{ cursor: "nwse-resize", zIndex: 0 }}
           >
-            <CgArrowsExpandLeft className="icon-resize editor-icon" />
+            <CgArrowsExpandLeft/>
           </CodeEditorIcon>
         </CodeEditorBottomPanel>
       </CodeEditorWindow>
