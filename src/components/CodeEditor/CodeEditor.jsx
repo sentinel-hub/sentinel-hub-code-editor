@@ -32,7 +32,6 @@ const JSHINT_CONFIG = {
   esversion: 6,
 };
 
-
 const CodeEditorTopPanel = styled.div`
   height: ${({ theme }) => theme.spacing07};
   display: flex;
@@ -143,14 +142,14 @@ export const CodeEditor = ({
       value: evalscript,
       language: "javascript",
       wordWrap: true,
-      fontSize:  isDocked ? 12 : 14,
+      fontSize: isDocked ? 12 : 14,
       automaticLayout: true,
       scrollBeyondLastLine: false,
       minimap: {
         enabled: false,
       },
     };
-    
+
     loader.init().then((monaco) => {
       const editor = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
