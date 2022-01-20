@@ -3,7 +3,7 @@ import { ArrowsExpandIcon } from "@heroicons/react/solid";
 import loader from "@monaco-editor/loader";
 import { JSHINT } from "jshint";
 import useFreeEditor from "../../hooks/useFreeEditor";
-import { BiFullscreen, BiExpand } from "react-icons/bi";
+import { BiFullscreen, BiExpand, BiExitFullscreen } from "react-icons/bi";
 import ReactDOM from "react-dom";
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
@@ -127,6 +127,7 @@ export const CodeEditor = ({
   const [isDarkTheme, setIsDarkTheme] = useState(
     editorTheme === "dark" ? true : false
   );
+
   const {
     editorPosition,
     editorSize,
@@ -135,6 +136,8 @@ export const CodeEditor = ({
     handleMoveMouseDown,
     handleResizeMouseDown,
     handleFullscreenClick,
+    handleCancelFullscreenClick,
+    isFullscreen
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
@@ -283,9 +286,15 @@ export const CodeEditor = ({
           ) : (
             <>
               <Switch onChange={toggleTheme} checked={isDarkTheme === true} />
-              <CodeEditorIcon onClick={handleFullscreenClick}>
-                <BiFullscreen />
-              </CodeEditorIcon>
+              {isFullscreen ?
+                <CodeEditorIcon onClick={handleCancelFullscreenClick}>
+                  <BiExitFullscreen />
+                </CodeEditorIcon>
+                :
+                <CodeEditorIcon onClick={handleFullscreenClick} >
+                  <BiFullscreen />
+                </CodeEditorIcon>
+              }
               <CodeEditorIcon onClick={handleDockedClick}>
                 <MdOutlineClose />
               </CodeEditorIcon>
