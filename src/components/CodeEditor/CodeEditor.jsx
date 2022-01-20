@@ -32,17 +32,6 @@ const JSHINT_CONFIG = {
   esversion: 6,
 };
 
-let MONACO_EDITOR_CONFIG = {
-  value: evalscript,
-  language: "javascript",
-  wordWrap: true,
-  fontSize: 14,
-  automaticLayout: true,
-  scrollBeyondLastLine: false,
-  minimap: {
-    enabled: false,
-  },
-};
 
 const CodeEditorTopPanel = styled.div`
   height: ${({ theme }) => theme.spacing07};
@@ -50,7 +39,6 @@ const CodeEditorTopPanel = styled.div`
   justify-content: flex-end;
   align-items: center;
   background: ${({ theme }) => theme.colorBg600};
-
 `;
 
 const CodeEditorBottomPanel = styled.div`
@@ -60,7 +48,6 @@ const CodeEditorBottomPanel = styled.div`
   align-items: center;
   padding: 0 0 0 ${({ theme }) => theme.spacing02};
   background: ${({ theme }) => theme.colorBg600};
-
 `;
 
 const ButtonPrimary = styled.button`
@@ -152,6 +139,18 @@ export const CodeEditor = ({
   } = useFreeEditor(editorWindowRef, headerEditorRef);
 
   useEffect(() => {
+    let MONACO_EDITOR_CONFIG = {
+      value: evalscript,
+      language: "javascript",
+      wordWrap: true,
+      fontSize:  isDocked ? 12 : 14,
+      automaticLayout: true,
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false,
+      },
+    };
+    
     loader.init().then((monaco) => {
       const editor = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
