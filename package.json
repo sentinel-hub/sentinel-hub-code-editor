@@ -1,6 +1,6 @@
 {
   "name": "test-package-2-pb",
-  "version": "1.0.80",
+  "version": "1.0.84",
   "description": "",
   "files": [
     "dist/*"

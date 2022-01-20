@@ -9,9 +9,6 @@ align-items: center;
 margin-right: ${({ theme }) => theme.spacing02};
 margin-right: ${({theme}) => theme.spacing02};
 
-${SwitchIcon} { 
- 
-}
 .switch-icon-left { 
     margin-right: ${({ theme }) => theme.spacing01};
   }
