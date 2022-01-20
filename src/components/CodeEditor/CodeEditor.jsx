@@ -36,7 +36,7 @@ let MONACO_EDITOR_CONFIG = {
   value: evalscript,
   language: "javascript",
   wordWrap: true,
-  fontSize: 12,
+  fontSize: 14,
   automaticLayout: true,
   scrollBeyondLastLine: false,
   minimap: {
