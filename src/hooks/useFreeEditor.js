@@ -27,6 +27,14 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, []);
 
   useEffect(() => {
+    if(isDocked) { 
+      setIsFullscreen(false)
+    }
+  }, [isDocked])
+
+
+
+  useEffect(() => {
     console.log(isDragging);
     if (isDragging) {
       document.querySelector("body").style.overflowY = "hidden";
@@ -68,7 +76,8 @@ const useFreeEditor = (boxRef, headerRef) => {
     return width;
   }
 
-  function handleFullscreenClick() {
+  function handleFullscreenClick(event) {
+    event.stopPropagation()
     preFullscreenEditorSize.current = {
       width: editorSize.width,
       height: editorSize.height,
@@ -82,7 +91,8 @@ const useFreeEditor = (boxRef, headerRef) => {
     setEditorSize({ height: window.innerHeight, width: window.innerWidth });
   }
 
-  function handleCancelFullscreenClick() {
+  function handleCancelFullscreenClick(event) {
+    event.stopPropagation()
     const { x, y } = preFullscreenEditorPosition.current;
     const { height, width } = preFullscreenEditorSize.current;
     setIsFullscreen(false);
@@ -108,6 +118,7 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   function handleMoveMouseDown(event) {
     if (isDocked) {
+ 
       return;
     }
     editorOffsetRef.current = {

@@ -38,12 +38,12 @@ const CodeEditorTopPanel = styled.div`
   justify-content: flex-end;
   align-items: center;
   background: ${({ theme }) => theme.colorBg600};
-    :hover {
-      cursor: grab;
-    }
-    :active {
-      cursor: grabbing;
-    }
+  :hover {
+    cursor: grab;
+  }
+  :active {
+    cursor: grabbing;
+  }
 `;
 
 const CodeEditorBottomPanel = styled.div`
@@ -93,8 +93,6 @@ const CodeEditorWindow = styled.div`
   left: 0;
 `;
 
-
-
 const CodeEditorWindowDocked = styled.div`
   height: 100%;
   width: 100%;
@@ -104,9 +102,9 @@ const CodeEditorWindowDocked = styled.div`
 `;
 
 const MonacoEditor = styled.div`
-    height: 100%;
-    width: 100%;
-  `
+  height: 100%;
+  width: 100%;
+`;
 
 export const CodeEditor = ({
   onRunEvalscriptClick,
@@ -230,13 +228,11 @@ export const CodeEditor = ({
             : { ...variables, ...themeLight }
         }
       >
-        <CodeEditorWindowDocked
-          ref={editorWindowRef}
-        >
+        <CodeEditorWindowDocked ref={editorWindowRef}>
           <CodeEditorTopPanel ref={headerEditorRef}>
             <Switch checked={isDarkTheme === true} onChange={toggleTheme} />
             <CodeEditorIcon onClick={handleDockedClick}>
-              <BiExpand/>
+              <BiExpand />
             </CodeEditorIcon>
           </CodeEditorTopPanel>
           <MonacoEditor
@@ -263,17 +259,13 @@ export const CodeEditor = ({
           position: "fixed",
         }}
         ref={editorWindowRef}
-
       >
         <CodeEditorTopPanel
           ref={headerEditorRef}
           onMouseDown={handleMoveMouseDown}
-
         >
           {isDocked ? (
-            <ArrowsExpandIcon
-              onClick={handleDockedClick}
-            />
+            <ArrowsExpandIcon onClick={handleDockedClick} />
           ) : (
             <>
               <Switch onChange={toggleTheme} checked={isDarkTheme === true} />
@@ -308,7 +300,7 @@ export const CodeEditor = ({
             onMouseDown={handleResizeMouseDown}
             style={{ cursor: "nwse-resize", zIndex: 0 }}
           >
-            <CgArrowsExpandLeft/>
+            <CgArrowsExpandLeft />
           </CodeEditorIcon>
         </CodeEditorBottomPanel>
       </CodeEditorWindow>
