@@ -5,6 +5,10 @@ const HEADER_FLOATED_CLASSNAME = "code-editor-header-floating";
 const MIN_WIDTH = 600;
 const MIN_HEIGHT = 400;
 
+function hello()  { 
+  
+}
+
 const useFreeEditor = (boxRef, headerRef) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
@@ -18,6 +22,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   const mouseOffsetRef = useRef({ x: 0, y: 0 });
   const preFullscreenEditorSize = useRef({ width: 0, height: 0 });
   const preFullscreenEditorPosition = useRef({ x: 0, y: 0 });
+
   const handleDockedClick = useCallback(() => {
     setIsDocked((prev) => !prev);
     if (isDocked) {
@@ -27,12 +32,10 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, []);
 
   useEffect(() => {
-    if(isDocked) { 
-      setIsFullscreen(false)
+    if (isDocked) {
+      setIsFullscreen(false);
     }
-  }, [isDocked])
-
-
+  }, [isDocked]);
 
   useEffect(() => {
     console.log(isDragging);
@@ -77,7 +80,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   function handleFullscreenClick(event) {
-    event.stopPropagation()
+    event.stopPropagation();
     preFullscreenEditorSize.current = {
       width: editorSize.width,
       height: editorSize.height,
@@ -92,7 +95,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   function handleCancelFullscreenClick(event) {
-    event.stopPropagation()
+    event.stopPropagation();
     const { x, y } = preFullscreenEditorPosition.current;
     const { height, width } = preFullscreenEditorSize.current;
     setIsFullscreen(false);
@@ -118,7 +121,6 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   function handleMoveMouseDown(event) {
     if (isDocked) {
- 
       return;
     }
     editorOffsetRef.current = {
