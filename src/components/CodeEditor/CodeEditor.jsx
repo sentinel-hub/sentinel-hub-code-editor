@@ -15,19 +15,6 @@ import { MdOutlineClose } from "react-icons/md";
 import Switch from "./Switch";
 import SuccessIcon from "./SuccessIcon";
 
-const evalscript = `//VERSION=3
-function setup() {
-  return {
-    input: ["B01","B02","B03", "dataMask"],
-    output: { bands: 4 }
-  };
-} 
-
-function evaluatePixel(sample) {
-  
-  return [2.5 * sample.B01, 2.5 * sample.B02, 2.5 * sample.B03, sample.dataMask];
-}`;
-
 const JSHINT_CONFIG = {
   asi: true,
   esversion: 6,
@@ -116,6 +103,8 @@ export const CodeEditor = ({
   onRunEvalscriptClick,
   portalId,
   editorTheme = "dark",
+  onChange,
+  value,
 }) => {
   const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
@@ -152,7 +141,7 @@ export const CodeEditor = ({
 
   useEffect(() => {
     let MONACO_EDITOR_CONFIG = {
-      value: evalscript,
+      value,
       language: "javascript",
       wordWrap: true,
       fontSize: isDocked ? 12 : 14,
@@ -173,6 +162,8 @@ export const CodeEditor = ({
       editorRef.current = editor;
 
       editor.onDidChangeModelContent(() => {
+        const code = editorRef.current.getValue();
+        onChange(code);
         checkAndApplyErrors();
       });
     });

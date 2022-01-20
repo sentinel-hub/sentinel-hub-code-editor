@@ -1,11 +1,7 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 
-const HEADER_FLOATED_CLASSNAME = "code-editor-header-floating";
-
 const MIN_WIDTH = 600;
 const MIN_HEIGHT = 400;
-
-function hello() {}
 
 const useFreeEditor = (boxRef, headerRef) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -36,7 +32,6 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, [isDocked]);
 
   useEffect(() => {
-    console.log(isDragging);
     if (isDragging) {
       document.querySelector("body").style.overflowY = "hidden";
     } else {
@@ -173,14 +168,6 @@ const useFreeEditor = (boxRef, headerRef) => {
     }
     return window.innerWidth - editorDimensions.width;
   }
-
-  useEffect(() => {
-    if (isDocked) {
-      headerRef.current.classList.remove(HEADER_FLOATED_CLASSNAME);
-    } else {
-      headerRef.current.classList.add(HEADER_FLOATED_CLASSNAME);
-    }
-  }, [isDocked]);
 
   return {
     editorSize,
