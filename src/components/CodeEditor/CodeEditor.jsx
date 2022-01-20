@@ -161,7 +161,7 @@ export const CodeEditor = ({
       monacoRef.current = monaco;
       editorRef.current = editor;
 
-      editor.onDidChangeModelContent(() => {
+      editorRef.current.onDidChangeModelContent(() => {
         const code = editorRef.current.getValue();
         onChange(code);
         checkAndApplyErrors();
