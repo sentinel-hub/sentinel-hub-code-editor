@@ -49,7 +49,8 @@ const CodeEditorTopPanel = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: ${({ theme }) => theme.colorBg500};
+  background: ${({ theme }) => theme.colorBg600};
+
 `;
 
 const CodeEditorBottomPanel = styled.div`
@@ -58,7 +59,8 @@ const CodeEditorBottomPanel = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 0 0 ${({ theme }) => theme.spacing02};
-  background: ${({ theme }) => theme.colorBg500};
+  background: ${({ theme }) => theme.colorBg600};
+
 `;
 
 const ButtonPrimary = styled.button`
@@ -87,7 +89,7 @@ const CodeEditorIcon = styled.button`
   justify-content: center;
 
   :hover {
-    background: ${({ theme }) => theme.colorBg600};
+    background: ${({ theme }) => theme.colorBg500};
     cursor: pointer;
   }
 `;
@@ -109,7 +111,7 @@ const CodeEditorWindow = styled.div`
     cursor: nwse-resize;
     z-index: 0;
     :hover {
-      background: ${({ theme }) => theme.colorBg600};
+      background: ${({ theme }) => theme.colorBg500};
     }
   }
 `;
