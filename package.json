@@ -1,6 +1,6 @@
 {
-  "name": "test-package-2-pb",
-  "version": "1.0.87",
+  "name": "@sentinel-hub-vas/sentinelhub-evalscript-editor",
+  "version": "1.0.0",
   "description": "",
   "files": [
     "dist/*"
