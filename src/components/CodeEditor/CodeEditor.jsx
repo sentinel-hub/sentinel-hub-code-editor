@@ -81,12 +81,12 @@ const CodeEditorIcon = styled.button`
 
 const CodeEditorWindow = styled.div`
   box-shadow: 0px 0px 55px rgba(0, 0, 0, 0.25);
-  z-index: ${props => props.zIndex};
-  transform: ${props => `translate(${props.x}px, ${props.y}px)`};
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
+  z-index: ${(props) => props.zIndex};
+  transform: ${(props) => `translate(${props.x}px, ${props.y}px)`};
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
   top: 0;
-  left: 0;  
+  left: 0;
   position: fixed;
 `;
 
@@ -258,7 +258,6 @@ export const CodeEditor = ({
     );
   }
 
-
   return ReactDOM.createPortal(
     <ThemeProvider
       theme={
@@ -268,11 +267,11 @@ export const CodeEditor = ({
       }
     >
       <CodeEditorWindow
-      zIndex={zIndex}
-      x={editorPosition.x}
-      y={editorPosition.y}
-      height={editorSize.height}
-      width={editorSize.width}
+        zIndex={zIndex}
+        x={editorPosition.x}
+        y={editorPosition.y}
+        height={editorSize.height}
+        width={editorSize.width}
         ref={editorWindowRef}
       >
         <CodeEditorTopPanel
