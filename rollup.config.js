@@ -20,12 +20,6 @@ export default [
       },
     ],
     plugins: [
-      postcss({
-        plugins: [],
-        minimize: true,
-        extract: false, 
-        inject: true,
-      }),
       babel({
         exclude: "node_modules/**",
         presets: [["@babel/preset-react", {runtime:"automatic"}]],
