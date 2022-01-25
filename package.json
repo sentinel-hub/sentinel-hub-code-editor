@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel-hub-vas/sentinelhub-evalscript-editor",
+  "name": "@sentinel-hub/evalscript-code-editor",
   "version": "1.0.0",
   "description": "",
   "files": [
