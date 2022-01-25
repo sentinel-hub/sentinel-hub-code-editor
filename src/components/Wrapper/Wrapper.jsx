@@ -10,7 +10,6 @@ export default function Wrapper() {
     rootNode.before(newNode);
   }, []);
 
-  console.log("hej");
   return (
     <div
       style={{
