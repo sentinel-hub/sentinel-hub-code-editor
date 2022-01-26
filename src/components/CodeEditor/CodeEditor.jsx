@@ -99,6 +99,7 @@ const CodeEditorWindowDocked = styled.div`
 
 const MonacoEditor = styled.div`
   height: 100%;
+  height: ${(props) => `calc(100% - ${props.theme.spacing07})`};
   width: 100%;
   overflow-y: hidden;
 `;
@@ -151,7 +152,7 @@ export const CodeEditor = ({
       wordWrap: true,
       fontSize: isDocked ? 12 : 14,
       automaticLayout: true,
-      scrollBeyondLastLine: true,
+      scrollBeyondLastLine: false,
       minimap: {
         enabled: false,
       },
@@ -249,10 +250,7 @@ export const CodeEditor = ({
               <BiExpand />
             </CodeEditorIcon>
           </CodeEditorTopPanel>
-          <MonacoEditor
-            style={{ height: "100%" }}
-            ref={monacoEditorDOMRef}
-          ></MonacoEditor>
+          <MonacoEditor ref={monacoEditorDOMRef}></MonacoEditor>
         </CodeEditorWindowDocked>
       </ThemeProvider>
     );
