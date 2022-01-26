@@ -95,12 +95,12 @@ const CodeEditorWindowDocked = styled.div`
   width: 100%;
   position: static;
   transform: translate(0px, 0px);
-  overflow-y: hidden;
 `;
 
 const MonacoEditor = styled.div`
   height: 100%;
   width: 100%;
+  overflow-y: hidden;
 `;
 
 export const CodeEditor = ({
