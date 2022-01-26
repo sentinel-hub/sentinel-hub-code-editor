@@ -111,6 +111,7 @@ export const CodeEditor = ({
   onChange,
   value,
   zIndex = 100,
+  shouldDisplayRunEvalscriptButton = true 
 }) => {
   const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
@@ -301,11 +302,13 @@ export const CodeEditor = ({
           ref={monacoEditorDOMRef}
         ></div>
         <CodeEditorBottomPanel>
+          {
+            shouldDisplayRunEvalscriptButton ?
           <ButtonPrimary
-            onClick={() => {
-              setShouldTriggerRunEvalscriptAnimation(true);
-              onRunEvalscriptClick(editorRef.current.getValue());
-            }}
+          onClick={() => {
+            setShouldTriggerRunEvalscriptAnimation(true);
+            onRunEvalscriptClick(editorRef.current.getValue());
+          }}
           >
             {shouldTriggerRunEvalscriptAnimation ? (
               <>
@@ -314,8 +317,13 @@ export const CodeEditor = ({
               </>
             ) : (
               "Run Evalscript"
-            )}
+              )}
           </ButtonPrimary>
+           :
+           <div>
+
+           </div>
+           }
           <CodeEditorIcon
             onMouseDown={handleResizeMouseDown}
             style={{ cursor: "nwse-resize", zIndex: 0 }}

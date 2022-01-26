@@ -27,6 +27,7 @@ export default function Wrapper() {
           value={evalscript}
           onChange={(event) => setEvalscript(event)}
           portalId="select-root"
+          shouldDisplayRunEvalscriptButton={false}
         />
         <h1 style={{ color: "white" }}>
           Wrapper to simulate parent div in apps like EOB and RB
