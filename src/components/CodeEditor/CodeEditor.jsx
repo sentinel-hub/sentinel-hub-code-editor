@@ -151,7 +151,7 @@ export const CodeEditor = ({
       wordWrap: true,
       fontSize: isDocked ? 12 : 14,
       automaticLayout: true,
-      scrollBeyondLastLine: false,
+      scrollBeyondLastLine: true,
       minimap: {
         enabled: false,
       },
