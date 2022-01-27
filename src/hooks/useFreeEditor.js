@@ -91,15 +91,18 @@ const useFreeEditor = (boxRef, headerRef) => {
   function handleCancelFullscreenClick(event) {
     event.stopPropagation();
     const { previousHeight, previousWidth } = preFullscreenEditorSize.current;
-    const { previousPositionY, previousPositionX } = preFullscreenEditorPosition.current
-    
-    if (previousHeight >= window.innerHeight && previousWidth >= window.innerWidth) {
-      setEditorSize({ width: MIN_WIDTH, height: MIN_HEIGHT })
-      setEditorPosition({ x: 0, y: 0 })
+    const { previousPositionY, previousPositionX } =
+      preFullscreenEditorPosition.current;
+
+    if (
+      previousHeight >= window.innerHeight &&
+      previousWidth >= window.innerWidth
+    ) {
+      setEditorSize({ width: MIN_WIDTH, height: MIN_HEIGHT });
+      setEditorPosition({ x: 0, y: 0 });
     } else {
       setEditorPosition({ y: previousPositionY, x: previousPositionX });
       setEditorSize({ height: previousHeight, width: previousWidth });
-
     }
     setIsFullscreen(false);
   }

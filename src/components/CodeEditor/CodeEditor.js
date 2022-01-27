@@ -34,6 +34,7 @@ const CodeEditorTopPanel = styled.div`
   }
 `;
 
+
 const CodeEditorBottomPanel = styled.div`
   height: ${({ theme }) => theme.spacing07};
   display: flex;
@@ -163,6 +164,9 @@ export const CodeEditor = ({
       const editor = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
         theme: isDarkTheme ? "vs-dark" : "vs",
+        scrollbar: {
+          alwaysConsumeMouseWheel: isDocked ? false : true
+        }
       });
 
       monacoRef.current = monaco;
