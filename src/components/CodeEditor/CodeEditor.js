@@ -182,7 +182,6 @@ export const CodeEditor = ({
         monacoRef.current.editor.setTheme("vs-dark");
       } else {
         monacoRef.current.editor.setTheme("vs");
-        monacoRef.current.editor.setFontSize;
       }
     }
   }, [isDarkTheme]);

@@ -1,1 +1,3 @@
-export * from './components/CodeEditor/CodeEditor'
+import {CodeEditor} from './components/CodeEditor/CodeEditor'
+
+export {CodeEditor}

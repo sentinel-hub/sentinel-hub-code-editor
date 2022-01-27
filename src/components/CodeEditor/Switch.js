@@ -7,7 +7,7 @@ const SwitchOuter = styled.div`
 display: flex;
 align-items: center;
 margin-right: ${({ theme }) => theme.spacing02};
-margin-right: ${({theme}) => theme.spacing02};
+margin-right: ${({ theme }) => theme.spacing02};
 
 .switch-icon-left { 
     margin-right: ${({ theme }) => theme.spacing01};
@@ -59,7 +59,7 @@ const SwitchIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 ${({theme}) => theme.spacing01};
+  margin: 0 ${({ theme }) => theme.spacing01};
 
 `
 const SwitchButton = styled.div`

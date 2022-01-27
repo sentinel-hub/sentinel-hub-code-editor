@@ -75,25 +75,33 @@ const useFreeEditor = (boxRef, headerRef) => {
   function handleFullscreenClick(event) {
     event.stopPropagation();
     preFullscreenEditorSize.current = {
-      width: editorSize.width,
-      height: editorSize.height,
+      previousWidth: editorSize.width,
+      previousHeight: editorSize.height,
     };
     preFullscreenEditorPosition.current = {
-      x: editorPosition.x,
-      y: editorPosition.y,
+      previousPositionX: editorPosition.x,
+      previousPositionY: editorPosition.y,
     };
     setIsFullscreen(true);
     setEditorPosition({ x: 0, y: 0 });
+
     setEditorSize({ height: window.innerHeight, width: window.innerWidth });
   }
 
   function handleCancelFullscreenClick(event) {
     event.stopPropagation();
-    const { x, y } = preFullscreenEditorPosition.current;
-    const { height, width } = preFullscreenEditorSize.current;
+    const { previousHeight, previousWidth } = preFullscreenEditorSize.current;
+    const { previousPositionY, previousPositionX } = preFullscreenEditorPosition.current
+    
+    if (previousHeight >= window.innerHeight && previousWidth >= window.innerWidth) {
+      setEditorSize({ width: MIN_WIDTH, height: MIN_HEIGHT })
+      setEditorPosition({ x: 0, y: 0 })
+    } else {
+      setEditorPosition({ y: previousPositionY, x: previousPositionX });
+      setEditorSize({ height: previousHeight, width: previousWidth });
+
+    }
     setIsFullscreen(false);
-    setEditorPosition({ x, y });
-    setEditorSize({ height, width });
   }
 
   const mousemoveHandle = useCallback(
