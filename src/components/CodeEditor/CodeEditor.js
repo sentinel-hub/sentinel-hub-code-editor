@@ -112,7 +112,8 @@ export const CodeEditor = ({
   onChange,
   value,
   zIndex = 100,
-  shouldDisplayRunEvalscriptButton = true 
+  shouldDisplayRunEvalscriptButton = true,
+  isReadOnly,
 }) => {
   const monacoEditorDOMRef = useRef();
   const editorRef = useRef();
@@ -161,7 +162,7 @@ export const CodeEditor = ({
     };
 
     loader.init().then((monaco) => {
-      const editor = monaco.editor.create(monacoEditorDOMRef.current, {
+      editorRef.current = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
         theme: isDarkTheme ? "vs-dark" : "vs",
         scrollbar: {
@@ -170,7 +171,6 @@ export const CodeEditor = ({
       });
 
       monacoRef.current = monaco;
-      editorRef.current = editor;
 
       editorRef.current.onDidChangeModelContent(() => {
         const code = editorRef.current.getValue();
@@ -180,15 +180,32 @@ export const CodeEditor = ({
     });
   }, [isDocked]);
 
+
+
   useEffect(() => {
-    if (monacoRef.current) {
-      if (isDarkTheme) {
-        monacoRef.current.editor.setTheme("vs-dark");
-      } else {
-        monacoRef.current.editor.setTheme("vs");
-      }
+    if (!monacoRef.current) {
+      return
     }
+    if (isDarkTheme) {
+      monacoRef.current.editor.setTheme("vs-dark");
+    } else {
+      monacoRef.current.editor.setTheme("vs");
+    }
+
   }, [isDarkTheme]);
+
+  useEffect(() => {
+
+    if (!editorRef.current) {
+      return
+    }
+
+    if (isReadOnly) {
+      editorRef.current.updateOptions({ readOnly: true })
+    } else {
+      editorRef.current.updateOptions({ readOnly: false })
+    }
+  }, [isReadOnly])
 
   const debounce = useCallback((func, wait, immediate) => {
     var timeout;
@@ -307,26 +324,26 @@ export const CodeEditor = ({
         <CodeEditorBottomPanel>
           {
             shouldDisplayRunEvalscriptButton ?
-          <ButtonPrimary
-          onClick={() => {
-            setShouldTriggerRunEvalscriptAnimation(true);
-            onRunEvalscriptClick(editorRef.current.getValue());
-          }}
-          >
-            {shouldTriggerRunEvalscriptAnimation ? (
-              <>
-                Running Evalscript
-                <SuccessIcon />
-              </>
-            ) : (
-              "Run Evalscript"
-              )}
-          </ButtonPrimary>
-           :
-           <div>
+              <ButtonPrimary
+                onClick={() => {
+                  setShouldTriggerRunEvalscriptAnimation(true);
+                  onRunEvalscriptClick(editorRef.current.getValue());
+                }}
+              >
+                {shouldTriggerRunEvalscriptAnimation ? (
+                  <>
+                    Running Evalscript
+                    <SuccessIcon />
+                  </>
+                ) : (
+                  "Run Evalscript"
+                )}
+              </ButtonPrimary>
+              :
+              <div>
 
-           </div>
-           }
+              </div>
+          }
           <CodeEditorIcon
             onMouseDown={handleResizeMouseDown}
             style={{ cursor: "nwse-resize", zIndex: 0 }}

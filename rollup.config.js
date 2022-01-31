@@ -14,7 +14,6 @@ export default [
         file: "dist/index.es.js",
         format: "es",
         exports: "default",
-
       },
     ],
     plugins: [
@@ -24,7 +23,7 @@ export default [
         extensions,
       }),
       external(),
-      resolve({extensions}),
+      resolve({extensions, preferBuiltins: true}),
       terser(),
       commonjs(),
     ],

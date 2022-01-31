@@ -7,7 +7,6 @@
   ],
   "main": "index.js",
   "module": "dist/index.es.js",
-
   "private": false,
   "scripts": {
     "prettier": "prettier --write src/**/*.{js,jsx} src/**/*.css",
@@ -15,8 +14,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build-editor": "rollup -c",
-    "prepare": "husky install",
-    "test": ""
+    "prepare": "husky install"  
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +32,7 @@
     "eslint": "^8.3.0",
     "eslint-plugin-react": "^7.27.1",
     "husky": "^7.0.0",
+    "jest": "^27.4.7",
     "patch-package": "^6.4.7",
     "prettier": "2.4.1",
     "react": "^16.8.3",
