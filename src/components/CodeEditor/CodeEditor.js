@@ -8,8 +8,8 @@ import ReactDOM from "react-dom";
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { variables } from "./variables.js";
-/* import { themeDark } from "./editor-themes/themeDark.js";
- */import { themeLight } from "./editor-themes/themeLight";
+import { defaultThemeDark } from "./editor-themes/themeDark.js";
+import { defaultThemeLight } from "./editor-themes/themeLight";
 import { CgArrowsExpandLeft } from "react-icons/cg";
 import { MdOutlineClose } from "react-icons/md";
 import Switch from "./Switch";
@@ -109,15 +109,16 @@ const MonacoEditor = styled.div`
   overflow-y: hidden;
 `;
 
-export const CodeEditor = React.forwardRef(({
+export const CodeEditor = React.forwardRef(({ 
   onRunEvalscriptClick,
   portalId,
-  editorTheme = "dark",
+  defaultEditorTheme = 'dark',
   onChange,
   value,
   zIndex = 100,
   isReadOnly,
-  customTheme
+  themeLight = defaultThemeLight,
+  themeDark = defaultThemeDark,
 }, editorRef) => {
 
   const monacoEditorDOMRef = useRef();
@@ -129,7 +130,7 @@ export const CodeEditor = React.forwardRef(({
     setShouldTriggerRunEvalscriptAnimation,
   ] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(
-    editorTheme === "dark" ? true : false
+    defaultEditorTheme === "dark" ? true : false
   );
 
   const {
@@ -168,62 +169,52 @@ export const CodeEditor = React.forwardRef(({
 
     loader.init().then((monaco) => {
 
-
-      const customThemeName = 'customDarkTheme'
-
-      let darkTheme = 'vs-dark'
-      if(customTheme) { 
-        monaco.editor.defineTheme(customThemeName, {
+      console.log(themeLight)
+      if(themeDark.name !== 'vs-dark') { 
+        monaco.editor.defineTheme(themeDark.name, {
           base: 'vs-dark', // can also be vs-dark or hc-black
           inherit: true, // can also be false to completely replace the builtin rules
           rules: [
             {}
           ],
           colors: {
-            'editor.background': `${customTheme.colorBg500}`
+            'editor.background': `${themeDark.styles.colorBg500}`
           }
         });
-        darkTheme = customThemeName
+      }
+
+      if(themeLight.name !== 'vs') { 
+        monaco.editor.defineTheme(themeLight.name, {
+          base: 'vs', // can also be vs-dark or hc-black
+          inherit: true, // can also be false to completely replace the builtin rules
+          rules: [
+            {}
+          ],
+          colors: {
+            'editor.background': `${themeLight.styles.colorBg500}`
+          }
+        });
       }
 
       editorRef.current = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
-        theme: isDarkTheme ? darkTheme : "vs",
+        theme: isDarkTheme ? themeDark.name : themeLight.name,
         scrollbar: {
           alwaysConsumeMouseWheel: isDocked ? false : true
         }
       });
 
 
-      editorRef.current.setTheme(customThemeName)
-
 
       monacoRef.current = monaco;
-      editorRef.current.onDidChangeModelContent((event) => {
-        console.log(event)
+      editorRef.current.onDidChangeModelContent(() => {
         const code = editorRef.current.getValue();
         onChange(code);
         checkAndApplyErrors();
       });
-      console.log(editorRef.current)
-      editorRef.current.onDidPaste((event) => {
-        console.log(event)
-      })
     });
   }, [isDocked]);
 
-
-
-
-
-  useEffect(() => {
-
-    if (!editorRef.current) {
-      return
-    }
-
-
-  }, [isReadOnly])
 
 
 
@@ -232,9 +223,9 @@ export const CodeEditor = React.forwardRef(({
       return
     }
     if (isDarkTheme) {
-      monacoRef.current.editor.setTheme("vs-dark");
+      monacoRef.current.editor.setTheme(themeDark.name);
     } else {
-      monacoRef.current.editor.setTheme("vs");
+      monacoRef.current.editor.setTheme(themeLight.name);
     }
 
   }, [isDarkTheme]);
@@ -310,8 +301,8 @@ export const CodeEditor = React.forwardRef(({
       <ThemeProvider
         theme={
           isDarkTheme
-            ? { ...variables, ...customTheme }
-            : { ...variables, ...themeLight }
+            ? { ...variables, ...themeDark.styles }
+            : { ...variables, ...themeLight.styles }
         }
       >
         <CodeEditorWindowDocked ref={editorWindowRef}>
@@ -331,8 +322,8 @@ export const CodeEditor = React.forwardRef(({
     <ThemeProvider
       theme={
         isDarkTheme
-          ? { ...variables, ...customTheme }
-          : { ...variables, ...themeLight }
+          ? { ...variables, ...themeDark.styles }
+          : { ...variables, ...themeLight.styles }
       }
     >
       <CodeEditorWindow
