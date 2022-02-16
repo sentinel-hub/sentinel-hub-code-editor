@@ -169,7 +169,6 @@ export const CodeEditor = React.forwardRef(({
 
     loader.init().then((monaco) => {
 
-      console.log(themeLight)
       if(themeDark.name !== 'vs-dark') { 
         monaco.editor.defineTheme(themeDark.name, {
           base: 'vs-dark', // can also be vs-dark or hc-black
