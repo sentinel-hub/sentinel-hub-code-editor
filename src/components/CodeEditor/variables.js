@@ -11,6 +11,8 @@ export const variables = {
     fontSize01: "0.25rem",
     fontSize02: "1rem",
     fontSize03: "1.5rem",
+
+    colorDisabled: "#E0E0E2",
   
     formElementBaseHeight: "3rem",
 }

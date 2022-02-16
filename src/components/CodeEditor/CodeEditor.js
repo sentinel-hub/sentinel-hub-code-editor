@@ -53,10 +53,14 @@ const ButtonPrimary = styled.button`
   border: none;
   display: inline-flex;
   align-items: center;
-
   :hover {
     cursor: pointer;
     background: ${({ theme }) => theme.colorPrimary600};
+  }
+  :disabled { 
+    color: #A0A0A6;
+    background:${({theme}) => theme.colorDisabled};
+    cursor: not-allowed;
   }
 `;
 
@@ -105,18 +109,18 @@ const MonacoEditor = styled.div`
   overflow-y: hidden;
 `;
 
-export const CodeEditor = ({
+const CodeEditor = React.forwardRef(({
   onRunEvalscriptClick,
   portalId,
   editorTheme = "dark",
   onChange,
   value,
   zIndex = 100,
-  shouldDisplayRunEvalscriptButton = true,
   isReadOnly,
-}) => {
+  
+}, editorRef) => {
+
   const monacoEditorDOMRef = useRef();
-  const editorRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
   const editorWindowRef = useRef();
@@ -139,6 +143,7 @@ export const CodeEditor = ({
     handleCancelFullscreenClick,
     isFullscreen,
   } = useFreeEditor(editorWindowRef, headerEditorRef);
+
 
   useEffect(() => {
     if (shouldTriggerRunEvalscriptAnimation) {
@@ -171,14 +176,30 @@ export const CodeEditor = ({
       });
 
       monacoRef.current = monaco;
-
-      editorRef.current.onDidChangeModelContent(() => {
+      editorRef.current.onDidChangeModelContent((event) => {
+        console.log(event)
         const code = editorRef.current.getValue();
         onChange(code);
         checkAndApplyErrors();
       });
+      console.log(editorRef.current)
+      editorRef.current.onDidPaste((event) => {
+        console.log(event)
+      })
     });
   }, [isDocked]);
+
+
+
+
+  useEffect(() => {
+
+    if (!editorRef.current) {
+      return
+    }
+
+
+  }, [isReadOnly])
 
 
 
@@ -255,6 +276,7 @@ export const CodeEditor = ({
     setIsDarkTheme((prev) => !prev);
   }
 
+  console.log("hello")
   if (isDocked) {
     return (
       <ThemeProvider
@@ -322,28 +344,23 @@ export const CodeEditor = ({
           ref={monacoEditorDOMRef}
         ></div>
         <CodeEditorBottomPanel>
-          {
-            shouldDisplayRunEvalscriptButton ?
-              <ButtonPrimary
-                onClick={() => {
-                  setShouldTriggerRunEvalscriptAnimation(true);
-                  onRunEvalscriptClick(editorRef.current.getValue());
-                }}
-              >
-                {shouldTriggerRunEvalscriptAnimation ? (
-                  <>
-                    Running Evalscript
-                    <SuccessIcon />
-                  </>
-                ) : (
-                  "Run Evalscript"
-                )}
-              </ButtonPrimary>
-              :
-              <div>
+          <ButtonPrimary
+            onClick={() => {
+              setShouldTriggerRunEvalscriptAnimation(true);
+              onRunEvalscriptClick(editorRef.current.getValue());
+            }}
+            disabled={isReadOnly}
+          >
+            {shouldTriggerRunEvalscriptAnimation ? (
+              <>
+                Running Evalscript
+                <SuccessIcon />
+              </>
+            ) : (
+              "Run Evalscript"
+            )}
+          </ButtonPrimary>
 
-              </div>
-          }
           <CodeEditorIcon
             onMouseDown={handleResizeMouseDown}
             style={{ cursor: "nwse-resize", zIndex: 0 }}
@@ -355,4 +372,6 @@ export const CodeEditor = ({
     </ThemeProvider>,
     document.getElementById(portalId)
   );
-};
+});
+
+export {CodeEditor}
