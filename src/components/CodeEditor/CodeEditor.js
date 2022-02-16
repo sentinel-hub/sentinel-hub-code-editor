@@ -8,8 +8,8 @@ import ReactDOM from "react-dom";
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { variables } from "./variables.js";
-import { themeDark } from "./themeDark.js";
-import { themeLight } from "./themeLight";
+/* import { themeDark } from "./editor-themes/themeDark.js";
+ */import { themeLight } from "./editor-themes/themeLight";
 import { CgArrowsExpandLeft } from "react-icons/cg";
 import { MdOutlineClose } from "react-icons/md";
 import Switch from "./Switch";
@@ -109,7 +109,7 @@ const MonacoEditor = styled.div`
   overflow-y: hidden;
 `;
 
-const CodeEditor = React.forwardRef(({
+export const CodeEditor = React.forwardRef(({
   onRunEvalscriptClick,
   portalId,
   editorTheme = "dark",
@@ -117,7 +117,7 @@ const CodeEditor = React.forwardRef(({
   value,
   zIndex = 100,
   isReadOnly,
-  
+  customTheme
 }, editorRef) => {
 
   const monacoEditorDOMRef = useRef();
@@ -167,13 +167,36 @@ const CodeEditor = React.forwardRef(({
     };
 
     loader.init().then((monaco) => {
+
+
+      const customThemeName = 'customDarkTheme'
+
+      let darkTheme = 'vs-dark'
+      if(customTheme) { 
+        monaco.editor.defineTheme(customThemeName, {
+          base: 'vs-dark', // can also be vs-dark or hc-black
+          inherit: true, // can also be false to completely replace the builtin rules
+          rules: [
+            {}
+          ],
+          colors: {
+            'editor.background': `${customTheme.colorBg500}`
+          }
+        });
+        darkTheme = customThemeName
+      }
+
       editorRef.current = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
-        theme: isDarkTheme ? "vs-dark" : "vs",
+        theme: isDarkTheme ? darkTheme : "vs",
         scrollbar: {
           alwaysConsumeMouseWheel: isDocked ? false : true
         }
       });
+
+
+      editorRef.current.setTheme(customThemeName)
+
 
       monacoRef.current = monaco;
       editorRef.current.onDidChangeModelContent((event) => {
@@ -188,6 +211,7 @@ const CodeEditor = React.forwardRef(({
       })
     });
   }, [isDocked]);
+
 
 
 
@@ -250,6 +274,11 @@ const CodeEditor = React.forwardRef(({
     };
   }, []);
 
+    
+    
+  
+
+
   const checkAndApplyErrors = debounce(function () {
     const code = editorRef.current.getValue();
     JSHINT(code, JSHINT_CONFIG);
@@ -276,13 +305,12 @@ const CodeEditor = React.forwardRef(({
     setIsDarkTheme((prev) => !prev);
   }
 
-  console.log("hello")
   if (isDocked) {
     return (
       <ThemeProvider
         theme={
           isDarkTheme
-            ? { ...variables, ...themeDark }
+            ? { ...variables, ...customTheme }
             : { ...variables, ...themeLight }
         }
       >
@@ -303,7 +331,7 @@ const CodeEditor = React.forwardRef(({
     <ThemeProvider
       theme={
         isDarkTheme
-          ? { ...variables, ...themeDark }
+          ? { ...variables, ...customTheme }
           : { ...variables, ...themeLight }
       }
     >
@@ -373,5 +401,3 @@ const CodeEditor = React.forwardRef(({
     document.getElementById(portalId)
   );
 });
-
-export {CodeEditor}

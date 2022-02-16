@@ -7,4 +7,6 @@ export const themeLight = {
 
   colorPrimary500: "#007acc",
   colorPrimary600: "#006eb8",
+
+
 }

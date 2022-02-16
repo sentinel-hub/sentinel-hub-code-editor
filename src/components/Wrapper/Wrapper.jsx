@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import useSentinelHubUseCases from "../../hooks/useShSpecificCases";
 import { CodeEditor } from "../CodeEditor/CodeEditor";
+import {themeEdcBrowser} from '../CodeEditor/editor-themes/themeEdcBrowser'
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [evalscript, setEvalscript] = useState("");
@@ -76,6 +77,7 @@ export default function Wrapper() {
     */`)
   }
 
+
   return (
     <div
       style={{
@@ -89,7 +91,7 @@ export default function Wrapper() {
     >
       <textarea name="" id="" value="asd" cols="30" rows="10"></textarea>
       <div style={{ height: 400 }}>
-        <CodeEditor ref={editorRef} editorRef={editorRef} manuallyInsertCode={() => {return 'hey'}} value={evalscript}  onChange={(code) => setEvalscript(code)} editorTheme="dark" portalId="root" isReadOnly={isReadOnly} />
+        <CodeEditor customTheme={themeEdcBrowser} ref={editorRef} value={evalscript}  onChange={(code) => setEvalscript(code)} editorTheme="dark" portalId="root" isReadOnly={isReadOnly} />
         <h1 style={{ color: "white" }}>
           Wrapper to simulate parent div in apps like EOB and RB
         </h1>
