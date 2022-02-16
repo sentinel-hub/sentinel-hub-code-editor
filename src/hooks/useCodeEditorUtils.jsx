@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function useSentinelHubUseCases(editorRef) {
-  function manuallyInsertEvalscript(evalscript = "") {
+export default function useCodeEditorUtils(editorRef) {
+  function manuallyInsertEvalscriptIntoEditor(evalscript = "") {
     if (!editorRef.current) {
       throw new Error("Editor ref is undefined");
     }
@@ -28,6 +28,6 @@ export default function useSentinelHubUseCases(editorRef) {
     editorRef.current.executeEdits("my-source", [op]);
   }
   return {
-    manuallyInsertEvalscript,
+    manuallyInsertEvalscriptIntoEditor,
   };
 }
