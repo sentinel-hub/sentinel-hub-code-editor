@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import useSentinelHubUseCases from "../../hooks/useShSpecificCases";
+import useSentinelHubUseCases from "../../hooks/useCodeEditorUtils";
 import { CodeEditor } from "../CodeEditor/CodeEditor";
 import {themeEdcBrowserDark, themeEdcBrowserLight} from '../CodeEditor/editor-themes/themesEdcBrowser'
 export default function Wrapper() {

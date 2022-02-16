@@ -1,8 +1,9 @@
+
 export const themeEdcBrowserDark = {
   name: "edc-dark",
   styles: {
     colorUI500: "#f4f4f4",
-    colorBg600: "#1f1d2b",
+    colorBg600: "#333041",
     colorBg500: "#252735",
     colorPrimary500: "#508aa8",
     colorPrimary600: "#497d97",

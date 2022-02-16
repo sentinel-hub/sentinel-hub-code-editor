@@ -240,7 +240,7 @@ export const CodeEditor = React.forwardRef(({
     } else {
       editorRef.current.updateOptions({ readOnly: false })
     }
-  }, [isReadOnly])
+  }, [isReadOnly, editorRef.current])
 
   const debounce = useCallback((func, wait, immediate) => {
     var timeout;
