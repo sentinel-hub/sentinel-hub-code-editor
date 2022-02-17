@@ -1,4 +1,4 @@
-export function manuallyInsertEvalscriptIntoEditor(editorRef, evalscript = "") {
+function manuallyInsertEvalscriptIntoEditor(editorRef, evalscript = "") {
   if (!editorRef.current) {
     throw new Error("Editor ref is undefined");
   }
@@ -24,3 +24,4 @@ export function manuallyInsertEvalscriptIntoEditor(editorRef, evalscript = "") {
   };
   editorRef.current.executeEdits("my-source", [op]);
 }
+export { manuallyInsertEvalscriptIntoEditor };
