@@ -93,6 +93,7 @@ const CodeEditorWindow = styled.div`
   top: 0;
   left: 0;
   position: fixed;
+  overflow-x: hidden;
 `;
 
 const CodeEditorWindowDocked = styled.div`
@@ -199,6 +200,7 @@ export const CodeEditor = ({
       editorRef.current = monaco.editor.create(monacoEditorDOMRef.current, {
         ...MONACO_EDITOR_CONFIG,
         theme: isDarkTheme ? themeDark.name : themeLight.name,
+        readOnly: isReadOnly,
         scrollbar: {
           alwaysConsumeMouseWheel: isDocked ? false : true
         }
