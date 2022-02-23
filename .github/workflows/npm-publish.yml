@@ -9,8 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  
-  publish-npm:  
+  publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
