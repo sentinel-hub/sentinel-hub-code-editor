@@ -2,10 +2,7 @@
   "name": "@sentinel-hub/evalscript-code-editor",
   "version": "1.0.22",
   "description": "",
-  "files": [
-    "dist/*"
-  ],
-  "main": "./dist/index.es.js",
+  "main": "dist/index.es.js",
   "private": false,
   "scripts": {
     "prettier": "prettier --write src/**/*.{js,jsx} src/**/*.css",
