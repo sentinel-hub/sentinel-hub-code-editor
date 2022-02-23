@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import useSentinelHubUseCases from "../../hooks/useCodeEditorUtils";
 import { CodeEditor } from "../CodeEditor/CodeEditor";
 import {themeEdcBrowserDark, themeEdcBrowserLight} from '../CodeEditor/editor-themes/themesEdcBrowser'
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [evalscript, setEvalscript] = useState("");
   const editorRef = useRef()
-  const {manuallyInsertEvalscript} = useSentinelHubUseCases(editorRef)
 
   useEffect(() => {
     const newNode = document.createElement("div");
@@ -17,7 +15,7 @@ export default function Wrapper() {
   }, []);
 
   function updateCode() { 
-    manuallyInsertEvalscript(`let ndvi = (B08 - B04) / (B08 + B04);
+    setEvalscript({evalscript: `let ndvi = (B08 - B04) / (B08 + B04);
 
     //Visualization, as used in EO Browser:
     if (ndvi<-1.1) return [0,0,0];
@@ -74,7 +72,7 @@ export default function Wrapper() {
         [26/255,152/255,80/255],   //  -> .9 = #1a9850
         [0,104/255,55/255]         //  -> 1.0 = #006837
        ]);
-    */`)
+    */`, isEvalUrl:  true})
   }
 
 
@@ -91,7 +89,7 @@ export default function Wrapper() {
     >
       <textarea name="" id="" value="asd" cols="30" rows="10"></textarea>
       <div style={{ height: 400 }}>
-        <CodeEditor themeLight={themeEdcBrowserLight} themeDark={themeEdcBrowserDark} ref={editorRef} value={evalscript}  onChange={(code) => setEvalscript(code)} editorTheme="dark" portalId="root" isReadOnly={isReadOnly} />
+        <CodeEditor evalscript={evalscript} themeLight={themeEdcBrowserLight} themeDark={themeEdcBrowserDark} ref={editorRef} value={evalscript}  onChange={(code) => setEvalscript(code)} editorTheme="dark" portalId="root" isReadOnly={isReadOnly} />
         <h1 style={{ color: "white" }}>
           Wrapper to simulate parent div in apps like EOB and RB
         </h1>

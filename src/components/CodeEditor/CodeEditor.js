@@ -59,7 +59,7 @@ const ButtonPrimary = styled.button`
   }
   :disabled { 
     color: #A0A0A6;
-    background:${({theme}) => theme.colorDisabled};
+    background:${({ theme }) => theme.colorDisabled};
     cursor: not-allowed;
   }
 `;
@@ -109,12 +109,13 @@ const MonacoEditor = styled.div`
   overflow-y: hidden;
 `;
 
-export const CodeEditor = React.forwardRef(({ 
+export const CodeEditor = React.forwardRef(({
   onRunEvalscriptClick,
   portalId,
   defaultEditorTheme = 'dark',
   onChange,
   value,
+  evalscript,
   zIndex = 100,
   isReadOnly,
   themeLight = defaultThemeLight,
@@ -169,7 +170,7 @@ export const CodeEditor = React.forwardRef(({
 
     loader.init().then((monaco) => {
 
-      if(themeDark.name !== 'vs-dark') { 
+      if (themeDark.name !== 'vs-dark') {
         monaco.editor.defineTheme(themeDark.name, {
           base: 'vs-dark', // can also be vs-dark or hc-black
           inherit: true, // can also be false to completely replace the builtin rules
@@ -182,7 +183,7 @@ export const CodeEditor = React.forwardRef(({
         });
       }
 
-      if(themeLight.name !== 'vs') { 
+      if (themeLight.name !== 'vs') {
         monaco.editor.defineTheme(themeLight.name, {
           base: 'vs', // can also be vs-dark or hc-black
           inherit: true, // can also be false to completely replace the builtin rules
@@ -208,13 +209,18 @@ export const CodeEditor = React.forwardRef(({
       monacoRef.current = monaco;
       editorRef.current.onDidChangeModelContent(() => {
         const code = editorRef.current.getValue();
-        onChange(code);
-        checkAndApplyErrors();
+        onChange(code)
+        checkAndApplyErrors()
       });
     });
   }, [isDocked]);
 
 
+  useEffect(() => {
+    if (isReadOnly && editorRef.current) {
+      editorRef.current.setValue(evalscript)
+    }
+  }, [evalscript])
 
 
   useEffect(() => {
@@ -264,9 +270,9 @@ export const CodeEditor = React.forwardRef(({
     };
   }, []);
 
-    
-    
-  
+
+
+
 
 
   const checkAndApplyErrors = debounce(function () {
@@ -294,6 +300,7 @@ export const CodeEditor = React.forwardRef(({
   function toggleTheme() {
     setIsDarkTheme((prev) => !prev);
   }
+
 
   if (isDocked) {
     return (
