@@ -1,4 +1,3 @@
-
 export const themeEdcBrowserDark = {
   name: "edc-dark",
   styles: {
@@ -7,9 +6,8 @@ export const themeEdcBrowserDark = {
     colorBg500: "#252735",
     colorPrimary500: "#508aa8",
     colorPrimary600: "#497d97",
-  }
-}
-
+  },
+};
 
 export const themeEdcBrowserLight = {
   name: "edc-light",
@@ -19,5 +17,5 @@ export const themeEdcBrowserLight = {
     colorUI500: "#363636",
     colorPrimary500: "#508aa8",
     colorPrimary600: "#497d97",
-  }
-}
+  },
+};

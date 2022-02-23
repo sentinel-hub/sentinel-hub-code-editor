@@ -109,7 +109,7 @@ const MonacoEditor = styled.div`
   overflow-y: hidden;
 `;
 
-export const CodeEditor = React.forwardRef(({
+export const CodeEditor = ({
   onRunEvalscriptClick,
   portalId,
   defaultEditorTheme = 'dark',
@@ -120,11 +120,12 @@ export const CodeEditor = React.forwardRef(({
   isReadOnly,
   themeLight = defaultThemeLight,
   themeDark = defaultThemeDark,
-}, editorRef) => {
+}) => {
 
   const monacoEditorDOMRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
+  const editorRef = useRef()
   const editorWindowRef = useRef();
   const [
     shouldTriggerRunEvalscriptAnimation,
@@ -397,4 +398,4 @@ export const CodeEditor = React.forwardRef(({
     </ThemeProvider>,
     document.getElementById(portalId)
   );
-});
+};
