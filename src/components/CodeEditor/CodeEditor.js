@@ -115,7 +115,6 @@ export const CodeEditor = ({
   defaultEditorTheme = 'dark',
   onChange,
   value,
-  evalscript,
   zIndex = 100,
   isReadOnly,
   themeLight = defaultThemeLight,
@@ -219,9 +218,9 @@ export const CodeEditor = ({
 
   useEffect(() => {
     if (isReadOnly && editorRef.current) {
-      editorRef.current.setValue(evalscript)
+      editorRef.current.setValue(value)
     }
-  }, [evalscript])
+  }, [value])
 
 
   useEffect(() => {
