@@ -93,7 +93,7 @@ const CodeEditorWindow = styled.div`
   top: 0;
   left: 0;
   position: fixed;
-  overflow-x: hidden;
+  overflow: hidden; 
 `;
 
 const CodeEditorWindowDocked = styled.div`
@@ -101,6 +101,8 @@ const CodeEditorWindowDocked = styled.div`
   width: 100%;
   position: static;
   transform: translate(0px, 0px);
+  overflow: hidden; 
+
 `;
 
 const MonacoEditor = styled.div`
