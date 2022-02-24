@@ -109,7 +109,7 @@ const MonacoEditor = styled.div`
   height: 100%;
   height: ${(props) => `calc(100% - ${props.theme.spacing07})`};
   width: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
 `;
 
 export const CodeEditor = ({
