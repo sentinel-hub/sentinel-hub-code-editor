@@ -6,5 +6,6 @@ export const defaultThemeDark = {
     colorBg500: "#1e1e1f",
     colorPrimary500: "#007acc",
     colorPrimary600: "#006eb8",
+    colorText500: "#ffffff"
   }
 }

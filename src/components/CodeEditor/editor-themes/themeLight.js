@@ -6,5 +6,6 @@ export const defaultThemeLight = {
     colorUI500: "#363636",
     colorPrimary500: "#007acc",
     colorPrimary600: "#006eb8",
+    colorText500: "#ffffff"
   }
 }

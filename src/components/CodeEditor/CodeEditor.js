@@ -49,7 +49,7 @@ const ButtonPrimary = styled.button`
   height: 40px;
   background: ${({ theme }) => theme.colorPrimary500};
   font-weight: 500;
-  color: white;
+  color: ${({theme}) => theme.colorText500};
   border: none;
   display: inline-flex;
   align-items: center;
@@ -181,10 +181,14 @@ export const CodeEditor = ({
             {}
           ],
           colors: {
-            'editor.background': `${themeDark.styles.colorBg500}`
+            'editor.background': `${themeDark.styles.colorBg500}`,
+            'editor.lineHighlightBackground': `${themeDark.styles.colorBg400}`,
+            'editor.lineHighlightBorder': `${themeDark.styles.colorBg400}`
           }
         });
       }
+
+
 
       if (themeLight.name !== 'vs') {
         monaco.editor.defineTheme(themeLight.name, {

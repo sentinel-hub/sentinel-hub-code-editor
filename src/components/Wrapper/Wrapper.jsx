@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { CodeEditor } from "../CodeEditor/CodeEditor";
 import {
-  themeEdcBrowserDark,
-  themeEdcBrowserLight,
-} from "../CodeEditor/editor-themes/themesEdcBrowser";
+  themeEoBrowserDark,
+  themeEoBrowserLight,
+} from "../CodeEditor/editor-themes/themesEoBrowser";
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [evalscript, setEvalscript] = useState("");
@@ -93,8 +93,8 @@ export default function Wrapper() {
       <textarea name="" id="" value="asd" cols="30" rows="10"></textarea>
       <div style={{ height: 400 }}>
         <CodeEditor
-          themeLight={themeEdcBrowserLight}
-          themeDark={themeEdcBrowserDark}
+          themeLight={themeEoBrowserLight}
+          themeDark={themeEoBrowserDark}
           value={evalscript}
           onChange={(code) => setEvalscript(code)}
           editorTheme="dark"
