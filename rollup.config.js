@@ -11,8 +11,13 @@ export default [
     input: "./src/index.js",
     output: [
       {
-        file: "dist/index.es.js",
-        format: "es",
+        file: "dist/index.esm.js",
+        format: "esm",
+        exports: "named",
+      },
+      {
+        file: "dist/index.cjs.js",
+        format: "cjs",
         exports: "named",
       },
     ],

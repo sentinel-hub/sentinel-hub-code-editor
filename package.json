@@ -3,10 +3,12 @@
   "version": "1.0.33",
   "description": "",
   "type": "module",
-  "main": "dist/index.es.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
   "files": [
+    "dist",
     "dist/index.es.js",
-    "dist"
+    "dist/index.cjs.js"
   ],
   "private": false,
   "scripts": {
