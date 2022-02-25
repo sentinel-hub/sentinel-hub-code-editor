@@ -2,6 +2,7 @@
   "name": "@sentinel-hub/evalscript-code-editor",
   "version": "1.0.32",
   "description": "",
+  "type": "module",
   "main": "dist/index.es.js",
   "files": [
     "dist/index.es.js",
