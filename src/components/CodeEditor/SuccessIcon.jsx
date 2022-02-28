@@ -37,7 +37,7 @@ const Checkmark = styled.svg`
   stroke: white;
   stroke-miterlimit: 10;
   animation: fill 0.4s ease-in-out 0.4s forwards,
-  scale 0.3s ease-in-out 0.9s both;
+    scale 0.3s ease-in-out 0.9s both;
 `;
 
 const Circle = styled.circle`
