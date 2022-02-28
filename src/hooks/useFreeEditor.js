@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 
+
+
 const MIN_WIDTH = 600;
 const MIN_HEIGHT = 400;
-
 const useFreeEditor = (boxRef, headerRef) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
@@ -41,11 +42,11 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   function handleResizeMouseDown(event) {
     mouseOffsetRef.current = { x: event.clientX, y: event.clientY };
-    window.addEventListener("mousemove", mousemoveHandle);
+    window.addEventListener("mousemove", handleEditorResize);
     window.addEventListener(
       "mouseup",
       () => {
-        window.removeEventListener("mousemove", mousemoveHandle);
+        window.removeEventListener("mousemove", handleEditorResize);
       },
       { once: true }
     );
@@ -107,7 +108,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     setIsFullscreen(false);
   }
 
-  const mousemoveHandle = useCallback(
+  const handleEditorResize = useCallback(
     (event) => {
       const newWidth = getValidWidth(
         editorSize.width + event.clientX - mouseOffsetRef.current.x
@@ -123,7 +124,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     [editorSize]
   );
 
-  function handleMoveMouseDown(event) {
+  function onEditorMove(event) {
     if (isDocked) {
       return;
     }
@@ -132,24 +133,23 @@ const useFreeEditor = (boxRef, headerRef) => {
       x: event.clientX - editorPosition.x,
     };
     setIsDragging(true);
-    window.addEventListener("mousemove", mouseMoveHandler);
+    window.addEventListener("mousemove", handleEditorMove);
     window.addEventListener(
       "mouseup",
       () => {
         setIsDragging(false);
-        window.removeEventListener("mousemove", mouseMoveHandler);
+        window.removeEventListener("mousemove", handleEditorMove);
       },
       { once: true }
     );
   }
 
-  const mouseMoveHandler = useCallback((e) => {
+  const handleEditorMove = useCallback((e) => {
     e.preventDefault();
     const editorDimensions = boxRef.current.getBoundingClientRect();
 
     const editorPositionX = e.clientX - editorOffsetRef.current.x;
     const editorPositionY = e.clientY - editorOffsetRef.current.y;
-
     const newEditorY = getEditorPositionY(editorPositionY, editorDimensions);
     const newEditorX = getEditorPositionX(editorPositionX, editorDimensions);
 
@@ -186,7 +186,7 @@ const useFreeEditor = (boxRef, headerRef) => {
     setEditorPosition,
     isDocked,
     handleDockedClick,
-    handleMoveMouseDown,
+    onEditorMove,
     handleResizeMouseDown,
     handleFullscreenClick,
     handleCancelFullscreenClick,
