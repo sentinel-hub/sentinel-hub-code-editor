@@ -52,11 +52,10 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   function getValidHeight(height) {
     const { top } = boxRef.current.getBoundingClientRect();
-
     if (height <= MIN_HEIGHT) {
       return MIN_HEIGHT;
     }
-    if (height >= window.innerHeight) {
+    if (height + top >= window.innerHeight) {
       return window.innerHeight - top;
     }
     return height;
@@ -66,12 +65,11 @@ const useFreeEditor = (boxRef, headerRef) => {
     const windowWidthoutScrollbarWidth =
       document.querySelector("body").clientWidth;
     const { left } = boxRef.current.getBoundingClientRect();
-
     if (width <= MIN_WIDTH) {
       return MIN_WIDTH;
     }
 
-    if (width >= windowWidthoutScrollbarWidth) {
+    if (width + left >= windowWidthoutScrollbarWidth) {
       return windowWidthoutScrollbarWidth - left;
     }
 
@@ -123,6 +121,7 @@ const useFreeEditor = (boxRef, headerRef) => {
 
   const handleEditorResize = useCallback(
     (event) => {
+      const { left } = boxRef.current.getBoundingClientRect();
       const newWidth = getValidWidth(
         editorSize.width + event.clientX - mouseOffsetRef.current.x
       );
@@ -134,7 +133,7 @@ const useFreeEditor = (boxRef, headerRef) => {
         height: newHeight,
       });
     },
-    [editorSize]
+    [editorSize, mouseOffsetRef.current]
   );
 
   function onEditorMove(event) {
