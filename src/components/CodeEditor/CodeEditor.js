@@ -124,6 +124,7 @@ export const CodeEditor = ({
   themeDark = defaultThemeDark,
 }) => {
 
+
   const monacoEditorDOMRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
@@ -142,7 +143,7 @@ export const CodeEditor = ({
     editorSize,
     isDocked,
     handleDockedClick,
-    handleMoveMouseDown,
+    onEditorMove,
     handleResizeMouseDown,
     handleFullscreenClick,
     handleCancelFullscreenClick,
@@ -350,7 +351,7 @@ export const CodeEditor = ({
       >
         <CodeEditorTopPanel
           ref={headerEditorRef}
-          onMouseDown={handleMoveMouseDown}
+          onMouseDown={onEditorMove}
         >
           {isDocked ? (
             <ArrowsExpandIcon onClick={handleDockedClick} />

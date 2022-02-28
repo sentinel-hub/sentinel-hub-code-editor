@@ -4,6 +4,7 @@ import {
   themeEoBrowserDark,
   themeEoBrowserLight,
 } from "../CodeEditor/editor-themes/themesEoBrowser";
+import "./wrapper.css";
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [evalscript, setEvalscript] = useState("");
