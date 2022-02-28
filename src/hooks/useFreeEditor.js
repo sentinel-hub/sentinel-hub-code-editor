@@ -31,7 +31,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, [isDocked]);
 
   useEffect(() => {
-  /*   if (isDragging) {
+    /*   if (isDragging) {
       document.querySelector("body").style.overflowY = "hidden";
     } else {
       document.querySelector("body").style.overflowY = "auto";
@@ -51,7 +51,7 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   function getValidHeight(height) {
-    const { top } = boxRef.current.getBoundingClientRect()
+    const { top } = boxRef.current.getBoundingClientRect();
 
     if (height <= MIN_HEIGHT) {
       return MIN_HEIGHT;
@@ -63,8 +63,9 @@ const useFreeEditor = (boxRef, headerRef) => {
   }
 
   function getValidWidth(width) {
-    const windowWidthoutScrollbarWidth = document.querySelector("body").clientWidth
-    const { left } = boxRef.current.getBoundingClientRect()
+    const windowWidthoutScrollbarWidth =
+      document.querySelector("body").clientWidth;
+    const { left } = boxRef.current.getBoundingClientRect();
 
     if (width <= MIN_WIDTH) {
       return MIN_WIDTH;
@@ -89,14 +90,19 @@ const useFreeEditor = (boxRef, headerRef) => {
     };
     setIsFullscreen(true);
     setEditorPosition({ x: 0, y: 0 });
-    const windowWithoutScrollbarWidth = document.querySelector("body").clientWidth
+    const windowWithoutScrollbarWidth =
+      document.querySelector("body").clientWidth;
 
-    setEditorSize({ height: window.innerHeight, width: windowWithoutScrollbarWidth });
+    setEditorSize({
+      height: window.innerHeight,
+      width: windowWithoutScrollbarWidth,
+    });
   }
 
   function handleCancelFullscreenClick(event) {
-    const windowWithoutScrollbarWidth = document.querySelector("body").clientWidth
-    
+    const windowWithoutScrollbarWidth =
+      document.querySelector("body").clientWidth;
+
     event.stopPropagation();
     const { previousHeight, previousWidth } = preFullscreenEditorSize.current;
     const { previousPositionY, previousPositionX } =
@@ -169,7 +175,6 @@ const useFreeEditor = (boxRef, headerRef) => {
   }, []);
 
   function getEditorPositionY(y, editorDimensions) {
-    
     const isInsideY =
       y >= 0 && y + editorDimensions.height <= window.innerHeight;
     const isOutsideTop = y < 0;
@@ -182,9 +187,11 @@ const useFreeEditor = (boxRef, headerRef) => {
     return window.innerHeight - editorDimensions.height;
   }
   function getEditorPositionX(x, editorDimensions) {
-    const windowWithoutScrollbarWidth = document.querySelector("body").clientWidth
+    const windowWithoutScrollbarWidth =
+      document.querySelector("body").clientWidth;
 
-    const isInsideX = x + editorDimensions.width <= windowWithoutScrollbarWidth && x >= 0;
+    const isInsideX =
+      x + editorDimensions.width <= windowWithoutScrollbarWidth && x >= 0;
     const isOutsideLeft = x < 0;
     if (isInsideX) {
       return x;
