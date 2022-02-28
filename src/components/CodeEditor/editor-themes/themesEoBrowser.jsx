@@ -6,7 +6,7 @@ export const themeEoBrowserDark = {
     colorBg500: "#2a2c38",
     colorBg600: "#262630",
     colorPrimary500: "#b6bf00",
-    colorPrimary600: "#6d7300",
+    colorPrimary600: "rgba(182,191,0,.7)",
     colorText500: "#101119",
   },
 };

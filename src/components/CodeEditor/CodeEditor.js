@@ -49,11 +49,13 @@ const ButtonPrimary = styled.button`
   height: 40px;
   background: ${({ theme }) => theme.colorPrimary500};
   font-weight: 500;
-  color: ${({theme}) => theme.colorText500};
+  color: ${({ theme }) => theme.colorText500};
   border: none;
   display: inline-flex;
   align-items: center;
+  transition: 0.1s linear background;
   :hover {
+    transition: 0.1s linear background;
     cursor: pointer;
     background: ${({ theme }) => theme.colorPrimary600};
   }
