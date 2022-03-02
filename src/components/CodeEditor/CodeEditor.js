@@ -124,6 +124,8 @@ export const CodeEditor = ({
   isReadOnly,
   themeLight = defaultThemeLight,
   themeDark = defaultThemeDark,
+  runEvalscriptButtonText = "Run evalscript",
+  runningEvalscriptButtonText = "Running evalscript"
 }) => {
 
 
@@ -389,11 +391,11 @@ export const CodeEditor = ({
           >
             {shouldTriggerRunEvalscriptAnimation ? (
               <>
-                Running Evalscript
+                {runningEvalscriptButtonText}
                 <SuccessIcon />
               </>
             ) : (
-              "Run Evalscript"
+                runEvalscriptButtonText
             )}
           </ButtonPrimary>
 
