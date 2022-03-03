@@ -7,7 +7,8 @@ import {
 import "./wrapper.css";
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
-  const [evalscript, setEvalscript] = useState(`let ndvi = (B08 - B04) / (B08 + B04);
+  const [evalscript, setEvalscript] =
+    useState(`let ndvi = (B08 - B04) / (B08 + B04);
 
   //Visualization, as used in EO Browser:
   if (ndvi<-1.1) return [0,0,0];
@@ -158,7 +159,7 @@ export default function Wrapper() {
           editorTheme="dark"
           portalId="root"
           isReadOnly={isReadOnly}
-          readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}  
+          readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}
         />
         <h1 style={{ color: "white" }}>
           Wrapper to simulate parent div in apps like EOB and RB
