@@ -35,6 +35,23 @@ const CodeEditorTopPanel = styled.div`
 `;
 
 
+const ReadonlyOverlay = styled.div`
+position: absolute;
+top: 0;
+left: 0; 
+height: 100%; 
+width: 100%;
+background: rgba(0,0,0,0.5);
+pointer-events: none;
+z-index: 2;
+color: white;
+display: flex;
+align-items: center;
+justify-content: center;
+
+`
+
+
 const CodeEditorBottomPanel = styled.div`
   height: ${({ theme }) => theme.spacing07};
   display: flex;
@@ -112,6 +129,7 @@ const MonacoEditor = styled.div`
   height: ${(props) => `calc(100% - ${props.theme.spacing07})`};
   width: 100%;
   overflow: hidden;
+  position: relative;
 `;
 
 export const CodeEditor = ({
@@ -125,7 +143,8 @@ export const CodeEditor = ({
   themeLight = defaultThemeLight,
   themeDark = defaultThemeDark,
   runEvalscriptButtonText = "Run evalscript",
-  runningEvalscriptButtonText = "Running evalscript"
+  runningEvalscriptButtonText = "Running evalscript",
+  readOnlyMessage = "Editor is in read only mode"
 }) => {
 
 
@@ -218,6 +237,10 @@ export const CodeEditor = ({
       });
 
 
+      const messageContribution = editorRef.current.getContribution('editor.contrib.messageController');
+      editorRef.current.onDidAttemptReadOnlyEdit(() => {
+        messageContribution.showMessage(readOnlyMessage, editorRef.current.getPosition());
+      });
 
       monacoRef.current = monaco;
       editorRef.current.onDidChangeModelContent(() => {
@@ -234,6 +257,8 @@ export const CodeEditor = ({
       editorRef.current.setValue(value)
     }
   }, [value])
+
+
 
 
   useEffect(() => {
@@ -331,7 +356,12 @@ export const CodeEditor = ({
               <BiExpand />
             </CodeEditorIcon>
           </CodeEditorTopPanel>
-          <MonacoEditor ref={monacoEditorDOMRef}></MonacoEditor>
+          <MonacoEditor ref={monacoEditorDOMRef}>
+            {isReadOnly &&
+              <ReadonlyOverlay isDarkTheme={isDarkTheme}>
+              </ReadonlyOverlay>
+            }
+          </MonacoEditor>
         </CodeEditorWindowDocked>
       </ThemeProvider>
     );
@@ -377,10 +407,16 @@ export const CodeEditor = ({
             </>
           )}
         </CodeEditorTopPanel>
-        <div
+        <MonacoEditor
           style={{ height: editorSize.height - 96 }}
           ref={monacoEditorDOMRef}
-        ></div>
+        >
+
+          {isReadOnly &&
+            <ReadonlyOverlay isDarkTheme={isDarkTheme}>
+            </ReadonlyOverlay>
+          }
+        </MonacoEditor>
         <CodeEditorBottomPanel>
           <ButtonPrimary
             onClick={() => {
@@ -395,7 +431,7 @@ export const CodeEditor = ({
                 <SuccessIcon />
               </>
             ) : (
-                runEvalscriptButtonText
+              runEvalscriptButtonText
             )}
           </ButtonPrimary>
 
