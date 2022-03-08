@@ -41,8 +41,7 @@ top: 0;
 left: 0; 
 height: 100%; 
 width: 100%;
-background: rgba(0,0,0,0.5);
-pointer-events: none;
+background: rgba(0,0,0,0.5);  
 z-index: 2;
 color: white;
 display: flex;
@@ -131,6 +130,8 @@ const MonacoEditor = styled.div`
   overflow: hidden;
   position: relative;
 `;
+
+
 
 export const CodeEditor = ({
   onRunEvalscriptClick,
