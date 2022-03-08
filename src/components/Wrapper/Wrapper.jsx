@@ -75,8 +75,7 @@ export default function Wrapper() {
   }, []);
 
   function updateCode() {
-    setEvalscript({
-      evalscript: `let ndvi = (B08 - B04) / (B08 + B04);
+    setEvalscript(`let ndvi = (B08 - B04) / (B08 + B04);
 
     //Visualization, as used in EO Browser:
     if (ndvi<-1.1) return [0,0,0];
@@ -133,9 +132,7 @@ export default function Wrapper() {
         [26/255,152/255,80/255],   //  -> .9 = #1a9850
         [0,104/255,55/255]         //  -> 1.0 = #006837
        ]);
-    */`,
-      isEvalUrl: true,
-    });
+    */`);
   }
 
   return (

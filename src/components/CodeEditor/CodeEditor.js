@@ -244,8 +244,9 @@ export const CodeEditor = ({
 
       monacoRef.current = monaco;
       editorRef.current.onDidChangeModelContent(() => {
-        const code = editorRef.current.getValue();
+        const code = editorRef.current.getValue();  
         onChange(code)
+
         checkAndApplyErrors()
       });
     });
@@ -253,7 +254,12 @@ export const CodeEditor = ({
 
 
   useEffect(() => {
-    if (isReadOnly && editorRef.current) {
+    if(!editorRef.current) { 
+      return
+    }
+
+    const code = editorRef.current.getValue();  
+    if (value !== code) {
       editorRef.current.setValue(value)
     }
   }, [value])
