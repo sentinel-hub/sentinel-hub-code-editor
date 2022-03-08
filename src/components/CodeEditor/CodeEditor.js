@@ -132,7 +132,6 @@ const MonacoEditor = styled.div`
 `;
 
 
-
 export const CodeEditor = ({
   onRunEvalscriptClick,
   portalId,
@@ -161,6 +160,7 @@ export const CodeEditor = ({
   const [isDarkTheme, setIsDarkTheme] = useState(
     defaultEditorTheme === "dark" ? true : false
   );
+  const [isInitialisingEditor, setIsInitialisingEditor] = useState(true)
 
   const {
     editorPosition,
