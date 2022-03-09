@@ -156,7 +156,6 @@ export default function Wrapper() {
           editorTheme="dark"
           portalId="root"
           isReadOnly={isReadOnly}
-          readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}
         />
         <h1 style={{ color: "white" }}>
           Wrapper to simulate parent div in apps like EOB and RB
