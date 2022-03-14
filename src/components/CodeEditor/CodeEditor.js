@@ -144,7 +144,6 @@ export const CodeEditor = ({
   themeDark = defaultThemeDark,
   runEvalscriptButtonText = "Run evalscript",
   runningEvalscriptButtonText = "Running evalscript",
-  readOnlyMessage = "Editor is in read only mode"
 }) => {
 
 
@@ -237,10 +236,6 @@ export const CodeEditor = ({
       });
 
 
-      const messageContribution = editorRef.current.getContribution('editor.contrib.messageController');
-      editorRef.current.onDidAttemptReadOnlyEdit(() => {
-        messageContribution.showMessage(readOnlyMessage, editorRef.current.getPosition());
-      });
 
       monacoRef.current = monaco;
       editorRef.current.onDidChangeModelContent(() => {
