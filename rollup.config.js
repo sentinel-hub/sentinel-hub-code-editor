@@ -3,7 +3,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-peer-deps-external";
 import { terser } from "rollup-plugin-terser";
 import commonjs from '@rollup/plugin-commonjs'
-
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 const extensions = ['.jsx', '.js']
 
 export default [
@@ -22,6 +22,7 @@ export default [
       },
     ],
     plugins: [
+      peerDepsExternal(),
       babel({
         exclude: "node_modules/**",
         presets: [["@babel/preset-react", {runtime:"automatic"}]],
