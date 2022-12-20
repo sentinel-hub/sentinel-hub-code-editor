@@ -2,12 +2,13 @@ export const themeEoBrowserDark = {
   name: "eo-browser-dark",
   styles: {
     colorUI500: "#f4f4f4",
-    colorBg400: "#343746",
-    colorBg500: "#2a2c38",
-    colorBg600: "#262630",
+    colorBg400: "#3a3d3d",
+    colorBg500: "#3a3d3d",
+    colorBg600: "#333636",
     colorPrimary500: "#b6bf00",
     colorPrimary600: "rgba(182,191,0,.7)",
     colorText500: "#101119",
+    switchHeight: "20px",
   },
 };
 
@@ -20,5 +21,6 @@ export const themeEoBrowserLight = {
     colorPrimary500: "#b6bf00",
     colorPrimary600: "#6d7300",
     colorText500: "#101119",
+    switchHeight: "20px",
   },
 };

@@ -21,7 +21,7 @@ margin-right: ${({ theme }) => theme.spacing02};
 
 
 const SwitchWrap = styled.div`
-  height: 24px;
+  height: ${(props) => props.theme.switchHeight ? props.theme.switchHeight : '24px'};
   width: 40px;
   position: relative;
   border-radius: 50px;
