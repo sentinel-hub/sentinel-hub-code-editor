@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { CodeEditor } from '../CodeEditor/CodeEditor';
-import { themeEoBrowserDark, themeEoBrowserLight } from '../CodeEditor/editor-themes/themesEoBrowser';
-import './wrapper.css';
+import React, { useEffect, useState } from "react";
+import { CodeEditor } from "../CodeEditor/CodeEditor";
+import {
+  themeEoBrowserDark,
+  themeEoBrowserLight,
+} from "../CodeEditor/editor-themes/themesEoBrowser";
+import "./wrapper.css";
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
-  const [evalscript, setEvalscript] = useState(`let ndvi = (B08 - B04) / (B08 + B04);
+  const [evalscript, setEvalscript] =
+    useState(`let ndvi = (B08 - B04) / (B08 + B04);
 
   //Visualization, as used in EO Browser:
   if (ndvi<-1.1) return [0,0,0];
@@ -64,9 +68,9 @@ export default function Wrapper() {
   */`);
 
   useEffect(() => {
-    const newNode = document.createElement('div');
-    newNode.setAttribute('id', 'select-root');
-    const rootNode = document.querySelector('#root');
+    const newNode = document.createElement("div");
+    newNode.setAttribute("id", "select-root");
+    const rootNode = document.querySelector("#root");
     rootNode.before(newNode);
   }, []);
 
@@ -134,11 +138,11 @@ export default function Wrapper() {
   return (
     <div
       style={{
-        height: '200vh',
-        display: 'flex',
-        alignItems: 'center',
+        height: "200vh",
+        display: "flex",
+        alignItems: "center",
         width: 400,
-        background: 'black',
+        background: "black",
       }}
       className="panel"
     >
@@ -154,9 +158,13 @@ export default function Wrapper() {
           isReadOnly={isReadOnly}
           readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}
         />
-        <h1 style={{ color: 'white' }}>Wrapper to simulate parent div in apps like EOB and RB</h1>
+        <h1 style={{ color: "white" }}>
+          Wrapper to simulate parent div in apps like EOB and RB
+        </h1>
 
-        <button onClick={() => setIsReadOnly((prev) => !prev)}>Toggle read only</button>
+        <button onClick={() => setIsReadOnly((prev) => !prev)}>
+          Toggle read only
+        </button>
         <button onClick={() => updateCode()}>Inject Evalscript</button>
       </div>
     </div>
