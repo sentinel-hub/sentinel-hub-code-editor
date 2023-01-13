@@ -1,6 +1,7 @@
 export const themeCdasBrowserDark = {
   name: "cdas-browser-dark",
   styles: {
+    colorOverlayBg: "rgba(0,0,0, 0.3)",
     colorUI500: "#f4f4f4",
     colorBg400: "#3a3d3d",
     colorBg500: "#3a3d3d",
@@ -15,6 +16,7 @@ export const themeCdasBrowserDark = {
 export const themeCdasBrowserLight = {
   name: "cdas-browser-light",
   styles: {
+    colorOverlayBg: "rgba(205, 205, 215, 0.5)",
     colorBg500: "#ffffff",
     colorBg600: "#f4f4f4",
     colorUI500: "#363636",
