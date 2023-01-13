@@ -34,22 +34,19 @@ const CodeEditorTopPanel = styled.div`
   }
 `;
 
-
 const ReadonlyOverlay = styled.div`
-position: absolute;
-top: 0;
-left: 0; 
-height: 100%; 
-width: 100%;
-background: rgba(0,0,0,0.5);  
-z-index: 2;
-color: white;
-display: flex;
-align-items: center;
-justify-content: center;
-
-`
-
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: ${({ theme }) => theme.colorOverlayBg};
+  z-index: 2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const CodeEditorBottomPanel = styled.div`
   height: ${({ theme }) => theme.spacing07};
@@ -75,9 +72,9 @@ const ButtonPrimary = styled.button`
     cursor: pointer;
     background: ${({ theme }) => theme.colorPrimary600};
   }
-  :disabled { 
-    color: #A0A0A6;
-    background:${({ theme }) => theme.colorDisabled};
+  :disabled {
+    color: #a0a0a6;
+    background: ${({ theme }) => theme.colorDisabled};
     cursor: not-allowed;
   }
 `;
@@ -111,7 +108,7 @@ const CodeEditorWindow = styled.div`
   top: 0;
   left: 0;
   position: fixed;
-  overflow: hidden; 
+  overflow: hidden;
 `;
 
 const CodeEditorWindowDocked = styled.div`
@@ -119,8 +116,7 @@ const CodeEditorWindowDocked = styled.div`
   width: 100%;
   position: static;
   transform: translate(0px, 0px);
-  overflow: hidden; 
-
+  overflow: hidden;
 `;
 
 const MonacoEditor = styled.div`
@@ -131,11 +127,10 @@ const MonacoEditor = styled.div`
   position: relative;
 `;
 
-
 export const CodeEditor = ({
   onRunEvalscriptClick,
   portalId,
-  defaultEditorTheme = 'dark',
+  defaultEditorTheme = "dark",
   onChange,
   value,
   zIndex = 100,
@@ -144,22 +139,15 @@ export const CodeEditor = ({
   themeDark = defaultThemeDark,
   runEvalscriptButtonText = "Run evalscript",
   runningEvalscriptButtonText = "Running evalscript",
-  readOnlyMessage = "Editor is in read only mode"
+  readOnlyMessage = "Editor is in read only mode",
 }) => {
-
-
   const monacoEditorDOMRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
-  const editorRef = useRef()
+  const editorRef = useRef();
   const editorWindowRef = useRef();
-  const [
-    shouldTriggerRunEvalscriptAnimation,
-    setShouldTriggerRunEvalscriptAnimation,
-  ] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(
-    defaultEditorTheme === "dark" ? true : false
-  );
+  const [shouldTriggerRunEvalscriptAnimation, setShouldTriggerRunEvalscriptAnimation] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(defaultEditorTheme === "dark" ? true : false);
 
   const {
     editorPosition,
@@ -172,7 +160,6 @@ export const CodeEditor = ({
     handleCancelFullscreenClick,
     isFullscreen,
   } = useFreeEditor(editorWindowRef, headerEditorRef);
-
 
   useEffect(() => {
     if (shouldTriggerRunEvalscriptAnimation) {
@@ -196,34 +183,27 @@ export const CodeEditor = ({
     };
 
     loader.init().then((monaco) => {
-
-      if (themeDark.name !== 'vs-dark') {
+      if (themeDark.name !== "vs-dark") {
         monaco.editor.defineTheme(themeDark.name, {
-          base: 'vs-dark', // can also be vs-dark or hc-black
+          base: "vs-dark", // can also be vs-dark or hc-black
           inherit: true, // can also be false to completely replace the builtin rules
-          rules: [
-            {}
-          ],
+          rules: [{}],
           colors: {
-            'editor.background': `${themeDark.styles.colorBg500}`,
-            'editor.lineHighlightBackground': `${themeDark.styles.colorBg400}`,
-            'editor.lineHighlightBorder': `${themeDark.styles.colorBg400}`
-          }
+            "editor.background": `${themeDark.styles.colorBg500}`,
+            "editor.lineHighlightBackground": `${themeDark.styles.colorBg400}`,
+            "editor.lineHighlightBorder": `${themeDark.styles.colorBg400}`,
+          },
         });
       }
 
-
-
-      if (themeLight.name !== 'vs') {
+      if (themeLight.name !== "vs") {
         monaco.editor.defineTheme(themeLight.name, {
-          base: 'vs', // can also be vs-dark or hc-black
+          base: "vs", // can also be vs-dark or hc-black
           inherit: true, // can also be false to completely replace the builtin rules
-          rules: [
-            {}
-          ],
+          rules: [{}],
           colors: {
-            'editor.background': `${themeLight.styles.colorBg500}`
-          }
+            "editor.background": `${themeLight.styles.colorBg500}`,
+          },
         });
       }
 
@@ -232,65 +212,58 @@ export const CodeEditor = ({
         theme: isDarkTheme ? themeDark.name : themeLight.name,
         readOnly: isReadOnly,
         scrollbar: {
-          alwaysConsumeMouseWheel: isDocked ? false : true
-        }
+          alwaysConsumeMouseWheel: isDocked ? false : true,
+        },
       });
 
-
-      const messageContribution = editorRef.current.getContribution('editor.contrib.messageController');
+      const messageContribution = editorRef.current.getContribution("editor.contrib.messageController");
       editorRef.current.onDidAttemptReadOnlyEdit(() => {
         messageContribution.showMessage(readOnlyMessage, editorRef.current.getPosition());
       });
 
       monacoRef.current = monaco;
       editorRef.current.onDidChangeModelContent(() => {
-        const code = editorRef.current.getValue();  
-        onChange(code)
+        const code = editorRef.current.getValue();
+        onChange(code);
 
-        checkAndApplyErrors()
+        checkAndApplyErrors();
       });
     });
   }, [isDocked]);
 
-
   useEffect(() => {
-    if(!editorRef.current) { 
-      return
+    if (!editorRef.current) {
+      return;
     }
 
-    const code = editorRef.current.getValue();  
+    const code = editorRef.current.getValue();
     if (value !== code) {
-      editorRef.current.setValue(value)
+      editorRef.current.setValue(value);
     }
-  }, [value])
-
-
-
+  }, [value]);
 
   useEffect(() => {
     if (!monacoRef.current) {
-      return
+      return;
     }
     if (isDarkTheme) {
       monacoRef.current.editor.setTheme(themeDark.name);
     } else {
       monacoRef.current.editor.setTheme(themeLight.name);
     }
-
   }, [isDarkTheme]);
 
   useEffect(() => {
-
     if (!editorRef.current) {
-      return
+      return;
     }
 
     if (isReadOnly) {
-      editorRef.current.updateOptions({ readOnly: true })
+      editorRef.current.updateOptions({ readOnly: true });
     } else {
-      editorRef.current.updateOptions({ readOnly: false })
+      editorRef.current.updateOptions({ readOnly: false });
     }
-  }, [isReadOnly, editorRef.current])
+  }, [isReadOnly, editorRef.current]);
 
   const debounce = useCallback((func, wait, immediate) => {
     var timeout;
@@ -314,11 +287,6 @@ export const CodeEditor = ({
     };
   }, []);
 
-
-
-
-
-
   const checkAndApplyErrors = debounce(function () {
     const code = editorRef.current.getValue();
     JSHINT(code, JSHINT_CONFIG);
@@ -334,26 +302,17 @@ export const CodeEditor = ({
           : monacoRef.current.MarkerSeverity.Warning,
       };
     });
-    monacoRef.current.editor.setModelMarkers(
-      editorRef.current.getModel(),
-      "test",
-      errors
-    );
+    monacoRef.current.editor.setModelMarkers(editorRef.current.getModel(), "test", errors);
   }, 500);
 
   function toggleTheme() {
     setIsDarkTheme((prev) => !prev);
   }
 
-
   if (isDocked) {
     return (
       <ThemeProvider
-        theme={
-          isDarkTheme
-            ? { ...variables, ...themeDark.styles }
-            : { ...variables, ...themeLight.styles }
-        }
+        theme={isDarkTheme ? { ...variables, ...themeDark.styles } : { ...variables, ...themeLight.styles }}
       >
         <CodeEditorWindowDocked ref={editorWindowRef}>
           <CodeEditorTopPanel ref={headerEditorRef}>
@@ -363,10 +322,7 @@ export const CodeEditor = ({
             </CodeEditorIcon>
           </CodeEditorTopPanel>
           <MonacoEditor ref={monacoEditorDOMRef}>
-            {isReadOnly &&
-              <ReadonlyOverlay isDarkTheme={isDarkTheme}>
-              </ReadonlyOverlay>
-            }
+            {isReadOnly && <ReadonlyOverlay isDarkTheme={isDarkTheme}></ReadonlyOverlay>}
           </MonacoEditor>
         </CodeEditorWindowDocked>
       </ThemeProvider>
@@ -375,11 +331,7 @@ export const CodeEditor = ({
 
   return ReactDOM.createPortal(
     <ThemeProvider
-      theme={
-        isDarkTheme
-          ? { ...variables, ...themeDark.styles }
-          : { ...variables, ...themeLight.styles }
-      }
+      theme={isDarkTheme ? { ...variables, ...themeDark.styles } : { ...variables, ...themeLight.styles }}
     >
       <CodeEditorWindow
         zIndex={zIndex}
@@ -389,10 +341,7 @@ export const CodeEditor = ({
         width={editorSize.width}
         ref={editorWindowRef}
       >
-        <CodeEditorTopPanel
-          ref={headerEditorRef}
-          onMouseDown={onEditorMove}
-        >
+        <CodeEditorTopPanel ref={headerEditorRef} onMouseDown={onEditorMove}>
           {isDocked ? (
             <ArrowsExpandIcon onClick={handleDockedClick} />
           ) : (
@@ -413,15 +362,8 @@ export const CodeEditor = ({
             </>
           )}
         </CodeEditorTopPanel>
-        <MonacoEditor
-          style={{ height: editorSize.height - 96 }}
-          ref={monacoEditorDOMRef}
-        >
-
-          {isReadOnly &&
-            <ReadonlyOverlay isDarkTheme={isDarkTheme}>
-            </ReadonlyOverlay>
-          }
+        <MonacoEditor style={{ height: editorSize.height - 96 }} ref={monacoEditorDOMRef}>
+          {isReadOnly && <ReadonlyOverlay isDarkTheme={isDarkTheme}></ReadonlyOverlay>}
         </MonacoEditor>
         <CodeEditorBottomPanel>
           <ButtonPrimary
@@ -441,15 +383,12 @@ export const CodeEditor = ({
             )}
           </ButtonPrimary>
 
-          <CodeEditorIcon
-            onMouseDown={handleResizeMouseDown}
-            style={{ cursor: "nwse-resize", zIndex: 0 }}
-          >
+          <CodeEditorIcon onMouseDown={handleResizeMouseDown} style={{ cursor: "nwse-resize", zIndex: 0 }}>
             <CgArrowsExpandLeft />
           </CodeEditorIcon>
         </CodeEditorBottomPanel>
       </CodeEditorWindow>
     </ThemeProvider>,
-    document.getElementById(portalId)
+    document.getElementById(portalId),
   );
 };
