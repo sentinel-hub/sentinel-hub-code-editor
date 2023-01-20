@@ -1,6 +1,6 @@
 {
   "name": "@sentinel-hub/evalscript-code-editor",
-  "version": "1.0.42-rc1",
+  "version": "1.0.42",
   "description": "",
   "type": "module",
   "main": "dist/index.cjs",
