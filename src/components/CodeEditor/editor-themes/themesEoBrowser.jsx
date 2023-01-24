@@ -1,6 +1,7 @@
 export const themeEoBrowserDark = {
   name: "eo-browser-dark",
   styles: {
+    colorOverlayBg: "rgba(0,0,0, 0.3)",
     colorUI500: "#f4f4f4",
     colorBg400: "#3a3d3d",
     colorBg500: "#3a3d3d",
@@ -15,6 +16,7 @@ export const themeEoBrowserDark = {
 export const themeEoBrowserLight = {
   name: "eo-browser-light",
   styles: {
+    colorOverlayBg: "rgba(0,0,0, 0.3)",
     colorBg500: "#ffffff",
     colorBg600: "#f4f4f4",
     colorUI500: "#363636",

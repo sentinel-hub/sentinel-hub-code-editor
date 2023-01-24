@@ -1,6 +1,7 @@
 export const themeEdcBrowserDark = {
   name: "edc-dark",
   styles: {
+    colorOverlayBg: "rgba(0,0,0, 0.3)",
     colorUI500: "#f4f4f4",
     colorBg600: "#333041",
     colorBg500: "#252735",
@@ -13,6 +14,7 @@ export const themeEdcBrowserDark = {
 export const themeEdcBrowserLight = {
   name: "edc-light",
   styles: {
+    colorOverlayBg: "rgba(0,0,0, 0.3)",
     colorBg500: "#ffffff",
     colorBg600: "#f4f4f4",
     colorUI500: "#363636",
