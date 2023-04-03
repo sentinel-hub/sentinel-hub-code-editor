@@ -20,9 +20,9 @@ export const themeCdasBrowserLight = {
     colorBg500: "#ffffff",
     colorBg600: "#f4f4f4",
     colorUI500: "#363636",
-    colorPrimary500: "#585867",
-    colorPrimary600: "#6d7300",
-    colorText500: "#101119",
+    colorPrimary500: "#004494",
+    colorPrimary600: "#00397c",
+    colorText500: "#fff",
     switchHeight: "20px",
   },
 };
