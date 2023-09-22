@@ -155,6 +155,8 @@ export default function Wrapper() {
           onChange={(code) => setEvalscript(code)}
           editorTheme="dark"
           portalId="root"
+          onRunEvalscriptClick={() => console.log("running function from shortcut! Ctrl+Enter")}
+          runEvalscriptOnShortcut
           isReadOnly={isReadOnly}
           readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}
         />
