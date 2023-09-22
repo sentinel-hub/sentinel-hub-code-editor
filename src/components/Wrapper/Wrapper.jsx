@@ -136,18 +136,9 @@ export default function Wrapper() {
   }
 
   return (
-    <div
-      style={{
-        height: "200vh",
-        display: "flex",
-        alignItems: "center",
-        width: 400,
-        background: "black",
-      }}
-      className="panel"
-    >
-      <textarea name="" id="" value="asd" cols="30" rows="10"></textarea>
-      <div style={{ height: 400 }}>
+    <div className="panel">
+      {/* <textarea name="" id="" value="asd" cols="30" rows="10"></textarea> */}
+      <div className="code-editor-wrapper">
         <CodeEditor
           themeLight={themeEoBrowserLight}
           themeDark={themeEoBrowserDark}
