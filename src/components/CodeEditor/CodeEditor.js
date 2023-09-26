@@ -219,6 +219,7 @@ export const CodeEditor = ({
 
       if (runEvalscriptOnShortcut && onRunEvalscriptClick) {
         editorRef.current.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+          setShouldTriggerRunEvalscriptAnimation(true);
           onRunEvalscriptClick(editorRef.current.getValue());
         });
       }
