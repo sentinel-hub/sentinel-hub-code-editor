@@ -140,6 +140,7 @@ export const CodeEditor = ({
   runEvalscriptButtonText = "Run evalscript",
   runningEvalscriptButtonText = "Running evalscript",
   readOnlyMessage = "Editor is in read only mode",
+  runEvalscriptOnShortcut = false,
 }) => {
   const monacoEditorDOMRef = useRef();
   const monacoRef = useRef();
@@ -215,6 +216,13 @@ export const CodeEditor = ({
           alwaysConsumeMouseWheel: isDocked ? false : true,
         },
       });
+
+      if (runEvalscriptOnShortcut && onRunEvalscriptClick) {
+        editorRef.current.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+          setShouldTriggerRunEvalscriptAnimation(true);
+          onRunEvalscriptClick(editorRef.current.getValue());
+        });
+      }
 
       const messageContribution = editorRef.current.getContribution("editor.contrib.messageController");
       editorRef.current.onDidAttemptReadOnlyEdit(() => {
