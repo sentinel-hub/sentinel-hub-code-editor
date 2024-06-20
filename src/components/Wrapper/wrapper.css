@@ -1,0 +1,10 @@
+.panel {
+  height: 200vh;
+  display: flex;
+  background: black;
+}
+
+.code-editor-wrapper {
+  width: 500px;
+  height: 500px;
+}
