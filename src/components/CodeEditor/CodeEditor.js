@@ -141,14 +141,21 @@ export const CodeEditor = ({
   runningEvalscriptButtonText = "Running evalscript",
   readOnlyMessage = "Editor is in read only mode",
   runEvalscriptOnShortcut = false,
+  language = "javascript",
+  isEditable = true,
 }) => {
   const monacoEditorDOMRef = useRef();
   const monacoRef = useRef();
   const headerEditorRef = useRef();
   const editorRef = useRef();
   const editorWindowRef = useRef();
-  const [shouldTriggerRunEvalscriptAnimation, setShouldTriggerRunEvalscriptAnimation] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(defaultEditorTheme === "dark" ? true : false);
+  const [
+    shouldTriggerRunEvalscriptAnimation,
+    setShouldTriggerRunEvalscriptAnimation,
+  ] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(
+    defaultEditorTheme === "dark" ? true : false
+  );
 
   const {
     editorPosition,
@@ -173,7 +180,7 @@ export const CodeEditor = ({
   useEffect(() => {
     let MONACO_EDITOR_CONFIG = {
       value,
-      language: "javascript",
+      language: language,
       wordWrap: true,
       fontSize: isDocked ? 12 : 14,
       automaticLayout: true,
@@ -218,15 +225,23 @@ export const CodeEditor = ({
       });
 
       if (runEvalscriptOnShortcut && onRunEvalscriptClick) {
-        editorRef.current.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
-          setShouldTriggerRunEvalscriptAnimation(true);
-          onRunEvalscriptClick(editorRef.current.getValue());
-        });
+        editorRef.current.addCommand(
+          monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+          () => {
+            setShouldTriggerRunEvalscriptAnimation(true);
+            onRunEvalscriptClick(editorRef.current.getValue());
+          }
+        );
       }
 
-      const messageContribution = editorRef.current.getContribution("editor.contrib.messageController");
+      const messageContribution = editorRef.current.getContribution(
+        "editor.contrib.messageController"
+      );
       editorRef.current.onDidAttemptReadOnlyEdit(() => {
-        messageContribution.showMessage(readOnlyMessage, editorRef.current.getPosition());
+        messageContribution.showMessage(
+          readOnlyMessage,
+          editorRef.current.getPosition()
+        );
       });
 
       monacoRef.current = monaco;
@@ -238,6 +253,27 @@ export const CodeEditor = ({
       });
     });
   }, [isDocked]);
+
+  useEffect(() => {
+    if (monacoRef.current !== undefined && editorRef.current !== undefined) {
+      monacoRef.current.editor.setModelLanguage(
+        editorRef.current.getModel(),
+        language
+      );
+
+      if (!isEditable) {
+        const messageContribution = editorRef.current.getContribution(
+          "editor.contrib.messageController"
+        );
+        editorRef.current.onDidAttemptReadOnlyEdit(() => {
+          messageContribution.showMessage(
+            readOnlyMessage,
+            editorRef.current.getPosition()
+          );
+        });
+      }
+    }
+  }, [language]);
 
   useEffect(() => {
     if (!editorRef.current) {
@@ -266,11 +302,9 @@ export const CodeEditor = ({
       return;
     }
 
-    if (isReadOnly) {
-      editorRef.current.updateOptions({ readOnly: true });
-    } else {
-      editorRef.current.updateOptions({ readOnly: false });
-    }
+    editorRef.current.updateOptions({
+      readOnly: isReadOnly,
+    });
   }, [isReadOnly, editorRef.current]);
 
   const debounce = useCallback((func, wait, immediate) => {
@@ -310,7 +344,11 @@ export const CodeEditor = ({
           : monacoRef.current.MarkerSeverity.Warning,
       };
     });
-    monacoRef.current.editor.setModelMarkers(editorRef.current.getModel(), "test", errors);
+    monacoRef.current.editor.setModelMarkers(
+      editorRef.current.getModel(),
+      "test",
+      errors
+    );
   }, 500);
 
   function toggleTheme() {
@@ -320,7 +358,11 @@ export const CodeEditor = ({
   if (isDocked) {
     return (
       <ThemeProvider
-        theme={isDarkTheme ? { ...variables, ...themeDark.styles } : { ...variables, ...themeLight.styles }}
+        theme={
+          isDarkTheme
+            ? { ...variables, ...themeDark.styles }
+            : { ...variables, ...themeLight.styles }
+        }
       >
         <CodeEditorWindowDocked ref={editorWindowRef}>
           <CodeEditorTopPanel ref={headerEditorRef}>
@@ -330,7 +372,9 @@ export const CodeEditor = ({
             </CodeEditorIcon>
           </CodeEditorTopPanel>
           <MonacoEditor ref={monacoEditorDOMRef}>
-            {isReadOnly && <ReadonlyOverlay isDarkTheme={isDarkTheme}></ReadonlyOverlay>}
+            {isReadOnly && isEditable && (
+              <ReadonlyOverlay isDarkTheme={isDarkTheme}></ReadonlyOverlay>
+            )}
           </MonacoEditor>
         </CodeEditorWindowDocked>
       </ThemeProvider>
@@ -339,7 +383,11 @@ export const CodeEditor = ({
 
   return ReactDOM.createPortal(
     <ThemeProvider
-      theme={isDarkTheme ? { ...variables, ...themeDark.styles } : { ...variables, ...themeLight.styles }}
+      theme={
+        isDarkTheme
+          ? { ...variables, ...themeDark.styles }
+          : { ...variables, ...themeLight.styles }
+      }
     >
       <CodeEditorWindow
         zIndex={zIndex}
@@ -370,33 +418,45 @@ export const CodeEditor = ({
             </>
           )}
         </CodeEditorTopPanel>
-        <MonacoEditor style={{ height: editorSize.height - 96 }} ref={monacoEditorDOMRef}>
-          {isReadOnly && <ReadonlyOverlay isDarkTheme={isDarkTheme}></ReadonlyOverlay>}
+        <MonacoEditor
+          style={{ height: editorSize.height - 96 }}
+          ref={monacoEditorDOMRef}
+        >
+          {isReadOnly && isEditable && (
+            <ReadonlyOverlay isDarkTheme={isDarkTheme}></ReadonlyOverlay>
+          )}
         </MonacoEditor>
         <CodeEditorBottomPanel>
-          <ButtonPrimary
-            onClick={() => {
-              setShouldTriggerRunEvalscriptAnimation(true);
-              onRunEvalscriptClick(editorRef.current.getValue());
-            }}
-            disabled={isReadOnly}
-          >
-            {shouldTriggerRunEvalscriptAnimation ? (
-              <>
-                {runningEvalscriptButtonText}
-                <SuccessIcon />
-              </>
-            ) : (
-              runEvalscriptButtonText
-            )}
-          </ButtonPrimary>
+          {isEditable ? (
+            <ButtonPrimary
+              onClick={() => {
+                setShouldTriggerRunEvalscriptAnimation(true);
+                onRunEvalscriptClick(editorRef.current.getValue());
+              }}
+              disabled={isReadOnly}
+            >
+              {shouldTriggerRunEvalscriptAnimation ? (
+                <>
+                  {runningEvalscriptButtonText}
+                  <SuccessIcon />
+                </>
+              ) : (
+                runEvalscriptButtonText
+              )}
+            </ButtonPrimary>
+          ) : (
+            <div />
+          )}
 
-          <CodeEditorIcon onMouseDown={handleResizeMouseDown} style={{ cursor: "nwse-resize", zIndex: 0 }}>
+          <CodeEditorIcon
+            onMouseDown={handleResizeMouseDown}
+            style={{ cursor: "nwse-resize", zIndex: 0 }}
+          >
             <CgArrowsExpandLeft />
           </CodeEditorIcon>
         </CodeEditorBottomPanel>
       </CodeEditorWindow>
     </ThemeProvider>,
-    document.getElementById(portalId),
+    document.getElementById(portalId)
   );
 };
