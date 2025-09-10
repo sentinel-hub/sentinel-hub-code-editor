@@ -7,6 +7,40 @@ import {
 import "./wrapper.css";
 export default function Wrapper() {
   const [isReadOnly, setIsReadOnly] = useState(false);
+  const [isEvalscriptSelected, setIsEvalscriptSelected] = useState(true);
+  const [processGraph] = useState({
+    load2: {
+      process_id: "load_collection",
+      arguments: {
+        id: "sentinel-2-l2a",
+        spatial_extent: {},
+        temporal_extent: ["2022-03-26T00:00:00Z", "2022-03-26T23:59:59Z"],
+        bands: ["B08", "B04", "B03"],
+        resampling: "BICUBIC",
+      },
+    },
+    highlight: {
+      process_id: "highlight_compression",
+      arguments: {
+        data: {
+          from_node: "load2",
+        },
+        maxInput: 0.4,
+        clipInput: 0.8,
+        maxOutput: 1,
+      },
+    },
+    save5: {
+      process_id: "save_result",
+      arguments: {
+        format: "PNG",
+        data: {
+          from_node: "highlight",
+        },
+      },
+      result: true,
+    },
+  });
   const [evalscript, setEvalscript] =
     useState(`let ndvi = (B08 - B04) / (B08 + B04);
 
@@ -138,36 +172,65 @@ export default function Wrapper() {
   return (
     <div
       style={{
-        height: "200vh",
+        height: "100vh",
         display: "flex",
-        alignItems: "center",
-        width: 400,
+        alignItems: "flex-start",
+        width: 600,
         background: "black",
       }}
       className="panel"
     >
-      <textarea name="" id="" value="asd" cols="30" rows="10"></textarea>
-      <div style={{ height: 400 }}>
-        <CodeEditor
-          themeLight={themeEoBrowserLight}
-          themeDark={themeEoBrowserDark}
-          value={evalscript}
-          onChange={(code) => setEvalscript(code)}
-          editorTheme="dark"
-          portalId="root"
-          onRunEvalscriptClick={() => console.log("running function from shortcut! Ctrl+Enter")}
-          runEvalscriptOnShortcut
-          isReadOnly={isReadOnly}
-          readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}
-        />
+      {/* <textarea name="" id="" value="asd" cols="30" rows="10"></textarea> */}
+      <div style={{ height: "60vh" }}>
         <h1 style={{ color: "white" }}>
-          Wrapper to simulate parent div in apps like EOB and RB
+          Wrapper to simulate parent div in apps like EOB and CB
         </h1>
 
         <button onClick={() => setIsReadOnly((prev) => !prev)}>
           Toggle read only
         </button>
         <button onClick={() => updateCode()}>Inject Evalscript</button>
+        <button onClick={() => setIsEvalscriptSelected(!isEvalscriptSelected)}>
+          Switch between JSON and Evalscript
+        </button>
+        {isEvalscriptSelected ? (
+          <CodeEditor
+            themeLight={themeEoBrowserLight}
+            themeDark={themeEoBrowserDark}
+            value={evalscript}
+            isReadOnly={isReadOnly}
+            isEditable={true}
+            language="javascript"
+            editorTheme="dark"
+            portalId="root"
+            onChange={(code) => {
+              try {
+                JSON.parse(code);
+              } catch (error) {
+                if (isEvalscriptSelected) {
+                  setEvalscript(code);
+                }
+              }
+            }}
+            onRunEvalscriptClick={() =>
+              console.log("running function from shortcut! Ctrl+Enter")
+            }
+            runEvalscriptOnShortcut
+            readOnlyMessage={`Editor is in read only mode. Untick "Load script from URL" to enable it again.`}
+          />
+        ) : (
+          <CodeEditor
+            themeLight={themeEoBrowserLight}
+            themeDark={themeEoBrowserDark}
+            value={JSON.stringify(processGraph, null, "\t")}
+            isReadOnly={true}
+            isEditable={false}
+            language="json"
+            editorTheme="dark"
+            portalId="root"
+            onChange={() => {}}
+          />
+        )}
       </div>
     </div>
   );
